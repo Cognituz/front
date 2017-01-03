@@ -31,3 +31,10 @@ module.exports =
       plugins: ["angularjs-annotate"]
     stylus:
       plugins: ['autoprefixer-stylus']
+
+  npm:
+    enabled: true
+    styles:
+      "angular":          ["angular-csp.css"]
+      "angular-material": ["angular-material.min.css"]
+      "normalize.css":    ["normalize.css"]

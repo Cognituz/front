@@ -11,7 +11,16 @@
     "start": "brunch watch --server",
     "build": "brunch build --production"
   },
-  "dependencies": {},
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-animate": "^1.6.1",
+    "angular-aria": "^1.6.1",
+    "angular-bem": "^1.1.0",
+    "angular-material": "^1.1.1",
+    "angular-ui-router": "^0.3.2",
+    "angular-waypoints": "^2.0.0",
+    "normalize.css": "^5.0.0"
+  },
   "devDependencies": {
     "auto-reload-brunch": "^2.0.0",
     "autoprefixer-stylus": "^0.11.0",
@@ -22,7 +31,6 @@
     "babel-preset-es2017": "^6.16.0",
     "brunch": "^2.0.0",
     "clean-css-brunch": "^2.0.0",
-    "css-brunch": "^2.0.0",
     "css-brunch": "^2.0.0",
     "jaded-brunch": "^2.3.0",
     "javascript-brunch": "^2.0.0",

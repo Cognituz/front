@@ -1,0 +1,63 @@
+div(block='ctz-home')
+  section.full-screen.full-width.position-relative(elem='header')
+    md-toolbar.md-toolbar--transparent.absolute-top
+      .md-toolbar-tools(layout='row')
+        span(elem='header-brand')
+          img(src='/images/logo.png')
+
+        span(flex)
+
+        div(layout='row' hide-xs)
+          md-button Ingresar
+          md-button Registrarse
+
+        md-button.md-icon-button(hide-gt-xs)
+          md-icon(md-svg-src='/images/icons/hamburger.svg')
+
+    .absolute-fill(
+      layout='column'
+      layout-align='center center'
+      layout-padding
+    )
+      .md-display-2.text-align-center.color-white
+        | Conocimiento a un <br/> click de distancia
+
+      .md-subhead.color-white
+        | Encontrá al profesor particular que estás buscando
+
+      div(layout='row')
+        md-button.md-primary.md-raised.uppercase Ser profesor
+        md-button.md-raised Como funciona
+
+  section(elem='cards')
+    div(layout='column' layout-gt-xs='row' layout-padding)
+      .text-align-center(flex=33 layout='column' layout-padding)
+        md-icon(
+          elem='card-icon'
+          md-svg-src='/images/icons/search.svg'
+          md-colors='{fill: "primary"}'
+        )
+        .md-title Busca Profesor
+        .md-subhead Buscá la materia en la que estés buscando apoyo académico
+
+      .text-align-center(flex=33 layout='column' layout-padding)
+        md-icon(
+          elem='card-icon'
+          md-svg-src='/images/icons/filter.svg'
+        )
+        .md-title Filtrá los profesores
+        .md-subhead Filtra los profesores a medida de tus preferencias en cuanto a fecha, horario, tipo de clase, barrio
+
+      .text-align-center(flex=33 layout='column' layout-padding)
+        md-icon(
+          elem='card-icon'
+          md-svg-src='/images/icons/appointment.svg'
+        )
+        .md-title Reserva tu clase
+        .md-subhead Una vez elegido el proferor, reserva la clase abonando de la manera que te quede más cómoda.
+
+  section
+    iframe.full-width(
+      src="https://www.youtube.com/embed/4XpTHW2qpLc"
+      allowfullscreen
+    )
