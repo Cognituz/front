@@ -1,5 +1,8 @@
 .ctz-home
-  &__header
+  &__toolbar
+    z-index 3
+
+  &__header-section
     position relative
     background-image url('/images/home_main_background.jpg')
     background-size cover
@@ -22,9 +25,37 @@
       height 100%
       object-fit contain
 
-  &__cards
+  &__cards-section
     padding 5vw
 
   &__card-icon
     width 120px
     height 120px
+
+  &__video-section
+    background-image url('/images/home_video_background.jpg')
+    background-size cover
+
+  &__video-frame
+    width 100vw
+    height ((9 * 100) / 16)vw
+
+    @media (min-width: 600px)
+      width ((16 * 80) / 9)vh
+      height 80vh
+
+  &__contact-section
+    @media (min-width: 600px)
+      padding 10vh
+
+    background-color rgba(40,42,46,0.9)
+
+  &__social-section
+    @media (min-width: 600px)
+      padding 10vh
+
+  &__footer-section
+    @media (min-width: 600px)
+      padding 5vh
+
+    background-color rgba(40,42,46,0.9)

@@ -1,3 +1,6 @@
+window.$ = require('jquery');
+require('waypoints/lib/noframework.waypoints.js');
+
 require('angular');
 require('angular-aria');
 require('angular-animate');
@@ -18,4 +21,5 @@ angular
   .config(require('config/routes'))
 
   .component('ctzApp', require('components/app/component'))
-  .component('ctzHome', require('components/home/component'));
+  .component('ctzHome', require('components/home/component'))
+  .component('ctzContactForm', require('components/contact_form/component'));

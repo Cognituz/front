@@ -1,8 +1,26 @@
 .full-screen, [full-screen]
   height 100vh
 
+.full-screen-gt-xs, [full-screen-gt-xs]
+  @media (min-width: 600px)
+    height 100vh
+
+.full-screen-minus-toolbar-gt-xs, [full-screen-minux-toolbar-gt-xs]
+  @media (min-width: 600px)
+    height calc(100vh - 64px)
+
+    @media (max-width: 959px) and (min-width: 0) and (orientation: portrait)
+      height calc(100vh - 56px)
+
+    @media (max-width: 959px) and (min-width: 0) and (orientation: landscape)
+      height calc(100vh - 48px)
+
 .position-relative, [position-relative]
   position relative
+
+.fixed-top, [fixed-top]
+  position fixed
+  top 0
 
 .absolute-top, [absolute-top]
   position absolute
@@ -28,7 +46,9 @@
   text-align center
 
 .color-white, [color-white]
-  color white
+  color white !important
+  *
+    color white !important
 
 .uppercase, [uppercase]
   text-transform uppercase !important

@@ -2,10 +2,16 @@ doctype html
 html(ng-app='cognituzFront')
   head
     title Cognituz
+
+    meta(charset='utf-8')
+    meta(name='viewport' content='initial-scale=1, maximum-scale=1, user-scalable=no')
+    meta(name='mobile-web-app-capable' content='yes')
+    meta(name='apple-mobile-web-app-capable' content='yes')
+
     link(rel='stylesheet' href='/vendor.css')
     link(rel='stylesheet' href='/app.css')
 
-  body
+  body(md-theme='cognituzPrimary')
     ctz-app
 
     script(src='/vendor.js')

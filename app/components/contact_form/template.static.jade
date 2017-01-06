@@ -1,0 +1,17 @@
+md-card
+  md-toolbar: h2.md-toolbar-tools.color-white Enviar Mensage
+
+  form.md-no-empty-errors-spacer(layout='column' layout-padding)
+    md-input-container
+      label Email
+      input(type='$ctrl.model.senderEmail' ng-model='email')
+
+    md-input-container
+      label Asunto
+      input(ng-model='$ctrl.model.subject')
+
+    md-input-container
+      label Mensaje
+      textarea(ng-model='$ctrl.model.body' rows=4)
+
+    md-button.md-primary.md-raised.color-white(type='submit') Enviar
