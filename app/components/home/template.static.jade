@@ -1,131 +1,137 @@
-div(block='ctz-home')
-  section.full-screen.full-width.position-relative(elem='header-section')
-    md-toolbar.md-toolbar--white.fixed-top.md-whiteframe-z1(elem='toolbar')
-      .md-toolbar-tools(layout='row')
-        span(elem='header-brand')
-          img(src='/images/logo.png')
+md-content(layout-fill)
+  div(block='ctz-home')
+    section.full-screen.full-width.position-relative(elem='header-section')
+      md-toolbar.md-toolbar--white.fixed-top.md-whiteframe-z1(elem='toolbar')
+        .md-toolbar-tools(layout='row')
+          span(elem='header-brand')
+            img(src='/images/logo.png')
 
-        span(flex)
+          span(flex)
 
-        div(layout='row' hide-xs)
-          md-button Ingresar
-          md-button Registrarse
+          div(layout='row' hide-xs)
+            md-button(ui-sref='app.signIn') Ingresar
+            md-button(ui-sref='app.students.signUp') Registrarse
 
-        md-button.md-icon-button(hide-gt-xs)
-          md-icon(md-svg-src='/images/icons/hamburger.svg')
+          md-menu(hide-gt-xs)
+            md-button.md-icon-button(ng-click='$mdOpenMenu($event)')
+              md-icon.md-icon--color-black(md-svg-src='/images/icons/hamburger.svg')
 
-    .absolute-fill(
-      layout='column'
-      layout-align='center center'
-      layout-padding
+            md-menu-content(width=2)
+              md-menu-item: md-button(ui-sref='app.signIn') Ingresar
+              md-menu-item: md-button(ui-sref='app.students.signUp') Registrarse
+
+      .absolute-fill(
+        layout='column'
+        layout-align='center center'
+        layout-padding
+      )
+        .md-display-2.text-align-center.color-white
+          | Conocimiento a un <br/> click de distancia
+
+        .md-subhead.color-white
+          | Encontrá al profesor particular que estás buscando
+
+        div(layout='row')
+          md-button.md-primary.md-raised.uppercase Ser profesor
+          md-button.md-raised Como funciona
+
+    md-divider
+
+    section(
+      elem='cards-section'
+      zum-waypoints='waypoints'
+      down='headerOn'
+      up='headerOff'
     )
-      .md-display-2.text-align-center.color-white
-        | Conocimiento a un <br/> click de distancia
+      div(ng-bind='waypoints | json')
 
-      .md-subhead.color-white
-        | Encontrá al profesor particular que estás buscando
+      div(layout='column' layout-gt-xs='row' layout-padding)
+        .text-align-center(flex=33 layout='column' layout-padding)
+          md-icon(
+            elem='card-icon'
+            md-svg-src='/images/icons/search.svg'
+            md-colors='{fill: "primary"}'
+          )
+          .md-title Busca Profesor
+          .md-subhead Buscá la materia en la que estés buscando apoyo académico
 
-      div(layout='row')
-        md-button.md-primary.md-raised.uppercase Ser profesor
-        md-button.md-raised Como funciona
+        .text-align-center(flex=33 layout='column' layout-padding)
+          md-icon(
+            elem='card-icon'
+            md-svg-src='/images/icons/filter.svg'
+          )
+          .md-title Filtrá los profesores
+          .md-subhead Filtra los profesores a medida de tus preferencias en cuanto a fecha, horario, tipo de clase, barrio
 
-  md-divider
+        .text-align-center(flex=33 layout='column' layout-padding)
+          md-icon(
+            elem='card-icon'
+            md-svg-src='/images/icons/appointment.svg'
+          )
+          .md-title Reserva tu clase
+          .md-subhead Una vez elegido el proferor, reserva la clase abonando de la manera que te quede más cómoda.
 
-  section(
-    elem='cards-section'
-    zum-waypoints='waypoints'
-    down='headerOn'
-    up='headerOff'
-  )
-    div(ng-bind='waypoints | json')
+    md-divider
 
-    div(layout='column' layout-gt-xs='row' layout-padding)
-      .text-align-center(flex=33 layout='column' layout-padding)
-        md-icon(
-          elem='card-icon'
-          md-svg-src='/images/icons/search.svg'
-          md-colors='{fill: "primary"}'
-        )
-        .md-title Busca Profesor
-        .md-subhead Buscá la materia en la que estés buscando apoyo académico
-
-      .text-align-center(flex=33 layout='column' layout-padding)
-        md-icon(
-          elem='card-icon'
-          md-svg-src='/images/icons/filter.svg'
-        )
-        .md-title Filtrá los profesores
-        .md-subhead Filtra los profesores a medida de tus preferencias en cuanto a fecha, horario, tipo de clase, barrio
-
-      .text-align-center(flex=33 layout='column' layout-padding)
-        md-icon(
-          elem='card-icon'
-          md-svg-src='/images/icons/appointment.svg'
-        )
-        .md-title Reserva tu clase
-        .md-subhead Una vez elegido el proferor, reserva la clase abonando de la manera que te quede más cómoda.
-
-  md-divider
-
-  section.full-screen-minus-toolbar-gt-xs(
-    layout='row'
-    layout-align='center center'
-    elem='video-section'
-  )
-    iframe.md-whiframe-z2(
-      elem='video-frame'
-      src="https://www.youtube.com/embed/4XpTHW2qpLc"
-      allowfullscreen
-    )
-
-  md-divider
-
-  section(elem='contact-section' layout='column' layout-padding)
-    .md-display-1.color-white.text-align-center Contactános
-
-    div(
+    section.full-screen-minus-toolbar-gt-xs(
       layout='row'
-      layout-align='center start'
-      rayout-padding
-      layout-wrap
+      layout-align='center center'
+      elem='video-section'
     )
-      div(flex=100 flex-md=50 flex-gt-md=30 flex-order=1 flex-order-gt-sm=0)
-        ctz-contact-form
+      iframe.md-whiframe-z2(
+        elem='video-frame'
+        src="https://www.youtube.com/embed/4XpTHW2qpLc"
+        allowfullscreen
+      )
 
-      div(flex=100 flex-md=50 flex-gt-md=30 flex-order=0 flex-order-gt-sm=1)
-        md-button.color-white(href='mailto:contacto@cognituz.com')
-          md-icon(md-svg-src='/images/icons/mail.svg')
-          |  contacto@cognituz.com
+    md-divider
 
-  md-divider
+    section(elem='contact-section' layout='column' layout-padding)
+      .md-display-1.color-white.text-align-center Contactános
 
-  section(elem='social-section' layout='column' layout-align='center center')
-    .text-align-center
-      .md-display-1 Seguínos!
-      .md-subhead
-        | Seguinos en nuestras redes sociales
-        br
-        | y enterate de todas nuestras novedades diariamente
+      div(
+        layout='row'
+        layout-align='center start'
+        rayout-padding
+        layout-wrap
+      )
+        div(flex=100 flex-md=50 flex-gt-md=30 flex-order=1 flex-order-gt-sm=0)
+          ctz-contact-form
 
-    div(layout='row' layout-padding)
-      md-button.md-icon-button(href='https://www.facebook.com/EducandoAndoPage' target='_blank')
-        md-icon.md-icon--color-black(md-svg-src='/images/icons/facebook_logo.svg')
+        div(flex=100 flex-md=50 flex-gt-md=30 flex-order=0 flex-order-gt-sm=1)
+          md-button.color-white(href='mailto:contacto@cognituz.com')
+            md-icon(md-svg-src='/images/icons/mail.svg')
+            |  contacto@cognituz.com
 
-      md-button.md-icon-button(href='https://twitter.com/EducandoAndoEA' target='_blank')
-        md-icon.md-icon--color-black(md-svg-src='/images/icons/twitter_logo.svg')
+    md-divider
 
-      md-button.md-icon-button(href='https://www.youtube.com/channel/UCdKxdDX6uj3ou8xuVUjvJoQ' target='_blank')
-        md-icon.md-icon--color-black(md-svg-src='/images/icons/youtube_logo.svg')
+    section(elem='social-section' layout='column' layout-align='center center')
+      .text-align-center
+        .md-display-1 Seguínos!
+        .md-subhead
+          | Seguinos en nuestras redes sociales
+          br
+          | y enterate de todas nuestras novedades diariamente
 
-      md-button.md-icon-button(href='https://www.linkedin.com/company/7675672' target='_blank')
-        md-icon.md-icon--color-black(md-svg-src='/images/icons/linkedin_logo.svg')
+      div(layout='row' layout-padding)
+        md-button.md-icon-button(href='https://www.facebook.com/EducandoAndoPage' target='_blank')
+          md-icon.md-icon--color-black(md-svg-src='/images/icons/facebook_logo.svg')
 
-      md-button.md-icon-button(href='https://plus.google.com/u/0/117734367256319007789?hl=es' target='_blank')
-        md-icon.md-icon--color-black(md-svg-src='/images/icons/google_plus_logo.svg')
+        md-button.md-icon-button(href='https://twitter.com/EducandoAndoEA' target='_blank')
+          md-icon.md-icon--color-black(md-svg-src='/images/icons/twitter_logo.svg')
 
-  md-divider
+        md-button.md-icon-button(href='https://www.youtube.com/channel/UCdKxdDX6uj3ou8xuVUjvJoQ' target='_blank')
+          md-icon.md-icon--color-black(md-svg-src='/images/icons/youtube_logo.svg')
 
-  section.text-align-center(elem='footer-section')
-    md-button.color-white(href='https://docs.google.com/document/d/1kE_AXMN9QUaG-hRekUuwcIFiUO0VA7FCBx7FsqkmFlw/pub' target='_blank')
-      | Términos y Condiciones de Uso
-    .md-subhead.color-white ©Cognituz 2016 - cognituz.com
+        md-button.md-icon-button(href='https://www.linkedin.com/company/7675672' target='_blank')
+          md-icon.md-icon--color-black(md-svg-src='/images/icons/linkedin_logo.svg')
+
+        md-button.md-icon-button(href='https://plus.google.com/u/0/117734367256319007789?hl=es' target='_blank')
+          md-icon.md-icon--color-black(md-svg-src='/images/icons/google_plus_logo.svg')
+
+    md-divider
+
+    section.text-align-center(elem='footer-section')
+      md-button.color-white(href='https://docs.google.com/document/d/1kE_AXMN9QUaG-hRekUuwcIFiUO0VA7FCBx7FsqkmFlw/pub' target='_blank')
+        | Términos y Condiciones de Uso
+      .md-subhead.color-white ©Cognituz 2016 - cognituz.com

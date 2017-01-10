@@ -1,0 +1,48 @@
+div(
+  block='ctz-sign-in-form'
+  layout-fill
+  layout='column'
+  layout-align='center center'
+)
+  md-card(ng-if='$ctrl.step === 1')
+    md-button.md-raised.md-primary(ng-click='$ctrl.setUserType("student")')
+      | Ingresar como estudiante
+
+    md-divider
+
+    md-button.md-raised.md-primary(ng-click='$ctrl.setUserType("teacher")')
+      | Ingresar como profesor
+
+  md-card.md-no-empty-errors-spacer(ng-if='$ctrl.step === 2')
+    md-button.md-button--facebook(
+      ng-if='$ctrl.userType === "student"'
+      href='http://localhost:3000/v1/users/auth/facebook'
+    )
+      md-icon(md-svg-src='/images/icons/facebook_logo.svg')
+      |  Ingresar con Facebook
+
+    md-divider(ng-if='$ctrl.userType === "student"')
+
+    form(ng-submit='$ctrl.save()' layout='column')
+      div(layout='column' layout-padding)
+        md-input-container
+          label Email
+          input(type='email' ng-model='$ctrl.credentials.email')
+
+        md-input-container
+          label Contraseña
+          input(type='password' ng-model='$ctrl.credentials.password')
+
+      md-button.md-raised.md-primary(type='submit') Ingresar
+
+    md-divider
+
+    div(layout='column' layout-align='center center' layout-padding)
+      a(
+        ui-sref='app.students.signUp'
+        ng-if='$ctrl.userType === "student"'
+      )
+        | ¿No tenés cuenta? Registrate acá
+
+      a(ui-sref='app.students.resetPassword')
+        | ¿Olvidaste tu contraseña? Reseteale acá

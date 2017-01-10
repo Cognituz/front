@@ -1,10 +1,14 @@
 md-card
   md-toolbar: h2.md-toolbar-tools.color-white Enviar Mensage
 
-  form.md-no-empty-errors-spacer(layout='column' layout-padding)
+  form.md-no-empty-errors-spacer(
+    ng-submit='$ctrl.save()'
+    layout='column'
+    layout-padding
+  )
     md-input-container
       label Email
-      input(type='$ctrl.model.senderEmail' ng-model='email')
+      input(type='email' ng-model='$ctrl.model.senderEmail' required)
 
     md-input-container
       label Asunto

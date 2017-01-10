@@ -1,0 +1,21 @@
+{
+  "name": "cognituz-front",
+  "description": "Description",
+  "main": "app/main.js",
+  "authors": [
+    "Your Name"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Cognituz/front",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "auth0-lock": "^10.9.0"
+  }
+}
