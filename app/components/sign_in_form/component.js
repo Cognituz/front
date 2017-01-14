@@ -1,20 +1,34 @@
 module.exports = {
   templateUrl: '/components/sign_in_form/template.html',
+  bindings: {userType: '@'},
   controller: class {
-    constructor(Auth) {
-      this.Auth = Auth;
+    constructor($auth, $mdToast, $state, lockingScope) {
+      'ngInject';
+      this.$auth        = $auth;
+      this.$mdToast     = $mdToast;
+      this.$state       = $state;
+      this.lockingScope = lockingScope;
     }
 
-    $onInit() { this.step = 1; }
-
-    setUserType(type) {
-      this.userType = type,
-      this.step++;
-      this.credentials = {};
+    loginWithFacebook() {
+      this.lockingScope(this, _ =>
+        this.$auth
+          .authenticate('facebook')
+          .then(_ => this.afterLoginSuccess())
+      );
     }
 
-    save() {
-      this.Auth.login(this.credentials);
+    loginWithCredentials() {
+      this.lockingScope(this, _ =
+        this.$auth
+          .login(this.credentials)
+          .then(_ => this.afterLoginSuccess())
+      )
+    }
+
+    afterLoginSuccess() {
+      this.$mdToast.showSimple('¡Bienvenido a Cognituz!')
+      this.$state.go('app.teachers.list')
     }
   }
 };

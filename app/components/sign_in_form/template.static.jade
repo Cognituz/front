@@ -4,26 +4,17 @@ div(
   layout='column'
   layout-align='center center'
 )
-  md-card(ng-if='$ctrl.step === 1')
-    md-button.md-raised.md-primary(ng-click='$ctrl.setUserType("student")')
-      | Ingresar como estudiante
-
-    md-divider
-
-    md-button.md-raised.md-primary(ng-click='$ctrl.setUserType("teacher")')
-      | Ingresar como profesor
-
-  md-card.md-no-empty-errors-spacer(ng-if='$ctrl.step === 2')
+  md-card.md-no-empty-errors-spacer
     md-button.md-button--facebook(
       ng-if='$ctrl.userType === "student"'
-      href='http://localhost:3000/v1/users/auth/facebook'
+      ng-click='$ctrl.loginWithFacebook()'
     )
       md-icon(md-svg-src='/images/icons/facebook_logo.svg')
       |  Ingresar con Facebook
 
     md-divider(ng-if='$ctrl.userType === "student"')
 
-    form(ng-submit='$ctrl.save()' layout='column')
+    form(ng-submit='$ctrl.loginWithCredentials()' layout='column')
       div(layout='column' layout-padding)
         md-input-container
           label Email
