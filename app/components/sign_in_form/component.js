@@ -13,7 +13,7 @@ module.exports = {
     loginWithFacebook() {
       this.lockingScope(this, _ =>
         this.$auth
-          .authenticate('facebook')
+          .authenticate('facebook', {userType: 'student'})
           .then(_ => this.afterLoginSuccess())
       );
     }
