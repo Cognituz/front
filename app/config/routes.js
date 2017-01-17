@@ -6,7 +6,19 @@ module.exports = (
 ) => {
   "ngInject";
 
-  $urlMatcherFactoryProvider.strictMode(false)
+  const getCurrentUserOrRedirect =
+    ($mdToast, $state, $timeout, Auth) => {
+      'ngInject';
+
+      return Auth
+        .getCurrentUser()
+        .catch(_ => {
+          $state.go('app.students.signIn');
+          $mdToast.showSimple('Necesitás ingresar para ver este contenido');
+        });
+    };
+
+  $urlMatcherFactoryProvider.strictMode(false);
   $urlRouterProvider.otherwise('/');
 
   $locationProvider.html5Mode({
@@ -40,7 +52,6 @@ module.exports = (
         template: '<ctz-password-edit-form layout-fill/>'
       })
 
-      // Students namespace
       .state('app.students', {
         url: '/estudiantes',
         abstract: true,
@@ -55,7 +66,6 @@ module.exports = (
           template: '<ctz-sign-up-form user-type="student" layout-fill/>'
         })
 
-      // Teachers
       .state('app.teachers', {
         url: '/profesores',
         abstract: true,
@@ -65,9 +75,38 @@ module.exports = (
           url: '/ingresar',
           template: '<ctz-sign-in-form user-type="teacher" layout-fill/>'
         })
-        .state('app.teachers.list', {
-          url: '',
-          template: 'LISTA DE PROFESORES'
+
+      .state('app.authenticated', {
+        url: '/s',
+        abstract: true,
+        resolve: {currentUser: getCurrentUserOrRedirect},
+        template: '<ui-view/>'
+      })
+
+        .state('app.authenticated.students', {
+          url: '/estudiantes',
+          abstract: true,
+          template: '<ui-view/>'
         })
+          .state('app.authenticated.students.profile', {
+            url: '/perfil',
+            abstract: true,
+            template: '<ui-view/>'
+          })
+            .state('app.authenticated.students.profile.edit', {
+              url: '/editar',
+              template: '<ctz-student-profile-editor/>'
+            })
+
+        .state('app.authenticated.teachers', {
+          url: '/profesores',
+          abstract: true,
+          template: '<ui-view/>'
+        })
+          .state('app.authenticated.teachers.list', {
+            url: '/',
+            resolve: {currentUser: getCurrentUserOrRedirect},
+            template: 'LISTA DE PROFESORES'
+          })
   ;
 };

@@ -24,8 +24,12 @@ angular
   .config(require('config/satellizer'))
 
   // Services
+  .service('Auth',         require('services/auth'))
   .service('lockingScope', require('services/locking_scope'),)
-  .service('ContactForm', require('services/contact_form'))
+
+  // API consumers or models
+  .service('ContactForm', require('models/contact_form'))
+  .service('User',        require('models/user'))
 
   // Components
   .component('ctzApp',               require('components/app/component'))
@@ -36,4 +40,6 @@ angular
   .component('ctzSignInFormPreselector', require('components/sign_in_form/preselector/component'))
   .component('ctzSignInForm',            require('components/sign_in_form/component'))
   .component('ctzSignUpForm',            require('components/sign_up_form/component'))
+
+  //.component('ctzStudentProfileEdiior', require('components/student/profile_editor'))
 ;

@@ -5,4 +5,21 @@ div(
   md-toolbar: .md-toolbar-tools
     span(flex)
 
+    div(layout='row' ng-if='$ctrl.Auth.currentUser')
+      md-menu
+        md-button.md-icon-button.md-icon-button--with-image.md-raised(
+          ng-click='$mdOpenMenu($event)')
+          img(ng-src='{{:: $ctrl.Auth.currentUser.avatar.url }}')
+
+        md-menu-content(width=2)
+          md-menu-item
+            md-button(ui-sref='app.authenticated.students.profile.edit') Editar perfil
+          md-menu-item
+            md-button(ui-sref='app.authenticated.students.profile.edit') Cambiar contraseña
+
+          md-divider
+
+          md-menu-item
+            md-button(ng-click='$ctrl.logout()') Desconectarse
+
   ui-view(flex)

@@ -60,7 +60,7 @@ module.exports = ($mdThemingProvider) => {
 
   $mdThemingProvider
     .theme('cognituzPrimary')
-  	.primaryPalette('cognituzGreen')
-  	.accentPalette('cognituzBlue')
-    .warnPalette('cognituzPeach');
+      .primaryPalette('cognituzGreen')
+      .accentPalette('cognituzBlue')
+      .warnPalette('cognituzPeach');
 };
