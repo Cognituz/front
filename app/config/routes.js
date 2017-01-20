@@ -95,7 +95,8 @@ module.exports = (
           })
             .state('app.authenticated.students.profile.edit', {
               url: '/editar',
-              template: '<ctz-student-profile-editor/>'
+              template: '<ctz-student-profile-editor student="currentUser"/>',
+              controller: inject({resolves: ['currentUser']})
             })
 
         .state('app.authenticated.teachers', {
@@ -105,8 +106,36 @@ module.exports = (
         })
           .state('app.authenticated.teachers.list', {
             url: '/',
-            resolve: {currentUser: getCurrentUserOrRedirect},
             template: 'LISTA DE PROFESORES'
           })
   ;
+
+  function inject({
+    resolves:    resolvesNames,
+    stateParams: paramNames,
+    services:    serviceNames
+  }) {
+    const fn = ($scope, $stateParams, $injector, ...resolves) => {
+      // Inject state params
+      paramNames &&
+      paramNames.forEach(param => $scope[param] = $stateParams[param]);
+
+      // Inject resolutions
+      resolvesNames &&
+      resolvesNames.forEach((name, i) => $scope[name] = resolves[i]);
+
+      // Inject services
+      serviceNames &&
+      serviceNames.forEach(sN => $scope[sN] = $injector.get(sN));
+    };
+
+    fn.$inject = ['$scope', '$stateParams', '$injector'];
+
+    fn.$inject =
+      resolvesNames ?
+      fn.$inject.concat(resolvesNames) :
+      fn.$inject;
+
+    return fn;
+  }
 };

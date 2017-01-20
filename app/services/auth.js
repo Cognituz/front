@@ -6,19 +6,19 @@ module.exports = ($auth, $q, User) => {
     signInViaOauth() {
       return $auth
         .authenticate(...arguments)
-        .then(_ => this.getCurrentUser());
+        .then(_ => this.getCurrentUser() && _);
     }
 
     signInViaCredentials() {
       return $auth
         .login(...arguments)
-        .then(_ => this.getCurrentUser());
+        .then(_ => this.getCurrentUser() && _);
     }
 
     logout() {
       return $auth
         .logout()
-        .then(_ => this.unsetCurrentUser());
+        .then(_ => this.unsetCurrentUser() && _);
     }
 
     getCurrentUser({reload} = {}) {

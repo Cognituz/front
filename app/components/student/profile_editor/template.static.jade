@@ -1,0 +1,50 @@
+div(
+  layout-fill
+  layout='column'
+  layout-align='center center'
+)
+  md-card.md-no-empty-errors-spacer
+    form(layout='column' ng-submit='$ctrl.save()')
+      div(layout-padding)
+        div(layout='column')
+          ctz-avatar-input(ng-model='$ctrl.student.avatar')
+
+          div(layout='row')
+            md-input-container
+              label Nombre
+              input(ng-model='$ctrl.student.firstName')
+
+            md-input-container
+              label Apellido
+              input(ng-model='$ctrl.student.lastName')
+
+          md-input-container
+            label Descripción
+            textarea(ng-model='$ctrl.student.description')
+
+          div(layout='row')
+            md-input-container(flex=20)
+              label Edad
+              input(ng-model='$ctrl.student.age' type='number' min=1)
+
+            md-input-container(flex)
+              label Año escolar
+              md-select(ng-model='$ctrl.student.schoolYear')
+                md-option(
+                  ng-repeat='o in $ctrl.schoolYears'
+                  ng-value=':: o'
+                  ng-bind=':: o'
+                )
+
+          md-input-container
+            label Teléfono
+            input(
+              ng-model='$ctrl.student.phoneNumber'
+              type='string'
+              mask='+d?d?d?d?d?dddddddd'
+            )
+
+      md-button.md-primary.md-raised(
+        type='submit'
+        ng-disabled='$ctrl.locked'
+      ) Actualizar

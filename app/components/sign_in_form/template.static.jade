@@ -8,6 +8,7 @@ div(
     md-button.md-button--facebook(
       ng-if='$ctrl.userType === "student"'
       ng-click='$ctrl.loginWithFacebook()'
+      ng-disabled='$ctrl.locked'
     )
       md-icon(md-svg-src='/images/icons/facebook_logo.svg')
       |  Ingresar con Facebook
@@ -24,7 +25,10 @@ div(
           label Contraseña
           input(type='password' ng-model='$ctrl.credentials.password')
 
-      md-button.md-raised.md-primary(type='submit') Ingresar
+      md-button.md-raised.md-primary(
+        type='submit'
+        ng-disabled='$ctrl.locked'
+      ) Ingresar
 
     md-divider
 
