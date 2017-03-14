@@ -1,0 +1,53 @@
+div(
+  block='ctz-teacher-profile-editor'
+  layout-fill
+  layout='column'
+  layout-align='center center'
+)
+  md-card.md-no-empty-errors-spacer
+    md-toolbar: .md-toolbar-tools
+      h2 Editando perfil
+
+    form(layout='column' ng-submit='$ctrl.save()')
+      div(layout-padding)
+        div(layout='column')
+          ctz-avatar-input(ng-model='$ctrl.teacher.avatar')
+
+          md-input-container
+            label Descripción corta
+            textarea(ng-model='$ctrl.teacher.shortDesc')
+
+          md-input-container
+            label Descripción larga
+            textarea(ng-model='$ctrl.teacher.longDesc' rows=3)
+
+        div(layout='column')
+          md-checkbox(ng-model='$ctrl.teacher.teachesOnline')
+            | Enseño online
+
+          md-checkbox(ng-model='$ctrl.teacher.teachesAtStudentsPlace')
+            | Enseño en domicilio del estudiante
+
+          md-checkbox(ng-model='$ctrl.teacher.teachesAtOwnPlace')
+            | Enseño en mi domicilio
+
+          md-checkbox(ng-model='$ctrl.teacher.teachesAtPublicPlace')
+            | Enseño en lugar público
+
+        div(layout='column')
+          md-input-container
+            label Calle
+            input(ng-model='$ctrl.teacher.location.street')
+
+          md-input-container
+            label Número
+            input(ng-model='$ctrl.teacher.location.streetNumber')
+
+          md-input-container
+            label Detalles
+            input(
+              ng-model='$ctrl.teacher.location.details'
+              placeholder='1º D'
+            )
+
+      md-button.md-primary.md-raised Actualizar

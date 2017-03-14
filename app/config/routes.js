@@ -95,8 +95,7 @@ module.exports = (
           })
             .state('app.authenticated.students.profile.edit', {
               url: '/editar',
-              template: '<ctz-student-profile-editor student="currentUser"/>',
-              controller: inject({resolves: ['currentUser']})
+              template: '<ctz-student-profile-editor/>',
             })
 
         .state('app.authenticated.teachers', {
@@ -104,9 +103,27 @@ module.exports = (
           abstract: true,
           template: '<ui-view/>'
         })
+          .state('app.authenticated.teachers.profile', {
+            url: '/perfil',
+            abstract: true,
+            template: '<ui-view/>'
+          })
+            .state('app.authenticated.teachers.profile.edit', {
+              url: '/editar',
+              template: '<ctz-teacher-profile-editor/>',
+            })
           .state('app.authenticated.teachers.list', {
             url: '/',
-            template: 'LISTA DE PROFESORES'
+            template: '<ctz-teacher-list/>'
+          })
+          .state('app.authenticated.teachers.show', {
+            url: '/:id',
+            resolve: {
+              teacher: (User, $stateParams) =>
+                User.get($stateParams.id)
+            },
+            controller: inject({resolves: ['teacher']}),
+            template: '<ctz-teacher-profile teacher="teacher"/>'
           })
   ;
 

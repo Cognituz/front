@@ -27,7 +27,9 @@ module.exports = ($auth, $q, User) => {
       if (this.currentUser && !reload) return $q.resolve(this.currentUser);
       else {
         const userId = $auth.getPayload().user_id;
-        return User.get(userId).then(user => this.currentUser = user);
+        return User.get(userId)
+          .then(user => this.currentUser = user)
+          .then(_ => this.currentUser);
       }
     }
 

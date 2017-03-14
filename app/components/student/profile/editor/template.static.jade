@@ -1,9 +1,13 @@
 div(
+  block='ctz-student-profile-editor'
   layout-fill
   layout='column'
   layout-align='center center'
 )
   md-card.md-no-empty-errors-spacer
+    md-toolbar: .md-toolbar-tools
+      h2 Editando perfil
+
     form(layout='column' ng-submit='$ctrl.save()')
       div(layout-padding)
         div(layout='column')
@@ -41,8 +45,15 @@ div(
             input(
               ng-model='$ctrl.student.phoneNumber'
               type='string'
-              mask='+d?d?d?d?d?dddddddd'
             )
+
+          md-input-container
+            label Contraseña
+            input(ng-model='$ctrl.student.password' type='password')
+
+          md-input-container
+            label Repetir contraseña
+            input(ng-model='$ctrl.student.passwordConfirmation' type='password')
 
       md-button.md-primary.md-raised(
         type='submit'

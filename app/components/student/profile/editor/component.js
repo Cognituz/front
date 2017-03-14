@@ -1,19 +1,23 @@
 module.exports = {
   templateUrl: '/components/student/profile_editor/template.html',
-  bindings: {student: '='},
   controller: class {
-    constructor($mdToast, User, lockingScope) {
+    constructor($mdToast, Auth, User, lockingScope) {
       'ngInject';
       this.$mdToast     = $mdToast;
+      this.Auth         = Auth
       this.lockingScope = lockingScope;
+      this.schoolYears  = User.SCHOOL_YEARS;
 
-      this.schoolYears = User.SCHOOL_YEARS;
+      Auth
+        .getCurrentUser()
+        .then(user => this.student = angular.copy(user));
     }
 
     save() {
       this.lockingScope(this, _ =>
         this.student
           .save()
+          .then(user => this.Auth.currentUser = angular.copy(user))
           .then(_ => this.showSuccessMessage())
           .catch(resp => this.handleError(resp))
       );
@@ -26,10 +30,12 @@ module.exports = {
     handleError(resp) {
       const msg =
         resp.status == 422 ?
-          'Datos inválidos' :
-          'Halgo ha salido mal. Por favor intentálo mas tarde'
+        `Operación inválida: ${resp.data.errors}` :
+        'Halgo ha salido mal. Por favor intentálo mas tarde'
 
-      return this.$mdToast.showSimple(msg);
+      this.$mdToast.showSimple(msg);
+
+      throw(resp);
     }
   }
 };

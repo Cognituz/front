@@ -35,6 +35,7 @@ module.exports =
   npm:
     enabled: true
     styles:
-      "angular":          ["angular-csp.css"]
-      "angular-material": ["angular-material.min.css"]
-      "normalize.css":    ["normalize.css"]
+      "angular":                    ["angular-csp.css"]
+      "angular-material":           ["angular-material.min.css"]
+      "normalize.css":              ["normalize.css"]
+      "ng-material-datetimepicker": ["dist/material-datetimepicker.min.css"]

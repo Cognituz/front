@@ -1,3 +1,7 @@
+window.$      = require('jquery');
+window.jQuery = require('jquery');
+window.moment = require('moment');
+
 require('angular');
 require('angular-aria');
 require('angular-animate');
@@ -6,8 +10,8 @@ require('angular-ui-router');
 require('angular-bem');
 require('angularjs-rails-resource');
 require('satellizer');
-require('ng-mask');
 require('ng-file-upload');
+require('ng-material-datetimepicker');
 
 angular
   .module('cognituzFront', [
@@ -18,7 +22,8 @@ angular
     'tenphi.bem',
     'rails',
     'satellizer',
-    'ngMask'
+    'ngFileUpload',
+    'ngMaterialDatePicker'
   ])
 
   // Configuration Blocks
@@ -28,7 +33,7 @@ angular
 
   // Services
   .service('Auth',         require('services/auth'))
-  .service('lockingScope', require('services/locking_scope'),)
+  .service('lockingScope', require('services/locking_scope'))
 
   // API consumers aka models
   .service('ContactForm', require('models/contact_form'))
@@ -42,6 +47,11 @@ angular
   .component('ctzSignInFormPreselector', require('components/sign_in_form/preselector/component'))
   .component('ctzSignInForm',            require('components/sign_in_form/component'))
   .component('ctzSignUpForm',            require('components/sign_up_form/component'))
-  .component('ctzStudentProfileEditor',  require('components/student/profile_editor/component'))
+  .component('ctzStudentProfileEditor',  require('components/student/profile/editor/component'))
   .component('ctzAvatarInput',           require('components/avatar_input/component'))
+  .component('ctzTeacherList',           require('components/teacher/list/component'))
+  .component('ctzTeacherListFilters',    require('components/teacher/list/filters/component'))
+  .component('ctzTeacherCard',           require('components/teacher/card/component'))
+  .component('ctzTeacherProfile',        require('components/teacher/profile/component'))
+  .component('ctzTeacherProfileEditor',  require('components/teacher/profile/editor/component'))
 ;

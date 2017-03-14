@@ -1,0 +1,64 @@
+div(
+  layout-fill
+  layout='column'
+)
+  md-tabs.md-whiteframe-z1(md-border-bottom)
+    md-tab(md-on-select='$ctrl.classType = "online"') Online
+    md-tab(md-on-select='$ctrl.classType = "presential"') Presencial
+
+  md-content.md-no-empty-errors-spacer(
+    flex
+    layout='column'
+  )
+
+    div(layout='column' layout-padding)
+      md-input-container
+        label Nivel
+        md-select(ng-model='$ctrl.filers.level')
+          md-option(
+            ng-repeat='(value, name) in $ctrl.levels'
+            ng-value=':: value'
+            ng-bind=':: name'
+          )
+
+      md-input-container
+        md-chips(
+          ng-model='$ctrl.filters.subjects'
+          md-require-match=':: true'
+        )
+          md-autocomplete(
+            md-items='subject in $ctrl.subjects | filter: $ctrl.subjectTextFilter'
+            md-item-text='subject'
+            md-search-text='$ctrl.subjectTextFilter'
+            placeholder='Materias'
+          )
+            span(
+              md-highlight-text='$ctrl.subjectTextFilter'
+            ) {{ subject }}
+
+      md-input-container(ng-if='$ctrl.classType == "presential"')
+        label Barrio
+        input(ng-model='$ctrl.filters.zone')
+
+    div(layout='row' layout-wrap layout-padding)
+      md-input-container(flex=100 flex-gt-xs=75)
+        label Fecha
+        input(
+          mdc-datetime-picker
+          date="true"
+          time="true"
+          show-todays-date
+          ng-model="$ctrl.filters.date"
+        )
+
+      md-input-container(flex=100 flex-gt-xs=25)
+        label Horas
+        input(ng-model='$ctrl.filters.hours' type='number' min=0 max=4)
+
+
+    div(layout='column' layout-padding ng-if='$ctrl.classType == "presential"')
+      md-checkbox(ng-model='$ctrl.filters.teachesAtStudentsPlace') En mi casa
+      md-checkbox(ng-model='$ctrl.filters.teachesAtOwnPlace') En el domicilio del profesor
+      md-checkbox(ng-model='$ctrl.filters.teachesAtPublicPlace') En un lugar publico a acordar
+
+  md-button.md-raised.md-primary Buscar

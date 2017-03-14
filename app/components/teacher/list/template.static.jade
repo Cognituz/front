@@ -1,0 +1,23 @@
+section(
+  block='yv-teacher-list'
+  layout-fill
+  layout='row'
+)
+  md-sidenav.md-sidenav-left.md-whiteframe-z1(md-is-locked-open='::true')
+    ctz-teacher-list-filters(
+      ng-model='$ctrl.filters'
+      layout-fill
+    )
+
+  md-content(
+    flex
+    layout='row'
+    layout-wrap
+  )
+    ctz-teacher-card(
+      flex=100
+      flex-sm=50
+      flex-gt-sm=25
+      ng-repeat='t in $ctrl.teachers'
+      teacher=':: t'
+    )

@@ -1,4 +1,7 @@
-module.exports = (RailsResource) => {
+module.exports = (
+  RailsResource,
+  railsSerializer
+) => {
   'ngInject';
 
   class User extends RailsResource {

@@ -1,1 +1,15 @@
-AVATAR INPUT
+div(
+  block='ctz-avatar-input'
+  layout='row'
+  layout-align='center center'
+)
+  img.md-whiteframe-z2(
+    block='ctz-picture'
+    mod-once='round'
+    ng-src='{{ $ctrl.imageSrc }}'
+
+    ngf-select
+    ngf-drop
+    ngf-change='$ctrl.handleUpload($file)'
+    ngf-accept="'image/*'"
+  )
