@@ -27,7 +27,10 @@ module.exports = (
 
   User.configure({
     url:  'http://localhost:3000/v1/users',
-    name: 'user'
+    name: 'user',
+    serializer: railsSerializer(function() {
+      this.nestedAttribute('taughtSubjects');
+    })
   });
 
   return User;

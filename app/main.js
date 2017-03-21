@@ -36,8 +36,9 @@ angular
   .service('lockingScope', require('services/locking_scope'))
 
   // API consumers aka models
-  .service('ContactForm', require('models/contact_form'))
-  .service('User',        require('models/user'))
+  .service('ContactForm',  require('models/contact_form'))
+  .service('User',         require('models/user'))
+  .service('SubjectGroup', require('models/subject_group'))
 
   // Components
   .component('ctzApp',                   require('components/app/component'))

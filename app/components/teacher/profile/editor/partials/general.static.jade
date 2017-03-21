@@ -1,0 +1,15 @@
+.md-title Datos Generales
+md-divider
+
+div(layout='column')
+  md-input-container
+    label Descripción corta
+    textarea(ng-model='$ctrl.teacher.shortDesc')
+
+  md-input-container
+    label Descripción larga
+    textarea(ng-model='$ctrl.teacher.longDesc')
+
+  md-input-container
+    label Barrios
+    input(ng-model='$ctrl.teacher.zones')

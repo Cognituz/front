@@ -1,0 +1,19 @@
+.md-title Dirección
+
+md-divider
+
+div(layout='column')
+  md-input-container
+    label Calle
+    input(ng-model='$ctrl.teacher.location.street')
+
+  md-input-container
+    label Número
+    input(ng-model='$ctrl.teacher.location.streetNumber')
+
+  md-input-container
+    label Detalles
+    input(
+      ng-model='$ctrl.teacher.location.details'
+      placeholder='1º D'
+  )

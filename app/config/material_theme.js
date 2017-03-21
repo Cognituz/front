@@ -17,7 +17,7 @@ module.exports = ($mdThemingProvider) => {
     'A400':                 '#9ab971',
     'A700':                 '#6c8a44',
     'contrastDefaultColor': 'light',
-    'contrastDarkColors':   '50 100 200 400 600 A100 A200 A400'
+    'contrastDarkColors':   '50 100 200 400 A100 A200 A400'
   });
 
   $mdThemingProvider.definePalette('cognituzBlue', {
@@ -60,7 +60,12 @@ module.exports = ($mdThemingProvider) => {
 
   $mdThemingProvider
     .theme('cognituzPrimary')
-      .primaryPalette('cognituzGreen')
+      .primaryPalette('cognituzGreen', {
+        'default': '600',
+        'hue-1':   '500',
+        'hue-2':   '400',
+        'hue-3':   '300'
+      })
       .accentPalette('cognituzBlue')
       .warnPalette('cognituzPeach');
 };

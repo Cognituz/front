@@ -1,0 +1,60 @@
+.md-title Materias
+md-divider
+
+div(
+  ng-if='!$ctrl.teacher.taughtSubjects.length'
+  layout-padding
+)
+  .md-subhead(
+    layout='column'
+    layout-align='center center'
+  )
+    | No especificaste que enseñas alguna materia todavia.
+    br
+    md-button.md-raised(ng-click='$ctrl.addSubject()') Agregá tu primer materia
+
+div(layout='row' layout-align='center')
+  div(flex='100' flex-sm=50)
+    div(
+      ng-repeat='ts in $ctrl.teacher.taughtSubjects'
+      ng-if='$ctrl.teacher.taughtSubjects.length'
+    )
+      div(
+        layout='row'
+        layout-align='strech end'
+        layout-padding
+        ng-if='!ts._destroy'
+      )
+        md-input-container(flex)
+          label Nivel
+          md-select(
+            ng-model='ts.$level'
+            ng-change='ts.level = ts.level.name'
+          )
+            md-option(
+              ng-repeat='level in $ctrl.subjectGroups'
+              ng-value='level'
+              ng-bind='level.name  || "Ninguno"'
+            )
+
+        md-input-container(flex)
+          label Materia
+          md-select(
+            ng-model='ts.name'
+            ng-disabled='!ts.$level'
+          )
+            md-option(
+              ng-repeat='s in ts.$level.subjects'
+              ng-value='s'
+              ng-bind='s'
+            )
+
+        md-button.md-icon-button(ng-click='$ctrl.removeSubject(ts)')
+          md-icon(md-svg-src='/images/icons/delete.svg')
+
+    div(layout='row' layout-align='center')
+      md-button.md-raised.md-icon-button(
+        ng-click='$ctrl.addSubject()'
+        ng-if='$ctrl.teacher.taughtSubjects.length'
+      )
+        md-icon(md-svg-src='/images/icons/add.svg')

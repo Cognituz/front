@@ -55,7 +55,7 @@ module.exports = (
       .state('app.students', {
         url: '/estudiantes',
         abstract: true,
-        template: '<ui-view/>'
+        template: '<ui-view layout-fill/>'
       })
         .state('app.students.signIn', {
           url: '/ingresar',
@@ -69,7 +69,7 @@ module.exports = (
       .state('app.teachers', {
         url: '/profesores',
         abstract: true,
-        template: '<ui-view/>'
+        template: '<ui-view layout-fill/>'
       })
         .state('app.teachers.signIn', {
           url: '/ingresar',
@@ -80,18 +80,18 @@ module.exports = (
         url: '/s',
         abstract: true,
         resolve: {currentUser: getCurrentUserOrRedirect},
-        template: '<ui-view/>'
+        template: '<ui-view layout-fill/>'
       })
 
         .state('app.authenticated.students', {
           url: '/estudiantes',
           abstract: true,
-          template: '<ui-view/>'
+          template: '<ui-view layout-fill/>'
         })
           .state('app.authenticated.students.profile', {
             url: '/perfil',
             abstract: true,
-            template: '<ui-view/>'
+            template: '<ui-view layout-fill/>'
           })
             .state('app.authenticated.students.profile.edit', {
               url: '/editar',
@@ -101,16 +101,16 @@ module.exports = (
         .state('app.authenticated.teachers', {
           url: '/profesores',
           abstract: true,
-          template: '<ui-view/>'
+          template: '<ui-view layout-fill/>'
         })
           .state('app.authenticated.teachers.profile', {
             url: '/perfil',
             abstract: true,
-            template: '<ui-view/>'
+            template: '<ui-view layout-fill/>'
           })
             .state('app.authenticated.teachers.profile.edit', {
               url: '/editar',
-              template: '<ctz-teacher-profile-editor/>',
+              template: '<ctz-teacher-profile-editor layout-fill/>',
             })
           .state('app.authenticated.teachers.list', {
             url: '/',

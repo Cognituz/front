@@ -1,53 +1,44 @@
-div(
+form.md-no-empty-errors-spacer(
   block='ctz-teacher-profile-editor'
   layout-fill
   layout='column'
-  layout-align='center center'
+  ng-submit='$ctrl.save()'
 )
-  md-card.md-no-empty-errors-spacer
-    md-toolbar: .md-toolbar-tools
-      h2 Editando perfil
+  md-toolbar.md-hue-1.md-whiteframe-z1
+    .md-toolbar-tools
+      | Editando perfil
+      span(flex)
+      md-button.md-raised(type='submit') Guardar cambios
 
-    form(layout='column' ng-submit='$ctrl.save()')
-      div(layout-padding)
-        div(layout='column')
-          ctz-avatar-input(ng-model='$ctrl.teacher.avatar')
+  md-content
+    div(
+      layout='row'
+      layout-align='center center'
+    )
+      div(flex=100 flex-md=60 flex-lg=50 flex-xl=30 layout='column')
+        div(
+          flex=100
+          layout-padding
+          layout='row'
+          layout-wrap
+        )
+          div(flex=100 flex-gt-xs=33)
+            ctz-avatar-input(ng-model='$ctrl.teacher.avatar')
+          div(flex=100 flex-gt-xs=33 ng-include=':: $ctrl.partialPath("general")')
+          div(flex=100 flex-gt-xs=33 ng-include=':: $ctrl.partialPath("location")')
 
-          md-input-container
-            label Descripción corta
-            textarea(ng-model='$ctrl.teacher.shortDesc')
+        ctz-spacer
 
-          md-input-container
-            label Descripción larga
-            textarea(ng-model='$ctrl.teacher.longDesc' rows=3)
+        div(
+          flex=100 
+          layout-padding
+          layout='row'
+          layout-wrap
+        )
+          div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("class_modes")')
+          div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("mercadolibre")')
 
-        div(layout='column')
-          md-checkbox(ng-model='$ctrl.teacher.teachesOnline')
-            | Enseño online
+        ctz-spacer
 
-          md-checkbox(ng-model='$ctrl.teacher.teachesAtStudentsPlace')
-            | Enseño en domicilio del estudiante
-
-          md-checkbox(ng-model='$ctrl.teacher.teachesAtOwnPlace')
-            | Enseño en mi domicilio
-
-          md-checkbox(ng-model='$ctrl.teacher.teachesAtPublicPlace')
-            | Enseño en lugar público
-
-        div(layout='column')
-          md-input-container
-            label Calle
-            input(ng-model='$ctrl.teacher.location.street')
-
-          md-input-container
-            label Número
-            input(ng-model='$ctrl.teacher.location.streetNumber')
-
-          md-input-container
-            label Detalles
-            input(
-              ng-model='$ctrl.teacher.location.details'
-              placeholder='1º D'
-            )
-
-      md-button.md-primary.md-raised Actualizar
+        div(flex=100 layout-padding)
+          div(ng-include=':: $ctrl.partialPath("taught_subjects")')
