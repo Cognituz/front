@@ -14,7 +14,7 @@ div(
     md-button.md-raised(ng-click='$ctrl.addSubject()') Agregá tu primer materia
 
 div(layout='row' layout-align='center')
-  div(flex='100' flex-sm=50)
+  div(flex='100' flex-gt-xs=50)
     div(
       ng-repeat='ts in $ctrl.teacher.taughtSubjects'
       ng-if='$ctrl.teacher.taughtSubjects.length'

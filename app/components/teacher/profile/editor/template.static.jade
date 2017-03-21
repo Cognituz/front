@@ -27,7 +27,8 @@ form.md-no-empty-errors-spacer(
           div(flex=100 flex-gt-xs=33 ng-include=':: $ctrl.partialPath("general")')
           div(flex=100 flex-gt-xs=33 ng-include=':: $ctrl.partialPath("location")')
 
-        ctz-spacer
+        div(flex=100 layout-padding)
+          div(ng-include=':: $ctrl.partialPath("descriptions")')
 
         div(
           flex=100 
@@ -38,7 +39,6 @@ form.md-no-empty-errors-spacer(
           div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("class_modes")')
           div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("mercadolibre")')
 
-        ctz-spacer
 
         div(flex=100 layout-padding)
           div(ng-include=':: $ctrl.partialPath("taught_subjects")')
