@@ -30,6 +30,7 @@ module.exports = (
     name: 'user',
     serializer: railsSerializer(function() {
       this.nestedAttribute('taughtSubjects');
+      this.nestedAttribute('location');
     })
   });
 
