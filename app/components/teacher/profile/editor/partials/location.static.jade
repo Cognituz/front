@@ -9,7 +9,12 @@ div(layout='column')
 
   md-input-container
     label Barrio
-    input(ng-model='$ctrl.teacher.location.district')
+    md-select(ng-model='$ctrl.teacher.location.neighborhood')
+      md-option(
+        ng-repeat='n in $ctrl.neighborhoods'
+        ng-value='n'
+        ng-bind='n'
+      )
 
   md-input-container
     label Calle

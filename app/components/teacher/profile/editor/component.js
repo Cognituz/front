@@ -4,6 +4,7 @@ module.exports = {
     constructor(
       $mdToast,
       Auth,
+      Neighborhood,
       SubjectGroup,
       User,
       lockingScope
@@ -14,20 +15,28 @@ module.exports = {
       this.Auth         = Auth
       this.lockingScope = lockingScope;
 
-      Auth
-        .getCurrentUser()
-        .then(user => this.teacher = this.setUserDefaults(user));
+      Neighborhood.query().then(ngs => this.neighborhoods = ngs);
 
-      SubjectGroup.query().then(sgs => this.subjectGroups = sgs);
+      SubjectGroup.query()
+        .then(sgs => {
+          this.subjectGroups = sgs;
+
+          Auth
+            .getCurrentUser()
+            .then(user => this.teacher = user);
+        });
     }
 
-    setUserDefaults(u) {
+    addSubject() {
+      const u = this.teacher;
       u.taughtSubjects = u.taughtSubjects || [];
-      return u;
+      u.taughtSubjects.push({});
     }
-
-    addSubject() { this.teacher.taughtSubjects.push({}); }
     removeSubject(s) { s._destroy = true; }
+
+    setMetaLevel(ts) {
+      ts.$level = this.subjectGroups.find(sb => sb.name == ts.level);
+    }
 
     partialPath(key) {
       const templateDir = '/components/teacher/profile/editor/partials';
@@ -51,7 +60,7 @@ module.exports = {
     handleError(resp) {
       const msg =
         resp.status == 422 ?
-        `Operación inválida: ${resp.data.errors}` :
+        `Operación inválida: ${resp.data.error}s` :
         'Halgo ha salido mal. Por favor intentálo mas tarde'
 
       this.$mdToast.showSimple(msg);

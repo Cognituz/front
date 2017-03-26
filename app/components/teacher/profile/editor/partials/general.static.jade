@@ -4,4 +4,12 @@ md-divider
 div(layout='column')
   md-input-container
     label Barrios
-    input(ng-model='$ctrl.teacher.zones')
+    md-select(
+      ng-model='$ctrl.teacher.neighborhoods'
+      multiple
+    )
+      md-option(
+        ng-repeat='n in $ctrl.neighborhoods'
+        ng-value='n'
+        ng-bind='n'
+      )

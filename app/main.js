@@ -39,6 +39,7 @@ angular
   .service('ContactForm',  require('models/contact_form'))
   .service('User',         require('models/user'))
   .service('SubjectGroup', require('models/subject_group'))
+  .service('Neighborhood', require('models/neighborhood'))
 
   // Components
   .component('ctzApp',                   require('components/app/component'))
