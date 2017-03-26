@@ -13,17 +13,17 @@ div(
     br
     md-button.md-raised(ng-click='$ctrl.addSubject()') Agregá tu primer materia
 
-div(layout='row' layout-align='center')
-  div(flex='100' flex-gt-xs=50)
+ctz-spacer-xs
+
+div(layout='column')
+  div(ng-if='$ctrl.teacher.taughtSubjects.length')
     div(
       ng-repeat='ts in $ctrl.teacher.taughtSubjects'
-      ng-if='$ctrl.teacher.taughtSubjects.length'
+      ng-if='!ts._destroy'
     )
       div(
         layout='row'
         layout-align='strech end'
-        layout-padding
-        ng-if='!ts._destroy'
       )
         md-input-container(flex)
           label Nivel
@@ -31,6 +31,7 @@ div(layout='row' layout-align='center')
             ng-model='ts.level'
             ng-change='$ctrl.setMetaLevel(ts)'
             ng-init='$ctrl.setMetaLevel(ts)'
+            required
           )
             md-option(
               ng-repeat='$level in $ctrl.subjectGroups track by $level.name'
@@ -43,6 +44,7 @@ div(layout='row' layout-align='center')
           md-select(
             ng-model='ts.name'
             ng-disabled='!ts.$level'
+            required
           )
             md-option(
               ng-repeat='s in ts.$level.subjects'
@@ -50,12 +52,13 @@ div(layout='row' layout-align='center')
               ng-bind='s'
             )
 
-        md-button.md-icon-button(ng-click='$ctrl.removeSubject(ts)')
+        md-button.md-icon-button(ng-click='$ctrl.markForDestruction(ts)')
           md-icon(md-svg-src='/images/icons/delete.svg')
 
-    div(layout='row' layout-align='center')
-      md-button.md-raised.md-icon-button(
-        ng-click='$ctrl.addSubject()'
-        ng-if='$ctrl.teacher.taughtSubjects.length'
-      )
-        md-icon(md-svg-src='/images/icons/add.svg')
+      ctz-spacer-xs
+   
+  md-button.no-margin(
+    ng-click='$ctrl.addSubject()'
+    ng-if='$ctrl.teacher.taughtSubjects.length'
+  )
+    md-icon(md-svg-src='/images/icons/add.svg')

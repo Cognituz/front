@@ -15,6 +15,16 @@ module.exports = {
       this.Auth         = Auth
       this.lockingScope = lockingScope;
 
+      this.weekDays = {
+        [1]: 'Lunes',
+        [2]: 'Martes',
+        [3]: 'Miércoles',
+        [4]: 'Jueves',
+        [5]: 'Viernes',
+        [6]: 'Sábado',
+        [0]: 'Domingo'
+      };
+
       Neighborhood.query().then(ngs => this.neighborhoods = ngs);
 
       SubjectGroup.query()
@@ -25,17 +35,6 @@ module.exports = {
             .getCurrentUser()
             .then(user => this.teacher = user);
         });
-    }
-
-    addSubject() {
-      const u = this.teacher;
-      u.taughtSubjects = u.taughtSubjects || [];
-      u.taughtSubjects.push({});
-    }
-    removeSubject(s) { s._destroy = true; }
-
-    setMetaLevel(ts) {
-      ts.$level = this.subjectGroups.find(sb => sb.name == ts.level);
     }
 
     partialPath(key) {
@@ -66,6 +65,39 @@ module.exports = {
       this.$mdToast.showSimple(msg);
 
       throw(resp);
+    }
+
+    // Subjects and availability periods, may move into a new component
+    markForDestruction(r) { r._destroy = true; }
+
+    addSubject() {
+      const u = this.teacher;
+      u.taughtSubjects = u.taughtSubjects || [];
+      u.taughtSubjects.push({});
+    }
+
+    setMetaLevel(ts) {
+      ts.$level = this.subjectGroups.find(sb => sb.name == ts.level);
+    }
+
+    addAvailabilityPeriod() {
+      const u = this.teacher;
+      u.availabilityPeriods = u.availabilityPeriods || [];
+      u.availabilityPeriods.push({});
+    }
+
+    setSfsow(ap) {
+      if (!(ap.weekDay && ap.startsAt && ap.endsAt)) return;
+      ap.startsAtSfsow = this._sfsowFor(ap.weekDay, ap.startsAt);
+      ap.endsAtSfsow   = this._sfsowFor(ap.weekDay, ap.endsAt);
+    }
+
+    _sfsowFor(weekDay, time) {
+      const weekPart = weekDay * 24 * 60 * 60;
+      const timePart = time.getHours() * 60 * 60 + time.getMinutes() * 60;
+      const offset   = time.getTimezoneOffset() * 60;
+
+      return weekPart + timePart + offset;;
     }
   }
 }

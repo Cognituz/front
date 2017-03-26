@@ -40,5 +40,11 @@ form.md-no-empty-errors-spacer(
           div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("mercadolibre")')
 
 
-        div(flex=100 layout-padding)
-          div(ng-include=':: $ctrl.partialPath("taught_subjects")')
+        div(
+          flex=100
+          layout-padding
+          layout='row'
+          layout-wrap
+        )
+          div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("taught_subjects")')
+          div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("availability_periods")')

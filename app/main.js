@@ -31,9 +31,12 @@ angular
   .config(require('config/routes'))
   .config(require('config/satellizer'))
 
-  // Services
+  // Misc services
   .service('Auth',         require('services/auth'))
   .service('lockingScope', require('services/locking_scope'))
+ 
+  // Serializers, used by models to serialize and deserialize JSON
+  .factory('DateSerializer', require('serializers/date'))
 
   // API consumers aka models
   .service('ContactForm',  require('models/contact_form'))
