@@ -3,11 +3,13 @@ section(
   layout-fill
   layout='row'
 )
-  md-sidenav.md-sidenav-left.md-whiteframe-z1(md-is-locked-open='::true')
-    ctz-teacher-list-filters(
-      ng-model='$ctrl.filters'
-      layout-fill
-    )
+  md-sidenav.md-sidenav-left.md-whiteframe-z1(
+    md-is-locked-open='::true'
+    layout='column'
+  )
+    ctz-teacher-list-filters(ng-model='$ctrl.filters' flex)
+    md-button.md-raised(ng-click='$ctrl.clearFilters()') Limpiar
+    md-button.md-raised.md-primary(ng-click='$ctrl.search()') Buscar
 
   md-content(
     flex

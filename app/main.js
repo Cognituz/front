@@ -30,6 +30,7 @@ angular
   .config(require('config/material_theme'))
   .config(require('config/routes'))
   .config(require('config/satellizer'))
+  .config(require('config/rails_resource'))
 
   // Misc services
   .service('Auth',         require('services/auth'))
@@ -59,4 +60,5 @@ angular
   .component('ctzTeacherCard',           require('components/teacher/card/component'))
   .component('ctzTeacherProfile',        require('components/teacher/profile/component'))
   .component('ctzTeacherProfileEditor',  require('components/teacher/profile/editor/component'))
+  .component('ctzSelect',                require('components/select/component'))
 ;
