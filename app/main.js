@@ -12,6 +12,7 @@ require('angularjs-rails-resource');
 require('satellizer');
 require('ng-file-upload');
 require('ng-material-datetimepicker');
+require('angular-filter');
 
 angular
   .module('cognituzFront', [
@@ -23,7 +24,8 @@ angular
     'rails',
     'satellizer',
     'ngFileUpload',
-    'ngMaterialDatePicker'
+    'ngMaterialDatePicker',
+    'angular.filter'
   ])
 
   // Configuration Blocks
@@ -45,6 +47,9 @@ angular
   .service('SubjectGroup', require('models/subject_group'))
   .service('Neighborhood', require('models/neighborhood'))
 
+  // Filters
+  .filter('fuzzy', require('filters/fuzzy'))
+
   // Components
   .component('ctzApp',                   require('components/app/component'))
   .component('ctzHome',                  require('components/home/component'))
@@ -60,5 +65,5 @@ angular
   .component('ctzTeacherCard',           require('components/teacher/card/component'))
   .component('ctzTeacherProfile',        require('components/teacher/profile/component'))
   .component('ctzTeacherProfileEditor',  require('components/teacher/profile/editor/component'))
-  .component('ctzSelect',                require('components/select/component'))
+  .component('ctzSubjectSelect',         require('components/subject_select/component'))
 ;

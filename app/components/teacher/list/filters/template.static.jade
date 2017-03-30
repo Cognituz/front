@@ -1,4 +1,4 @@
-div(layout='column')
+.md-no-empty-errors-spacer(layout='column')
   md-tabs.md-whiteframe-z1(md-border-bottom)
     md-tab(md-on-select='$ctrl.filters.classType = "online"') Online
     md-tab(md-on-select='$ctrl.filters.classType = "presential"') Presencial
@@ -8,7 +8,7 @@ div(layout='column')
     layout='column'
     layout-padding
   )
-    md-input-container
+    md-input-container(ng-if='$ctrl.filters.classType === "presential"')
       label Barrios
       md-select(
         ng-model='$ctrl.filters.neighborhoods'
@@ -22,21 +22,7 @@ div(layout='column')
 
     md-input-container
       label Materias
-      ctz-select(
-        ng-model='$ctrl.filters.taughtSubjects'
-        multiple=':: true'
-        bind-search-term-to='searchTerm'
-        search-placeholder='Buscar materia...'
-      )
-        md-optgroup(
-          ng-repeat='$level in $ctrl.subjectGroups | filter: searchTerm'
-          label='{{:: $level.name || "Otros" }}'
-        )
-          md-option(
-            ng-repeat='s in $level.subjects | filter: searchTerm'
-            ng-value='{level: $level.name, name: s}'
-            ng-bind='s'
-          )
+      ctz-subject-select(ng-model='$ctrl.filters.taughtSubjects')
 
     div(layout='row' layout-wrap)
       md-input-container(flex=100 flex-gt-xs=75)

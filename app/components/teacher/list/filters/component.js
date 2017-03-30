@@ -6,7 +6,6 @@ module.exports = {
       $scope.$watch(_ => this.filters, fts => this.ngModel.$setViewValue(fts), true);
 
       Neighborhood.query().then(ngs => this.neighborhoods = ngs);
-      SubjectGroup.query().then(sgs => this.subjectGroups = sgs);
     }
 
     $onInit() {

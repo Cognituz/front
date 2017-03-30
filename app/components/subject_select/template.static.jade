@@ -1,0 +1,24 @@
+md-select(
+  ng-model='$ctrl.model'
+  multiple=':: $ctrl.multiple'
+  md-on-open='$ctrl.onOpen()'
+  md-on-close='$ctrl.clearSearch()'
+  block='ctz-subject-select'
+  md-container-class='ctz-subject-select-container {{:: $ctrl.containerClass }}'
+)
+  md-select-header
+    input(
+      ng-model="$ctrl.searchTerm"
+      class="demo-header-searchbox md-text"
+      placeholder='{{:: $ctrl.searchPlaceholder }}'
+    )
+
+  md-optgroup(
+    ng-repeat='$level in $ctrl.subjectGroups'
+    label='{{:: $level.name || "Otros" }}'
+  )
+    md-option(
+      ng-repeat='s in $level.subjects | fuzzy: $ctrl.searchTerm'
+      ng-value='{level: $level.name, name: s}'
+      ng-bind='s'
+    )
