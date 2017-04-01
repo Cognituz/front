@@ -35,7 +35,17 @@ module.exports = (
       this.nestedAttribute('taughtSubjects');
       this.nestedAttribute('location');
       this.nestedAttribute('availabilityPeriods');
-    })
+    }),
+    fullResponse: true
+  });
+
+  User.interceptResponse((response, constructor, context) => {
+    response.pagination = {
+      totalPages: parseInt(response.headers('X-Total-Pages')),
+      perPage:    parseInt(response.headers('X-Total-Pages'))
+    };
+
+    return response;
   });
 
   return User;

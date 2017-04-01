@@ -12,7 +12,7 @@ require('angularjs-rails-resource');
 require('satellizer');
 require('ng-file-upload');
 require('ng-material-datetimepicker');
-require('angular-filter');
+require('ng-infinite-scroll');
 
 angular
   .module('cognituzFront', [
@@ -25,7 +25,7 @@ angular
     'satellizer',
     'ngFileUpload',
     'ngMaterialDatePicker',
-    'angular.filter'
+    'infinite-scroll'
   ])
 
   // Configuration Blocks
@@ -67,3 +67,5 @@ angular
   .component('ctzTeacherProfileEditor',  require('components/teacher/profile/editor/component'))
   .component('ctzSubjectSelect',         require('components/subject_select/component'))
 ;
+
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)

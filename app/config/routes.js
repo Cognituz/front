@@ -119,8 +119,7 @@ module.exports = (
           .state('app.authenticated.teachers.show', {
             url: '/:id',
             resolve: {
-              teacher: (User, $stateParams) =>
-                User.get($stateParams.id)
+              teacher: (User, $stateParams) => User.get($stateParams.id)
             },
             controller: inject({resolves: ['teacher']}),
             template: '<ctz-teacher-profile teacher="teacher"/>'

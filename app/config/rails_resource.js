@@ -8,8 +8,6 @@ module.exports = ($provide) => {
   $provide.decorator('RailsResource', ($delegate) => {
     'ngInject';
 
-    const oldFunc = $delegate.$get;
-
     $delegate.$get = function(url, queryParams) {
       const config = angular.extend({method: 'get', url: url}, this.getHttpConfig(queryParams));
 

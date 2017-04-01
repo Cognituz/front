@@ -28,7 +28,7 @@ module.exports = ($auth, $q, User) => {
       else {
         const userId = $auth.getPayload().user_id;
         return User.get(userId)
-          .then(user => this.currentUser = user)
+          .then(resp => this.currentUser = resp.data)
           .then(_ => this.currentUser);
       }
     }

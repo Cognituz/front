@@ -1,9 +1,8 @@
-div(block='ctz-teacher-card')
-  md-card
-    md-card-avatar
-    img.md-card-image(ng-src="{{:: $ctrl.teacher.avatar }}")
-    md-card-content
-      p(ng-bind=':: $ctrl.teacher.description')
-    md-button.md-primary.md-raised(
-      ui-sref='app.authenticated.teachers.show({id: $ctrl.teacher.id})'
-    ) Reservar
+md-card(block='ctz-teacher-card' layout='column')
+  md-card-avatar
+  img.md-card-image(ng-src="{{:: $ctrl.teacher.avatar }}")
+  md-card-content(flex)
+    p(ng-bind=':: $ctrl.teacher.shortDesc')
+  md-button.md-primary.md-raised(
+    ui-sref='app.authenticated.teachers.show({id: $ctrl.teacher.id})'
+  ) Reservar

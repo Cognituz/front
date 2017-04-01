@@ -11,15 +11,19 @@ section(
     md-button.md-raised(ng-click='$ctrl.clearFilters()') Limpiar
     md-button.md-raised.md-primary(ng-click='$ctrl.search()') Buscar
 
-  md-content(
-    flex
-    layout='row'
-    layout-wrap
-  )
-    ctz-teacher-card(
-      flex=100
-      flex-sm=50
-      flex-gt-sm=25
-      ng-repeat='t in $ctrl.teachers'
-      teacher=':: t'
+  md-content(flex infinite-scroll-fix)
+    div(
+      layout='row'
+      layout-wrap
+      infinite-scroll='$ctrl.getNextPage()'
+      infinite-scroll-parent='true'
+      infinite-scroll-disabled='!$ctrl.shouldGetNextPage()'
     )
+      ctz-teacher-card(
+        flex=100
+        flex-sm=50
+        flex-gt-sm=25
+        ng-repeat='t in $ctrl.teachers'
+        teacher=':: t'
+        layout='row'
+      )
