@@ -35,15 +35,24 @@ module.exports = (
       this.nestedAttribute('taughtSubjects');
       this.nestedAttribute('location');
       this.nestedAttribute('availabilityPeriods');
-    }),
-    fullResponse: true
+    })
   });
 
   User.interceptResponse((response, constructor, context) => {
-    response.pagination = {
-      totalPages: parseInt(response.headers('X-Total-Pages')),
-      perPage:    parseInt(response.headers('X-Total-Pages'))
-    };
+    const totalRecords   = parseHeaderAsInt('X-Total-Records');
+    const recordsPerPage = parseHeaderAsInt('X-Records-Per-Page');
+
+    const totalPages =
+      totalRecords &&
+      recordsPerPage &&
+      Math.ceil(totalRecords / recordsPerPage);
+
+    response.data.$pagination = {totalRecords, recordsPerPage, totalPages};
+
+    function parseHeaderAsInt(headerName) {
+      const val = response.headers(headerName);
+      return val && parseInt(val);
+    }
 
     return response;
   });

@@ -13,24 +13,23 @@ module.exports = {
       Neighborhood.query().then(ngs => this.neighborhoods = ngs);
       SubjectGroup.query().then(sgs => this.subjectGroups = sgs);
 
-      this.filters = {page: 0};
+      this.page    = 1;
+      this.filters = {};
 
       this.search();
     }
 
     search({append} = {}) {
-      const filters = angular.extend({isTeacher: true}, this.filters)
-      if (this.filters.classType === 'online') filters.teachesOnline = true;
+      const filters = angular.extend({isTeacher: true}, this.filters || {})
+      if (filters.classType === 'online') filters.teachesOnline = true;
 
       this.User
-        .query({filters: filters})
-        .then(resp => {
-          this.totalPages = resp.pagination.totalPages;
+        .query({page: this.page, filters: filters})
+        .then(users => {
+          this.totalPages = users.$pagination.totalPages;
 
-          if (append)
-            this.teachers = this.teachers.concat(resp.data);
-          else
-            this.teachers = resp.data
+          if (append) this.teachers = this.teachers.concat(users);
+          else this.teachers = users;
         });
     }
 
@@ -40,14 +39,13 @@ module.exports = {
     }
 
     get getNextPage() {
-      this.filters = this.filters || {}
-      this.filters.page = this.filters.page || 0;
-      this.filters.page++;
+      this.page = this.page || 0;
+      this.page++;
       this.search({append: true})
     }
 
     shouldGetNextPage() {
-      return this.filters && !(this.filters.page >= this.totalPages - 1);
+      return !(this.page >= this.totalPages);
     }
   }
 };

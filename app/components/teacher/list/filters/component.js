@@ -13,6 +13,8 @@ module.exports = {
       this.ngModel.$setViewValue(filters);
     }
 
-    setMetaLevel() { this.$level = this.subjectGroups.find(sg => sg.name == this.level); }
+    setMetaLevel() {
+      this.$level = this.subjectGroups.find(sg => sg.name == this.level);
+    }
   }
 };

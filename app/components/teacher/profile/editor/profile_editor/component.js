@@ -3,7 +3,7 @@ module.exports = {
   controller: class {
     constructor($mdToast, Auth, User, lockingScope) {
       'ngInject';
-      this.Auth         = Auth
+      this.Auth = Auth
 
       Auth
         .getCurrentUser()
