@@ -5,6 +5,11 @@ div(
   layout-align='center center'
 )
   md-card.md-no-empty-errors-spacer
+    md-toolbar: .md-toolbar-tools
+      | Ingresá como 
+      span(ng-if='$ctrl.userType === "student"') estudiante
+      span(ng-if='$ctrl.userType === "teacher"') profesor
+
     md-button.md-button--facebook(
       ng-if='$ctrl.userType === "student"'
       ng-click='$ctrl.loginWithFacebook()'

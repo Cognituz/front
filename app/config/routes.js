@@ -13,7 +13,7 @@ module.exports = (
       return Auth
         .getCurrentUser()
         .catch(_ => {
-          $state.go('app.students.signIn');
+          $state.go('app.signIn');
           $mdToast.showSimple('Necesitás ingresar para ver este contenido');
         });
     };
@@ -41,7 +41,7 @@ module.exports = (
       // Auth
       .state('app.signIn', {
         url: '/ingresar',
-        template: '<ctz-sign-in-form-preselector layout-fill/>'
+        template: '<ctz-sign-in-form-wrapper layout-fill/>'
       })
       .state('app.resetPassword', {
         url: '/recuperar_contraseña',
@@ -57,10 +57,6 @@ module.exports = (
         abstract: true,
         template: '<ui-view layout-fill/>'
       })
-        .state('app.students.signIn', {
-          url: '/ingresar',
-          template: '<ctz-sign-in-form user-type="student" layout-fill/>'
-        })
         .state('app.students.signUp', {
           url: '/registrarse',
           template: '<ctz-sign-up-form user-type="student" layout-fill/>'
@@ -71,10 +67,6 @@ module.exports = (
         abstract: true,
         template: '<ui-view layout-fill/>'
       })
-        .state('app.teachers.signIn', {
-          url: '/ingresar',
-          template: '<ctz-sign-in-form user-type="teacher" layout-fill/>'
-        })
 
       .state('app.authenticated', {
         url: '/s',

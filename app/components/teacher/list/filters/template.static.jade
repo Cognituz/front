@@ -1,5 +1,5 @@
 .md-no-empty-errors-spacer(layout='column')
-  md-tabs.md-whiteframe-z1(md-border-bottom)
+  md-tabs.md-accenprimaryt.md-whiteframe-z1(md-border-bottom)
     md-tab(md-on-select='$ctrl.filters.classType = "online"') Online
     md-tab(md-on-select='$ctrl.filters.classType = "presential"') Presencial
 
@@ -25,7 +25,7 @@
       ctz-subject-select(ng-model='$ctrl.filters.taughtSubjects')
 
     div(layout='row' layout-wrap)
-      md-input-container(flex=100 flex-gt-xs=75)
+      md-input-container(flex=75)
         label Fecha
         input(
           mdc-datetime-picker
@@ -35,14 +35,13 @@
           ng-model="$ctrl.filters.date"
         )
 
-      md-input-container(flex=100 flex-gt-xs=25)
+      md-input-container(flex=25)
         label Horas
         input(
           ng-model='$ctrl.filters.hours'
           type='number' min=0 max=4
           ng-disabled='!$ctrl.filters.date'
         )
-
 
     div(layout='column' ng-if='$ctrl.filters.classType == "presential"')
       md-checkbox(ng-model='$ctrl.filters.teachesAtStudentsPlace') En mi casa

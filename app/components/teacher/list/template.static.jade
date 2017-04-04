@@ -1,15 +1,18 @@
-section(
+section.position-relative(
   block='yv-teacher-list'
   layout-fill
   layout='row'
 )
   md-sidenav.md-sidenav-left.md-whiteframe-z1(
-    md-is-locked-open='::true'
+    md-is-locked-open=':: $ctrl.$mdMedia("gt-sm")'
+    md-component-id='teacherFilters'
     layout='column'
   )
-    ctz-teacher-list-filters(ng-model='$ctrl.filters' flex)
-    md-button.md-raised(ng-click='$ctrl.clearFilters()') Limpiar
-    md-button.md-raised.md-primary(ng-click='$ctrl.search()') Buscar
+    ctz-teacher-list-filters(flex ng-model='$ctrl.filters')
+
+    div(layout='row')
+      md-button.md-raised(flex ng-click='$ctrl.clearFilters()') Limpiar
+      md-button.md-raised.md-primary(flex ng-click='$ctrl.search()') Buscar
 
   md-content(flex infinite-scroll-fix)
     div(
@@ -27,3 +30,10 @@ section(
         ng-repeat='t in $ctrl.teachers'
       )
         ctz-teacher-card(teacher=':: t')
+
+  md-button.md-fab.absolute-left-bottom(
+    ng-click='$ctrl.sidenav.toggle()'
+    ng-if=':: !$ctrl.$mdMedia("gt-sm")'
+  )
+    md-icon(md-svg-src='/images/icons/filter.svg')
+    md-tooltip(md-direction='left') Filtros

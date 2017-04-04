@@ -66,6 +66,11 @@ module.exports = ($mdThemingProvider) => {
         'hue-2':   '400',
         'hue-3':   '300'
       })
-      .accentPalette('cognituzBlue')
+      .accentPalette('cognituzBlue', {
+          'default': 'A400',
+          'hue-1':   'A700',
+          'hue-2':   '700',
+          'hue-3':   '800'
+      })
       .warnPalette('cognituzPeach');
 };

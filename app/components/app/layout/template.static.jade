@@ -1,32 +1,36 @@
 div(
+  block='ctz-app-layout'
   layout-fill
   layout='column'
 )
-  md-toolbar.md-whiteframe-z2: .md-toolbar-tools
-    div(layout='row' ng-if='$ctrl.Auth.currentUser')
-      md-button(ui-sref='app.authenticated.teachers.list') Profesores
+  md-toolbar.md-whiteframe-z2(layout='row')
 
-    span(flex)
+    .md-toolbar-tools(layout='row')
+      span(elem='header-brand' ): img(src='/images/logo.png')
 
-    div(layout='row' ng-if='$ctrl.Auth.currentUser')
-      md-menu
-        md-button.md-icon-button.md-icon-button--with-image.md-raised.md-whiteframe-z4(
-          ng-click='$mdOpenMenu($event)')
-          img.object-fit-cover(ng-src='{{ $ctrl.Auth.currentUser.avatar }}')
+      div(layout='row' ng-if='$ctrl.Auth.currentUser')
+        md-button(ui-sref='app.authenticated.teachers.list') Profesores
 
-        md-menu-content(width=2)
-          md-menu-item(ng-if='$ctrl.Auth.currentUser.isStudent')
-            md-button(ui-sref='app.authenticated.students.profile.edit') Editar perfil
+      span(flex)
 
-          md-menu-item(ng-if='$ctrl.Auth.currentUser.isStudent')
-            md-button(ui-sref='app.authenticated.students.profile.edit') Cambiar contraseña
+      div(layout='row' ng-if='$ctrl.Auth.currentUser')
+        md-menu
+          md-button.md-icon-button.md-icon-button--with-image.md-raised.md-whiteframe-z4(ng-click='$mdOpenMenu($event)')
+            img.object-fit-cover(ng-src='{{ $ctrl.Auth.currentUser.avatar }}')
 
-          md-menu-item(ng-if='$ctrl.Auth.currentUser.isTeacher')
-            md-button(ui-sref='app.authenticated.teachers.profile.edit') Editar perfil
+          md-menu-content(width=2)
+            md-menu-item(ng-if='$ctrl.Auth.currentUser.isStudent')
+              md-button(ui-sref='app.authenticated.students.profile.edit') Editar perfil
 
-          md-divider
+            md-menu-item(ng-if='$ctrl.Auth.currentUser.isStudent')
+              md-button(ui-sref='app.authenticated.students.profile.edit') Cambiar contraseña
 
-          md-menu-item
-            md-button(ng-click='$ctrl.logout()') Desconectarse
+            md-menu-item(ng-if='$ctrl.Auth.currentUser.isTeacher')
+              md-button(ui-sref='app.authenticated.teachers.profile.edit') Editar perfil
+
+            md-divider
+
+            md-menu-item
+              md-button(ng-click='$ctrl.logout()') Desconectarse
 
   ui-view(flex)

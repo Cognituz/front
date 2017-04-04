@@ -1,0 +1,20 @@
+div(
+  block='ctz-sign-in-form-wrapper'
+  layout-fill
+  layout='row'
+)
+  div(
+    elem='teacher-form-wrapper'
+    flex=50
+    layout='column'
+    layout-align='center center'
+  )
+    ctz-sign-in-form(user-type='student')
+
+  div(
+    elem='student-form-wrapper'
+    flex=50
+    layout='column'
+    layout-align='center center'
+  )
+    ctz-sign-in-form(user-type='teacher')

@@ -2,16 +2,15 @@ module.exports = {
   templateUrl: '/components/teacher/list/template.html',
   controller: class {
     constructor(
-      Neighborhood,
-      SubjectGroup,
+      $mdMedia,
+      $mdSidenav,
       User
     ) {
       'ngInject';
 
-      this.User    = User;
-
-      Neighborhood.query().then(ngs => this.neighborhoods = ngs);
-      SubjectGroup.query().then(sgs => this.subjectGroups = sgs);
+      this.$mdMedia   = $mdMedia;
+      this.$mdSidenav = $mdSidenav;
+      this.User       = User;
 
       this.page    = 1;
       this.filters = {};
@@ -30,6 +29,8 @@ module.exports = {
 
           if (append) this.teachers = this.teachers.concat(users);
           else this.teachers = users;
+
+          if (this.$mdMedia('gt-sm')) this.sidenav.hide();
         });
     }
 
@@ -38,14 +39,14 @@ module.exports = {
       this.search();
     }
 
-    get getNextPage() {
+    getNextPage() {
       this.page = this.page || 0;
       this.page++;
       this.search({append: true})
     }
 
-    shouldGetNextPage() {
-      return !(this.page >= this.totalPages);
-    }
+    get sidenav() { return this.$mdSidenav('teacherFilters'); }
+
+    shouldGetNextPage() { return !(this.page >= this.totalPages); }
   }
 };
