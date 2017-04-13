@@ -1,0 +1,68 @@
+md-card(
+  block='ctz-teacher-reservation-card'
+  layout-fill
+)
+  md-toolbar: .md-toolbar-tools
+    | Reservar clase
+    span(flex)
+    md-button.md-icon-button
+      md-icon(
+        md-svg-src='/images/icons/remove.svg'
+        ng-click='$ctrl.$mdDialog.hide()'
+      )
+
+  md-card-title
+    md-card-title-text
+      .md-headline {{:: $ctrl.teacher.name }}
+      .md-subhead {{:: $ctrl.teacher.shortDesc }}
+
+    md-card-title-media
+      img.md-media-sm.object-fit-contain(ng-src='{{:: $ctrl.teacher.avatar }}')
+
+  md-nav-bar(md-border-bottom)
+    md-nav-item(md-nav-click='$ctrl.filters.classType = "online"') Online
+    md-nav-item(md-nav-click='$ctrl.filters.classType = "presential"') Presencial
+
+  md-card-content(layout='column')
+    md-radio-group(ng-class='{"layout-row": $ctrl.$mdMedia("gt-xs")}')
+      md-radio-button(
+ .id}       ng-model='$ctrl.appointment.kind'
+        value='atStudentsPlace'
+      ) En mi casa
+
+      md-radio-button(
+        ng-model='$ctrl.appointment.kind'
+        value='atTeacherPlace'
+      ) En casa del profesor
+
+      md-radio-button(
+        ng-model='$ctrl.appointment.kind'
+        value='atPublicPlace'
+      ) En lugar público
+
+    md-input-container
+      label Materias
+      ctz-subject-select(
+        ng-model='$ctrl.appointment.subjects'
+        subjects='$ctrl.teacher.subjectGroups'
+      )
+
+    div(layout='row')
+      md-input-container(flex=75)
+        label Fecha
+        input(
+          mdc-datetime-picker
+          date="true"
+          time="true"
+          show-todays-date
+          ng-model="$ctrl.appointment.startsAt"
+        )
+
+      md-input-container(flex=25)
+        label Horas
+        input(
+          ng-model="$ctrl.appointment.hours"
+          type='number'
+          min=0
+          max=10
+        )

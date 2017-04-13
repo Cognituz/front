@@ -2,11 +2,11 @@ module.exports = {
   templateUrl: '/components/sign_up_form/template.html',
   bindings: {userType: '@'},
   controller: class {
-    constructor($auth, $mdToast, $state, lockingScope) {
+    constructor($mdToast, $state, Auth, lockingScope) {
       'ngInject';
       this.$mdToast     = $mdToast;
       this.$state       = $state;
-      this.$auth        = $auth;
+      this.Auth         = Auth;
       this.lockingScope = lockingScope;
     }
 
@@ -20,22 +20,25 @@ module.exports = {
 
     registerWithCredentials() {
       this.lockingScope(this, _ =>
-        this.$auth
-          .signup(this.credentials)
+        this.Auth
+          .signUp(this.credentials)
           .then(_ => this.afterRegisterSuccess())
           .catch(resp => {
             if (resp.status = 422)
               this.$mdToast.showSimple('Ese email ya sido tomado')
             else
               this.$mdToast.showSimple('Ha habido un problema, por favor intentelo mas tarde.');
-
-            this.credentials = {};
           })
       );
     }
 
     afterRegisterSuccess() {
-      this.$state.go('app.authenticated.teachers.list')
+      this.credentials = {};
+
+      this.$state
+        .go('app.authenticated.students.profile.edit', {
+          afterSaveRedirectTo: 'app.authenticated.teachers.list'
+        })
         .then(_ => this.$mdToast.showSimple('¡Bienvenido a Cognituz!'));
     }
   }

@@ -9,5 +9,5 @@ md-card(
     p(ng-bind=':: $ctrl.teacher.shortDesc')
 
   md-button.md-primary.md-raised(
-    ui-sref='app.authenticated.teachers.show({id: $ctrl.teacher.id})'
+    ng-click='$ctrl.showTeacherReservationDialog($ctrl.teacher)'
   ) Reservar

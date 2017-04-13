@@ -30,7 +30,7 @@ module.exports = {
           if (append) this.teachers = this.teachers.concat(users);
           else this.teachers = users;
 
-          if (this.$mdMedia('gt-sm')) this.sidenav.hide();
+          if (!this.$mdMedia('gt-sm')) this.sidenav.close();
         });
     }
 

@@ -5,10 +5,10 @@ form.md-no-empty-errors-spacer(
   ng-submit='$ctrl.save()'
 )
   md-toolbar.md-hue-1.md-whiteframe-z1
-    .md-toolbar-tools
+    .md-toolbar-tools(layout='row')
       | Editando perfil
       span(flex)
-      md-button.md-raised(type='submit') Guardar cambios
+      md-button.md-raised.md-raised(type='submit') Actualizar
 
   md-content
     div(

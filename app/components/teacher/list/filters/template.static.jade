@@ -1,7 +1,7 @@
 .md-no-empty-errors-spacer(layout='column')
-  md-tabs.md-accenprimaryt.md-whiteframe-z1(md-border-bottom)
-    md-tab(md-on-select='$ctrl.filters.classType = "online"') Online
-    md-tab(md-on-select='$ctrl.filters.classType = "presential"') Presencial
+  md-nav-bar.md-accent.md-whiteframe-z1(md-border-bottom)
+    md-nav-item(md-nav-click='$ctrl.filters.classType = "online"') Online
+    md-nav-item(md-nav-click='$ctrl.filters.classType = "presential"') Presencial
 
   md-content.md-no-empty-errors-spacer(
     flex
@@ -39,7 +39,7 @@
         label Horas
         input(
           ng-model='$ctrl.filters.hours'
-          type='number' min=0 max=4
+          type='number' min=0 max=10
           ng-disabled='!$ctrl.filters.date'
         )
 

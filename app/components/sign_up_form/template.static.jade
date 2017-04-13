@@ -22,6 +22,7 @@ div(
             type='email'
             ng-model='$ctrl.credentials.email'
             required
+            autocomplete='false'
           )
 
         md-input-container
@@ -30,6 +31,7 @@ div(
             type='password'
             ng-model='$ctrl.credentials.password'
             required
+            autocomplete='false'
           )
 
         md-input-container
@@ -38,7 +40,14 @@ div(
             type='password'
             ng-model='$ctrl.credentials.passwordConfirmation'
             required
+            autocomplete='false'
           )
+
+        span
+          | Al registrarte te manifestas en acuerdo 
+          br
+          | con nuestros 
+          a(href='/misc/tos.pdf' target='_blank') términos y condiciones
 
       md-button.md-raised.md-primary(
         type='submit'

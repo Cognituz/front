@@ -3,7 +3,13 @@ module.exports = {
   require: {ngModel: 'ngModel'},
   controller: class {
     constructor($scope, Neighborhood, SubjectGroup) {
-      $scope.$watch(_ => this.filters, fts => this.ngModel.$setViewValue(fts), true);
+      'ngInject';
+
+      $scope.$watch(
+        _ => this.filters,
+        fts => this.ngModel.$setViewValue(fts),
+        true
+      );
 
       Neighborhood.query().then(ngs => this.neighborhoods = ngs);
     }
@@ -11,6 +17,7 @@ module.exports = {
     $onInit() {
       const filters = this.ngModel.$modelValue || {};
       this.ngModel.$setViewValue(filters);
+      this.ngModel.$render = _ => this.filters = this.ngModel.$viewValue;
     }
 
     setMetaLevel() {

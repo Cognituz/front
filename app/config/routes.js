@@ -86,8 +86,24 @@ module.exports = (
             template: '<ui-view layout-fill/>'
           })
             .state('app.authenticated.students.profile.edit', {
-              url: '/editar',
-              template: '<ctz-student-profile-editor/>',
+              url: '/editar?afterSaveRedirectTo',
+              template: '<ctz-student-profile-editor after-save="$ctrl.afterSave()" layout-fill/>',
+              controllerAs: '$ctrl',
+              controller: class  {
+                constructor($state, $stateParams) {
+                  'ngInject';
+                  this.$state       = $state;
+                  this.$stateParams = $stateParams;
+                }
+
+                afterSave() {
+                  const redirectLocation =
+                    this.$stateParams &&
+                    this.$stateParams.afterSaveRedirectTo;
+
+                  redirectLocation && this.$state.go(redirectLocation);
+                }
+              }
             })
 
         .state('app.authenticated.teachers', {
@@ -110,11 +126,20 @@ module.exports = (
           })
           .state('app.authenticated.teachers.show', {
             url: '/:id',
-            resolve: {
-              teacher: (User, $stateParams) => User.get($stateParams.id)
-            },
-            controller: inject({resolves: ['teacher']}),
-            template: '<ctz-teacher-profile teacher="teacher"/>'
+            resolve: { teacher: (User, $stateParams) => User.get($stateParams.id) },
+            onEnter: (teacher, $mdDialog, $mdMedia) => {
+              'ngInject';
+
+              $mdDialog.show({
+                template: `
+                  <md-dialog>
+                    <ctz-teacher-reservation-form teacher="$ctrl.teacher" layout-fill/>
+                  </md-dialog>
+                `,
+                locals: {teacher: teacher},
+                fullscreen: $mdMedia('xs')
+              });
+            }
           })
   ;
 

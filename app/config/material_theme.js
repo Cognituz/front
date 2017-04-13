@@ -59,7 +59,7 @@ module.exports = ($mdThemingProvider) => {
   });
 
   $mdThemingProvider
-    .theme('cognituzPrimary')
+    .theme('default')
       .primaryPalette('cognituzGreen', {
         'default': '600',
         'hue-1':   '500',

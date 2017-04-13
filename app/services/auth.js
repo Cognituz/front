@@ -2,23 +2,32 @@
 module.exports = ($auth, $q, User) => {
   'ngInject';
 
+  window.$auth = $auth;
+
   return new class Auth {
     signInViaOauth() {
       return $auth
         .authenticate(...arguments)
-        .then(_ => this.getCurrentUser() && _);
+        .then(_ => this.getCurrentUser());
     }
 
     signInViaCredentials() {
       return $auth
         .login(...arguments)
-        .then(_ => this.getCurrentUser() && _);
+        .then(_ => this.getCurrentUser());
+    }
+
+    signUp() {
+      return $auth
+        .signup(...arguments)
+        .then(resp => $auth.setToken(resp.data.token))
+        .then(_ => this.getCurrentUser());
     }
 
     logout() {
       return $auth
         .logout()
-        .then(_ => this.unsetCurrentUser() && _);
+        .then(_ => this.unsetCurrentUser());
     }
 
     getCurrentUser({reload} = {}) {
