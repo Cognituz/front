@@ -4,7 +4,8 @@ module.exports = {
   templateUrl: '/components/subject_select/template.html',
   bindings: {
     subjectGroups: '=?',
-    outsideModel:  '<ngModel'
+    outsideModel:  '<ngModel',
+    required:      '<?'
   },
   require: {ngModel: 'ngModel'},
   controller: class {

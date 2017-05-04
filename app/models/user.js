@@ -29,9 +29,6 @@ module.exports = (
     url:  'http://localhost:3000/v1/users',
     name: 'user',
     serializer: railsSerializer(function() {
-      this.serializeWith('startsAt', 'DateSerializer');
-      this.serializeWith('endsAt', 'DateSerializer');
-
       this.nestedAttribute('taughtSubjects');
       this.nestedAttribute('location');
       this.nestedAttribute('availabilityPeriods');

@@ -1,5 +1,5 @@
-md-card(
-  block='ctz-teacher-reservation-card'
+md-card.md-no-empty-errors-spacer(
+  block='ctz-appointment-form-card'
   layout-fill
 )
   md-toolbar: .md-toolbar-tools
@@ -19,26 +19,27 @@ md-card(
     md-card-title-media
       img.md-media-sm.object-fit-contain(ng-src='{{:: $ctrl.teacher.avatar }}')
 
-  md-nav-bar(md-border-bottom)
-    md-nav-item(md-nav-click='$ctrl.filters.classType = "online"') Online
-    md-nav-item(md-nav-click='$ctrl.filters.classType = "presential"') Presencial
+  md-nav-bar(
+    md-selected-item='$ctrl.classType'
+    md-border-bottom
+  )
+    md-nav-item(md-nav-click='$ctrl.setClassType()') Online
+    md-nav-item(md-nav-click='$ctrl.setClassType()') Presencial
 
   md-card-content(layout='column')
-    md-radio-group(ng-class='{"layout-row": $ctrl.$mdMedia("gt-xs")}')
-      md-radio-button(
- .id}       ng-model='$ctrl.appointment.kind'
-        value='atStudentsPlace'
-      ) En mi casa
+    md-radio-group(
+      ng-model='$ctrl.appointment.kind'
+      ng-class='{"layout-row": $ctrl.$mdMedia("gt-xs")}'
+    )
+      md-radio-button(value='at_students_place') En mi casa
+      md-radio-button(value='at_teachers_place') En casa del profesor
+      md-radio-button(value='at_public_place') En lugar público
 
-      md-radio-button(
-        ng-model='$ctrl.appointment.kind'
-        value='atTeacherPlace'
-      ) En casa del profesor
+      ctz-spacer-xs
 
-      md-radio-button(
-        ng-model='$ctrl.appointment.kind'
-        value='atPublicPlace'
-      ) En lugar público
+    md-input-container(ng-if='$ctrl.appointment.kind === "at_public_place"')
+      label Lugar
+      input(ng-model='$ctrl.appointment.placeDesc')
 
     md-input-container
       label Materias

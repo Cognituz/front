@@ -1,5 +1,5 @@
 module.exports = {
-  templateUrl: '/components/teacher/reservation_form/template.html',
+  templateUrl: '/components/appointment/form/template.html',
   bindings: {teacher: '<'},
   controller: class {
     constructor($mdMedia, $mdDialog) {
@@ -8,8 +8,6 @@ module.exports = {
       this.$mdMedia  = $mdMedia;
     }
 
-    close() {
-      this.$mdDialog.hide()
-    }
+    close() { this.$mdDialog.hide(); }
   }
 };

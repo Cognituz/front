@@ -38,37 +38,42 @@ angular
   .decorator('$mdDialog',     require('decorators/md_dialog'))
 
   // Misc services
-  .service('Auth',         require('services/auth'))
-  .service('lockingScope', require('services/locking_scope'))
+  .service('Auth',                  require('services/auth'))
+  .service('lockingScope',          require('services/locking_scope'))
+  .service('AppointmentFormDialog', require('components/appointment/form/dialog'))
  
   // Serializers, used by models to serialize and deserialize JSON
   .factory('DateSerializer', require('serializers/date'))
 
   // API consumers aka models
-  .service('ContactForm',  require('models/contact_form'))
-  .service('User',         require('models/user'))
-  .service('SubjectGroup', require('models/subject_group'))
-  .service('Neighborhood', require('models/neighborhood'))
+  .service('ContactForm',      require('models/contact_form'))
+  .service('User',             require('models/user'))
+  .service('SubjectGroup',     require('models/subject_group'))
+  .service('Neighborhood',     require('models/neighborhood'))
+  .service('ClassAppointment', require('models/class_appointment'))
 
   // Filters
   .filter('fuzzy', require('filters/fuzzy'))
 
+  // Directives
+  .directive('ctzLoading', require('directives/loading'))
+
   // Components
-  .component('ctzApp',                    require('components/app/component'))
-  .component('ctzHome',                   require('components/home/component'))
-  .component('ctzContactForm',            require('components/contact_form/component'))
-  .component('ctzAppLayout',              require('components/app/layout/component'))
-  .component('ctzSignInFormWrapper',      require('components/sign_in_form/wrapper/component'))
-  .component('ctzSignInForm',             require('components/sign_in_form/component'))
-  .component('ctzSignUpForm',             require('components/sign_up_form/component'))
-  .component('ctzStudentProfileEditor',   require('components/student/profile/editor/component'))
-  .component('ctzAvatarInput',            require('components/avatar_input/component'))
-  .component('ctzTeacherList',            require('components/teacher/list/component'))
-  .component('ctzTeacherListFilters',     require('components/teacher/list/filters/component'))
-  .component('ctzTeacherCard',            require('components/teacher/card/component'))
-  .component('ctzTeacherReservationForm', require('components/teacher/reservation_form/component'))
-  .component('ctzTeacherProfileEditor',   require('components/teacher/profile/editor/component'))
-  .component('ctzSubjectSelect',          require('components/subject_select/component'))
+  .component('ctzApp',                  require('components/app/component'))
+  .component('ctzHome',                 require('components/home/component'))
+  .component('ctzContactForm',          require('components/contact_form/component'))
+  .component('ctzAppLayout',            require('components/app/layout/component'))
+  .component('ctzSignInFormWrapper',    require('components/sign_in_form/wrapper/component'))
+  .component('ctzSignInForm',           require('components/sign_in_form/component'))
+  .component('ctzSignUpForm',           require('components/sign_up_form/component'))
+  .component('ctzStudentProfileEditor', require('components/student/profile/editor/component'))
+  .component('ctzAvatarInput',          require('components/avatar_input/component'))
+  .component('ctzTeacherList',          require('components/teacher/list/component'))
+  .component('ctzTeacherListFilters',   require('components/teacher/list/filters/component'))
+  .component('ctzTeacherCard',          require('components/teacher/card/component'))
+  .component('ctzAppointmentForm',      require('components/appointment/form/component'))
+  .component('ctzTeacherProfileEditor', require('components/teacher/profile/editor/component'))
+  .component('ctzSubjectSelect',        require('components/subject_select/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)
