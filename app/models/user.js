@@ -28,7 +28,7 @@ module.exports = (
   };
 
   User.configure({
-    url:  `${API_URL}:3000/v1/users`,
+    url:  `${API_URL}/v1/users`,
     name: 'user',
     serializer: railsSerializer(function() {
       this.nestedAttribute('taughtSubjects');
