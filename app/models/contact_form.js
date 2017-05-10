@@ -1,10 +1,12 @@
+const {API_URL} = require('config');
+
 module.exports = (RailsResource) => {
   'ngInject';
 
   class ContactForm extends RailsResource {};
 
   ContactForm.configure({
-    url:  'http://localhost:3000/v1/contact_forms',
+    url:  `${API_URL}/v1/contact_forms`,
     name: 'contact_form'
   });
 

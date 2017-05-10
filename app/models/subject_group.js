@@ -1,3 +1,5 @@
+const {API_URL} = require('config');
+
 module.exports = (
   RailsResource,
   railsSerializer
@@ -7,7 +9,7 @@ module.exports = (
   class SubjectGroup extends RailsResource {}
 
   SubjectGroup.configure({
-    url:  'http://localhost:3000/v1/subject_groups',
+    url:  `${API_URL}/v1/subject_groups`,
     name: 'subject_group'
   });
 

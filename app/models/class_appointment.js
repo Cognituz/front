@@ -1,3 +1,5 @@
+const {API_URL} = require('config');
+
 module.exports = (
   RailsResource,
   railsSerializer
@@ -7,7 +9,7 @@ module.exports = (
   class ClassAppointment extends RailsResource {}
 
   ClassAppointment.configure({
-    url:  'http://localhost:3000/v1/class_appointments',
+    url:  `${API_URL}/v1/class_appointments`,
     name: 'class_appointment',
     serializer: railsSerializer(function() {
       this.serializeWith('startsAt', 'DateSerializer');
