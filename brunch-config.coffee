@@ -1,4 +1,6 @@
 module.exports =
+  paths:
+    public: process.env.PUBLIC_DIR || './public'
   files:
     javascripts:
       joinTo:

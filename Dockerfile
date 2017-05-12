@@ -20,4 +20,7 @@ RUN bower install
 COPY . $APP_PATH
 VOLUME $APP_PATH/public
 
-CMD rm -rf $APP_PATH/public; brunch b -p -d
+CMD \
+  PUBLIC_DIR=./tmp_public brunch b -p -d; \
+  rm -rf $APP_PATH/public; \
+  cp ./tmp_public/* $APP_PATH/public/*;
