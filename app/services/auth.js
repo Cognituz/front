@@ -2,8 +2,6 @@
 module.exports = ($auth, $q, User) => {
   'ngInject';
 
-  window.$auth = $auth;
-
   return new class Auth {
     signInViaOauth() {
       return $auth

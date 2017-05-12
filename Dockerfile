@@ -22,5 +22,5 @@ VOLUME $APP_PATH/public
 
 CMD \
   PUBLIC_DIR=./tmp_public brunch b -p -d; \
-  rm -rf $APP_PATH/public; \
-  cp ./tmp_public/* $APP_PATH/public/*;
+  rm -rf $APP_PATH/public/*; \
+  cp ./tmp_public/* $APP_PATH/public/;
