@@ -2,6 +2,8 @@ module.exports = {
   templateUrl: '/components/contact_form/template.html',
   controller: class {
     constructor($mdToast, ContactForm) {
+      'ngInject';
+
       this.$mdToast    = $mdToast;
       this.ContactForm = ContactForm;
 
