@@ -1,6 +1,8 @@
+const {API_URL, FACEBOOK_ID} = require('config');
+
 module.exports = $authProvider => {
   'ngInject';
 
-  $authProvider.baseUrl = 'http://localhost:3000/v1';
-  $authProvider.facebook({clientId: '1488551384779862'});
+  $authProvider.baseUrl = `#${API_URL}/v1`;
+  $authProvider.facebook({clientId: FACEBOOK_ID});
 };
