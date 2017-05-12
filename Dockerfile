@@ -2,7 +2,7 @@
 FROM node
 RUN npm i -g bower brunch coffee-script
 
-ARG APP_PATH=/source
+ENV APP_PATH=/source
 
 RUN mkdir $APP_PATH
 WORKDIR $APP_PATH
