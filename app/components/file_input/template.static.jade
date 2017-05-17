@@ -1,0 +1,15 @@
+div(
+  block='ctz-file-input'
+  layout-fill
+  layout='column'
+)
+  md-button.md-block(
+    ng-model='$ctrl.model'
+    ngf-select
+    ngf-drop
+    ngf-change='$ctrl.handleFiles($files)'
+    multiple
+  )
+    span(ng-if='!$ctrl.model.length') Agregar archivos
+    span(ng-if='$ctrl.model.length == 1') 1 archivo adjunto
+    span(ng-if='$ctrl.model.length > 1') {{ $ctrl.model.length }} archivos adjuntos

@@ -74,6 +74,7 @@ angular
   .component('ctzAppointmentForm',      require('components/appointment/form/component'))
   .component('ctzTeacherProfileEditor', require('components/teacher/profile/editor/component'))
   .component('ctzSubjectSelect',        require('components/subject_select/component'))
+  .component('ctzFileInput',            require('components/file_input/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)

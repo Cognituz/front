@@ -14,5 +14,7 @@ module.exports = {
     }
 
     close() { this.$mdDialog.hide(); }
+
+    buildAttachment(url) { return {content: url}; }
   }
 };

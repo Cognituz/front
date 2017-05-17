@@ -73,6 +73,9 @@ md-card.md-no-empty-errors-spacer(
           max=10
         )
 
-  ctz-file-input(ng-model='$ctrl.appointment.attachments')
+  ctz-file-input(
+    ng-model='$ctrl.appointment.attachments'
+    transform='$ctrl.buildAttachment($url)'
+  )
 
   md-button.md-primary.md-raised(type="submit") Agendar clase
