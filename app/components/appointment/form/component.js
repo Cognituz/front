@@ -4,8 +4,13 @@ module.exports = {
   controller: class {
     constructor($mdMedia, $mdDialog) {
       'ngInject';
+
       this.$mdDialog = $mdDialog;
       this.$mdMedia  = $mdMedia;
+    }
+
+    $onInit() {
+      this.classType = 'faceToFace';
     }
 
     close() { this.$mdDialog.hide(); }

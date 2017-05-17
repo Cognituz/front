@@ -1,8 +1,8 @@
 doctype html
 html(
   ng-app='cognituzFront'
-  ng-strict-di
-  manifest=(process.env.ENABLE_CACHE && '/appcache.appcache')
+  ng-strict-di=process.env.NG_STRICT_DI
+  manifest=process.env.ENABLE_CACHE && '/appcache.appcache'
 )
   head
     title Cognituz

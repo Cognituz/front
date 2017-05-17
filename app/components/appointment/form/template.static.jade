@@ -20,22 +20,23 @@ md-card.md-no-empty-errors-spacer(
       img.md-media-sm.object-fit-contain(ng-src='{{:: $ctrl.teacher.avatar }}')
 
   md-nav-bar(
-    md-selected-item='$ctrl.classType'
+    md-selected-nav-item='$ctrl.classType'
     md-border-bottom
   )
-    md-nav-item(md-nav-click='$ctrl.setClassType()') Online
-    md-nav-item(md-nav-click='$ctrl.setClassType()') Presencial
+    md-nav-item(md-nav-click='$ctrl.setClassType()' name='online') Online
+    md-nav-item(md-nav-click='$ctrl.setClassType()' name='faceToFace') Presencial
 
   md-card-content(layout='column')
     md-radio-group(
       ng-model='$ctrl.appointment.kind'
       ng-class='{"layout-row": $ctrl.$mdMedia("gt-xs")}'
+      ng-if='$ctrl.classType === "faceToFace"'
     )
       md-radio-button(value='at_students_place') En mi casa
       md-radio-button(value='at_teachers_place') En casa del profesor
-      md-radio-button(value='at_public_place') En lugar público
+      md-radio-button(value='at_public_place')   En lugar público
 
-      ctz-spacer-xs
+    ctz-spacer-xs
 
     md-input-container(ng-if='$ctrl.appointment.kind === "at_public_place"')
       label Lugar
@@ -47,6 +48,10 @@ md-card.md-no-empty-errors-spacer(
         ng-model='$ctrl.appointment.subjects'
         subjects='$ctrl.teacher.subjectGroups'
       )
+
+    md-input-container
+      label Tema
+      input(ng-model='$ctrl.appointment.desc')
 
     div(layout='row')
       md-input-container(flex=75)
@@ -67,3 +72,7 @@ md-card.md-no-empty-errors-spacer(
           min=0
           max=10
         )
+
+  ctz-file-input(ng-model='$ctrl.appointment.attachments')
+
+  md-button.md-primary.md-raised(type="submit") Agendar clase
