@@ -1,81 +1,83 @@
-md-card.md-no-empty-errors-spacer(
+form(
   block='ctz-appointment-form-card'
   layout-fill
+  ng-submit='$ctrl.submit()'
 )
-  md-toolbar: .md-toolbar-tools
-    | Reservar clase
-    span(flex)
-    md-button.md-icon-button
-      md-icon(
-        md-svg-src='/images/icons/remove.svg'
-        ng-click='$ctrl.$mdDialog.hide()'
-      )
+  md-card.md-no-empty-errors-spacer(layout-fill)
+    md-toolbar: .md-toolbar-tools
+      | Reservar clase
+      span(flex)
+      md-button.md-icon-button
+        md-icon(
+          md-svg-src='/images/icons/remove.svg'
+          ng-click='$ctrl.$mdDialog.hide()'
+        )
 
-  md-card-title
-    md-card-title-text
-      .md-headline {{:: $ctrl.teacher.name }}
-      .md-subhead {{:: $ctrl.teacher.shortDesc }}
+    md-card-title
+      md-card-title-text
+        .md-headline {{:: $ctrl.teacher.name }}
+        .md-subhead {{:: $ctrl.teacher.shortDesc }}
 
-    md-card-title-media
-      img.md-media-sm.object-fit-contain(ng-src='{{:: $ctrl.teacher.avatar }}')
+      md-card-title-media
+        img.md-media-sm.object-fit-contain(ng-src='{{:: $ctrl.teacher.avatar }}')
 
-  md-nav-bar(
-    md-selected-nav-item='$ctrl.classType'
-    md-border-bottom
-  )
-    md-nav-item(md-nav-click='$ctrl.setClassType()' name='online') Online
-    md-nav-item(md-nav-click='$ctrl.setClassType()' name='faceToFace') Presencial
-
-  md-card-content(layout='column')
-    md-radio-group(
-      ng-model='$ctrl.appointment.kind'
-      ng-class='{"layout-row": $ctrl.$mdMedia("gt-xs")}'
-      ng-if='$ctrl.classType === "faceToFace"'
+    md-nav-bar(
+      md-selected-nav-item='$ctrl.classType'
+      md-border-bottom
     )
-      md-radio-button(value='at_students_place') En mi casa
-      md-radio-button(value='at_teachers_place') En casa del profesor
-      md-radio-button(value='at_public_place')   En lugar público
+      md-nav-item(md-nav-click='$ctrl.setAppointmentKind()' name='online') Online
+      md-nav-item(md-nav-click='$ctrl.setAppointmentKind()' name='faceToFace') Presencial
 
-    ctz-spacer-xs
-
-    md-input-container(ng-if='$ctrl.appointment.kind === "at_public_place"')
-      label Lugar
-      input(ng-model='$ctrl.appointment.placeDesc')
-
-    md-input-container
-      label Materias
-      ctz-subject-select(
-        ng-model='$ctrl.appointment.subjects'
-        subjects='$ctrl.teacher.subjectGroups'
+    md-card-content(layout='column')
+      md-radio-group(
+        ng-model='$ctrl.appointment.kind'
+        ng-class='{"layout-row": $ctrl.$mdMedia("gt-xs")}'
+        ng-if='$ctrl.classType === "faceToFace"'
       )
+        md-radio-button(value='at_students_place') En mi casa
+        md-radio-button(value='at_teachers_place') En casa del profesor
+        md-radio-button(value='at_public_place')   En lugar público
 
-    md-input-container
-      label Tema
-      input(ng-model='$ctrl.appointment.desc')
+      ctz-spacer-xs
 
-    div(layout='row')
-      md-input-container(flex=75)
-        label Fecha
-        input(
-          mdc-datetime-picker
-          date="true"
-          time="true"
-          show-todays-date
-          ng-model="$ctrl.appointment.startsAt"
+      md-input-container(ng-if='$ctrl.appointment.kind === "at_public_place"')
+        label Lugar
+        input(ng-model='$ctrl.appointment.placeDesc')
+
+      md-input-container
+        label Materias
+        ctz-subject-select(
+          ng-model='$ctrl.appointment.subjects'
+          subjects='$ctrl.teacher.subjectGroups'
         )
 
-      md-input-container(flex=25)
-        label Horas
-        input(
-          ng-model="$ctrl.appointment.hours"
-          type='number'
-          min=0
-          max=10
-        )
+      md-input-container
+        label Tema
+        input(ng-model='$ctrl.appointment.desc')
 
-  ctz-file-input(
-    ng-model='$ctrl.appointment.attachments'
-    transform='$ctrl.buildAttachment($url)'
-  )
+      div(layout='row')
+        md-input-container(flex=75)
+          label Fecha
+          input(
+            mdc-datetime-picker
+            date="true"
+            time="true"
+            show-todays-date
+            ng-model="$ctrl.appointment.startsAt"
+          )
 
-  md-button.md-primary.md-raised(type="submit") Agendar clase
+        md-input-container(flex=25)
+          label Horas
+          input(
+            ng-model="$ctrl.appointment.duration"
+            type='number'
+            min=0
+            max=10
+          )
+
+    ctz-file-input(
+      ng-model='$ctrl.appointment.attachments'
+      transform='$ctrl.buildAttachment($url)'
+    )
+
+    md-button.md-primary.md-raised(type="submit") Agendar clase
