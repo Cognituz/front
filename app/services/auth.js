@@ -24,7 +24,7 @@ module.exports = ($auth, $q, User) => {
 
     logout() {
       return $auth
-        .logout()
+        .logout(...arguments)
         .then(_ => this.unsetCurrentUser());
     }
 

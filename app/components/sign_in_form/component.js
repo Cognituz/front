@@ -12,9 +12,11 @@ module.exports = {
     }
 
     loginWithFacebook() {
+      const data = {userType: this.userType};
+
       this.lockingScope(this, _ =>
         this.Auth
-          .signInViaOauth('facebook', {userType: 'student'})
+          .signInViaOauth('facebook', {data})
           .then(_ => this.afterLoginSuccess())
       );
     }
@@ -30,11 +32,11 @@ module.exports = {
 
     afterLoginSuccess() {
       this.$state.go('app.authenticated.teachers.list')
-        .then(_ => this.$mdToast.showSimple('¡Bienvenido a Cognituz!'))
+        .then(_ => this.$mdToast.showSimple('¡Bienvenido a Cognituz!'));
     }
 
     afterLoginFailure() {
-      this.$mdToast.showSimple('Email o contraseña incorrectos')
+      this.$mdToast.showSimple('Email o contraseña incorrectos');
     }
   }
 };

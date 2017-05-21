@@ -4,6 +4,7 @@ module.exports = {
     constructor(
       $mdToast,
       Auth,
+      MercadoPago,
       Neighborhood,
       SubjectGroup,
       User,
@@ -12,7 +13,8 @@ module.exports = {
       'ngInject';
 
       this.$mdToast     = $mdToast;
-      this.Auth         = Auth
+      this.Auth         = Auth;
+      this.MercadoPago  = MercadoPago;
       this.lockingScope = lockingScope;
 
       this.weekDays = {

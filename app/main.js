@@ -41,6 +41,7 @@ angular
   .service('Auth',                  require('services/auth'))
   .service('lockingScope',          require('services/locking_scope'))
   .service('AppointmentFormDialog', require('components/appointment/form/dialog'))
+  .service('MercadoPago',           require('services/mercado_pago'))
  
   // Serializers, used by models to serialize and deserialize JSON
   .factory('DateSerializer', require('serializers/date'))
