@@ -6,7 +6,12 @@ module.exports = (
 ) => {
   'ngInject';
 
-  class ClassAppointment extends RailsResource {}
+  class ClassAppointment extends RailsResource {
+    get cost() {
+      return this.teacher && this.duration &&
+        this.teacher.hourlyPrice * this.duration;
+    }
+  }
 
   ClassAppointment.configure({
     url:  `${API_URL}/v1/class_appointments`,

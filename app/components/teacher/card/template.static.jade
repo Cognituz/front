@@ -9,5 +9,5 @@ md-card(
     p(ng-bind=':: $ctrl.teacher.shortDesc')
 
   md-button.md-primary.md-raised(
-    ng-click='$ctrl.AppointmentFormDialog.show($ctrl.teacher)'
+    ng-click='$ctrl.AppointmentFormDialog.show($ctrl.teacher, $event)'
   ) Reservar
