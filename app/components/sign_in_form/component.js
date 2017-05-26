@@ -31,7 +31,7 @@ module.exports = {
     }
 
     afterLoginSuccess() {
-      this.$state.go('app.authenticated.teachers.list')
+      this.$state.go('app.s.teachers.list')
         .then(_ => this.$mdToast.showSimple('¡Bienvenido a Cognituz!'));
     }
 

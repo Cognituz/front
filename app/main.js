@@ -61,10 +61,10 @@ angular
   .directive('ctzLoading', require('directives/loading'))
 
   // Components
-  .component('ctzApp',                  require('components/app/component'))
-  .component('ctzHome',                 require('components/home/component'))
   .component('ctzContactForm',          require('components/contact_form/component'))
+  .component('ctzApp',                  require('components/app/component'))
   .component('ctzAppLayout',            require('components/app/layout/component'))
+  .component('ctzHome',                 require('components/home/component'))
   .component('ctzSignInFormWrapper',    require('components/sign_in_form/wrapper/component'))
   .component('ctzSignInForm',           require('components/sign_in_form/component'))
   .component('ctzSignUpForm',           require('components/sign_up_form/component'))
@@ -73,10 +73,12 @@ angular
   .component('ctzTeacherList',          require('components/teacher/list/component'))
   .component('ctzTeacherListFilters',   require('components/teacher/list/filters/component'))
   .component('ctzTeacherCard',          require('components/teacher/card/component'))
-  .component('ctzAppointmentForm',      require('components/appointment/form/component'))
   .component('ctzTeacherProfileEditor', require('components/teacher/profile/editor/component'))
   .component('ctzSubjectSelect',        require('components/subject_select/component'))
   .component('ctzFileInput',            require('components/file_input/component'))
+  .component('ctzAppointmentForm',      require('components/appointment/form/component'))
+  .component('ctzAppointmentList',      require('components/appointment/list/component'))
+  .component('ctzAppointmentCard',      require('components/appointment/card/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)

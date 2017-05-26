@@ -36,8 +36,8 @@ module.exports = {
       this.credentials = {};
 
       this.$state
-        .go('app.authenticated.students.profile.edit', {
-          afterSaveRedirectTo: 'app.authenticated.teachers.list'
+        .go('app.s.students.profile.edit', {
+          afterSaveRedirectTo: 'app.s.teachers.list'
         })
         .then(_ => this.$mdToast.showSimple('¡Bienvenido a Cognituz!'));
     }

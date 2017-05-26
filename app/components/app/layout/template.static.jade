@@ -9,7 +9,15 @@ div(
       span(elem='header-brand' ): img(src='/images/logo.png')
 
       div(layout='row' ng-if='$ctrl.Auth.currentUser')
-        md-button(ui-sref='app.authenticated.teachers.list') Profesores
+        md-button(
+          ui-sref='app.s.teachers.list'
+          ui-sref-active='md-raised'
+        ) Profesores
+
+        md-button(
+          ui-sref='app.s.appointments.list'
+          ui-sref-active='md-raised'
+        ) Agenda
 
       span(flex)
 
@@ -20,13 +28,13 @@ div(
 
           md-menu-content(width=2)
             md-menu-item(ng-if='$ctrl.Auth.currentUser.isStudent')
-              md-button(ui-sref='app.authenticated.students.profile.edit') Editar perfil
+              md-button(ui-sref='app.s.students.profile.edit') Editar perfil
 
             md-menu-item(ng-if='$ctrl.Auth.currentUser.isStudent')
-              md-button(ui-sref='app.authenticated.students.profile.edit') Cambiar contraseña
+              md-button(ui-sref='app.s.students.profile.edit') Cambiar contraseña
 
             md-menu-item(ng-if='$ctrl.Auth.currentUser.isTeacher')
-              md-button(ui-sref='app.authenticated.teachers.profile.edit') Editar perfil
+              md-button(ui-sref='app.s.teachers.profile.edit') Editar perfil
 
             md-divider
 

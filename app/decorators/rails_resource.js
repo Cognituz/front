@@ -18,5 +18,25 @@ module.exports = $delegate => {
     return this.$http(config);
   };
 
+  // Performs a RESTful member action
+  // Default HTTP method is PUT
+  $delegate.prototype.performAction = function(action, queryParams = {}) {
+    const url = this.$url(action);
+    return this.$put(url, this, queryParams);
+  };
+
+  // Just alias
+  $delegate.prototype.perform = $delegate.prototype.performAction;
+
+  // Just an alias for perform('trasition/eventName')
+  $delegate.prototype.transition = function(eventName) {
+    return this.performAction(`transition`, {event: eventName});
+  };
+
+  // Depends on API exposing an attribute availableStatusTransitions
+  $delegate.prototype.isTransitionAvailable = function(eventName) {
+    return this.availableStatusTransitions.indexOf(eventName) !== -1;
+  };
+
   return $delegate;
 };

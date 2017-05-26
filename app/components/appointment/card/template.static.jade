@@ -1,0 +1,57 @@
+md-card
+  md-card-header
+    md-card-avatar
+      img.md-user-avatar(ng-src='{{:: $ctrl.displayedUser.avatar }}')
+    md-card-header-text
+      .md-title(ng-bind=':: $ctrl.displayedUser.name')
+      .md-subhead(ng-bind=':: $ctrl.displayedUser.shortDesc')
+
+  md-card-content(layout='column')
+    table
+      tr
+        td Estado
+        td(ng-bind="::  $ctrl.appointment.status")
+
+      tr
+        td Tipo
+        td(ng-bind="::  $ctrl.appointment.kind")
+
+      tr(ng-if=':: $ctrl.appointment.kind === "at_public_place"')
+        td Lugar
+        td(ng-bind="::  $ctrl.appointment.placeDesc")
+
+      tr
+        td Empieza
+        td(ng-bind="::  $ctrl.appointment.startsAt")
+
+      tr
+        td Termina
+        td(ng-bind="::  $ctrl.appointment.endsAt")
+
+      tr
+        td Duración
+        td {{:: $ctrl.appointment.duration }} horas
+
+      tr
+        td Materias
+        td(ng-bind="::  $ctrl.appointment.desc")
+
+      tr
+        td Tema
+        td(ng-bind="::  $ctrl.appointment.desc")
+
+  md-card-actions(
+    layout='row'
+    layout-align='end end'
+    ng-if='$ctrl.appointments.availableStatusTransitions.length'
+  )
+    md-button(
+      ng-click='$ctrl.cancel()'
+      ng-disabled='!$ctrl.appointment.isTransitionAvailable("cancel")'
+    ) Cancelar
+
+    md-button.md-raised.md-primary(
+      ng-click='$ctrl.confirm()'
+      ng-disabled='!$ctrl.appointment.isTransitionAvailable("confirm")'
+      ng-if='$ctrl.userType === "teacher"'
+    ) Confirmar

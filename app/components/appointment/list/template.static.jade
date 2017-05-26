@@ -1,0 +1,36 @@
+div(
+  block='ctz-appointment-list'
+  layout-fill
+  layout='column'
+)
+  md-toolbar.md-hue-1.md-whiteframe-z1: .md-toolbar-tools(layout='row')
+    .md-toolbar-item
+      md-input-container(md-no-float)
+        md-select(
+          ng-model='$ctrl.filters.status'
+          ng-change='$ctrl.getClassAppointments()'
+          placeholder='Filtrar estado'
+        )
+          md-option(
+            ng-repeat='(value, label) in $ctrl.statuses track by $index'
+            ng-bind=':: label'
+            ng-value=':: value'
+          )
+
+  md-content(
+    flex
+    layout='row'
+    layout-align='center start'
+  )
+    div(
+      layout='column'
+      flex
+      flex-md=50
+      flex-lg=40
+      flex-xl=25
+    )
+      div(ng-repeat='a in $ctrl.appointments')
+        ctz-appointment-card(
+          appointment=':: a'
+          user-type='$ctrl.user.isTeacher ? "teacher" : "student"'
+        )

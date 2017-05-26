@@ -68,28 +68,39 @@ module.exports = (
         template: '<ui-view layout-fill/>'
       })
 
-      .state('app.authenticated', {
+      // Secured by resolving currentUser
+      .state('app.s', {
         url: '/s',
         abstract: true,
         resolve: {currentUser: getCurrentUserOrRedirect},
         template: '<ui-view layout-fill/>'
       })
 
-        .state('app.authenticated.students', {
+        .state('app.s.appointments', {
+          url: '/clases',
+          abstract: true,
+          template: '<ui-view layout-fill/>'
+        })
+        .state('app.s.appointments.list', {
+          url: '',
+          template: '<ctz-appointment-list/>'
+        })
+
+        .state('app.s.students', {
           url: '/estudiantes',
           abstract: true,
           template: '<ui-view layout-fill/>'
         })
-          .state('app.authenticated.students.profile', {
+          .state('app.s.students.profile', {
             url: '/perfil',
             abstract: true,
             template: '<ui-view layout-fill/>'
           })
-            .state('app.authenticated.students.profile.edit', {
+            .state('app.s.students.profile.edit', {
               url: '/editar?afterSaveRedirectTo',
               template: '<ctz-student-profile-editor after-save="$ctrl.afterSave()" layout-fill/>',
               controllerAs: '$ctrl',
-              controller: class  {
+              controller: class {
                 constructor($state, $stateParams) {
                   'ngInject';
                   this.$state       = $state;
@@ -106,25 +117,25 @@ module.exports = (
               }
             })
 
-        .state('app.authenticated.teachers', {
+        .state('app.s.teachers', {
           url: '/profesores',
           abstract: true,
           template: '<ui-view layout-fill/>'
         })
-          .state('app.authenticated.teachers.profile', {
+          .state('app.s.teachers.profile', {
             url: '/perfil',
             abstract: true,
             template: '<ui-view layout-fill/>'
           })
-            .state('app.authenticated.teachers.profile.edit', {
+            .state('app.s.teachers.profile.edit', {
               url: '/editar',
               template: '<ctz-teacher-profile-editor layout-fill/>',
             })
-          .state('app.authenticated.teachers.list', {
+          .state('app.s.teachers.list', {
             url: '/',
             template: '<ctz-teacher-list/>'
           })
-          .state('app.authenticated.teachers.show', {
+          .state('app.s.teachers.show', {
             url: '/:id',
             resolve: { teacher: (User, $stateParams) => User.get($stateParams.id) },
             onEnter: (teacher, $mdDialog, $mdMedia) => {
