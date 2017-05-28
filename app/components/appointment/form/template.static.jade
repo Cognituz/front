@@ -64,6 +64,8 @@ form(
             time="true"
             show-todays-date
             ng-model="$ctrl.appointment.startsAt"
+            min-date=":: $ctrl.minDate"
+            max-date=":: $ctrl.maxDate"
           )
 
         md-input-container(flex=25)

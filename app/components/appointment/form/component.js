@@ -2,6 +2,10 @@ module.exports = {
   templateUrl: '/components/appointment/form/template.html',
   bindings: {teacher: '<'},
   controller: class {
+    classType = 'faceToFace';
+    minDate   = moment().add(1, 'day');
+    maxDate   = moment().add(2, 'weeks');
+
     constructor($mdDialog, $mdMedia, $mdToast, $q, Auth, ClassAppointment, PaymentPreference) {
       'ngInject';
 
@@ -15,8 +19,6 @@ module.exports = {
     }
 
     $onInit() {
-      this.classType = 'faceToFace';
-
       this.appointment =
         new this.ClassAppointment({
           teacher:   this.teacher,
@@ -28,7 +30,6 @@ module.exports = {
           placeDesc: 'un lugar re copado',
           subjects:  this.teacher.taughtSubjects.slice(0, 3),
           desc:      'Quiero saber el teorema de pitágoras',
-          startsAt:  new Date(2017, 6, 23, 16, 30),
           duration:  2
         });
     }
