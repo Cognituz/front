@@ -2,7 +2,7 @@ module.exports = {
   templateUrl: '/components/teacher/list/filters/template.html',
   require: {ngModel: 'ngModel'},
   controller: class {
-    constructor($scope, Neighborhood, SubjectGroup) {
+    constructor($scope, Neighborhood) {
       'ngInject';
 
       $scope.$watch(

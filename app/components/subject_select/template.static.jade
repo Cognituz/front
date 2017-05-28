@@ -15,11 +15,11 @@ md-select(
     )
 
   md-optgroup(
-    ng-repeat='$level in $ctrl.subjectGroups'
-    label='{{:: $level.name || "Otros" }}'
+    ng-repeat='(level, studySubjects) in $ctrl.studySubjects'
+    label='{{:: level === null ? "Otros" : level }}'
   )
     md-option(
-      ng-repeat='s in $level.subjects | fuzzy: $ctrl.searchTerm'
-      ng-value='{level: $level.name, name: s}'
-      ng-bind='s'
+      ng-repeat='ss in studySubjects | fuzzy: $ctrl.searchTerm'
+      ng-value='ss.id'
+      ng-bind='ss.name'
     )

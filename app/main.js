@@ -49,7 +49,7 @@ angular
   // API consumers aka models
   .service('ContactForm',       require('models/contact_form'))
   .service('User',              require('models/user'))
-  .service('SubjectGroup',      require('models/subject_group'))
+  .service('StudySubject',      require('models/study_subject'))
   .service('Neighborhood',      require('models/neighborhood'))
   .service('ClassAppointment',  require('models/class_appointment'))
   .service('PaymentPreference', require('models/mercado_pago/payment_preference'))

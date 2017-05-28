@@ -34,7 +34,10 @@ md-card
 
       tr
         td Materias
-        td(ng-bind="::  $ctrl.appointment.desc")
+        td
+          span(ng-repeat="ss in $ctrl.appointment.studySubjects")
+            | {{ ss.level }} - {{ ss.name }}
+            span(ng-if='!$last') , 
 
       tr
         td Tema

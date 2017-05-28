@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 module.exports = {
   templateUrl: '/components/teacher/profile/editor/template.html',
   controller: class {
@@ -6,7 +8,6 @@ module.exports = {
       Auth,
       MercadoPago,
       Neighborhood,
-      SubjectGroup,
       User,
       lockingScope
     ) {
@@ -29,14 +30,9 @@ module.exports = {
 
       Neighborhood.query().then(ngs => this.neighborhoods = ngs);
 
-      SubjectGroup.query()
-        .then(sgs => {
-          this.subjectGroups = sgs;
-
-          Auth
-            .getCurrentUser()
-            .then(user => this.teacher = user);
-        });
+      Auth
+        .getCurrentUser()
+        .then(user => this.teacher = user);
     }
 
     partialPath(key) {

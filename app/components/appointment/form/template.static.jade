@@ -47,8 +47,8 @@ form(
       md-input-container
         label Materias
         ctz-subject-select(
-          ng-model='$ctrl.appointment.subjects'
-          subjects='$ctrl.teacher.subjectGroups'
+          ng-model='$ctrl.appointment.studySubjectIds'
+          study-subjects='$ctrl.teacher.taughtSubjects'
         )
 
       md-input-container

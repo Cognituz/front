@@ -1,19 +1,22 @@
-const Fuse = require('fuse.js');
+const _ = require('lodash');
 
 module.exports = {
   templateUrl: '/components/subject_select/template.html',
   bindings: {
-    subjectGroups: '=?',
     outsideModel:  '<ngModel',
-    required:      '<?'
+    required:      '<?',
+
+    // to be able to select from a different list of subjects,
+    // like the taught subjects list of a teacher
+    studySubjects: '=?'
   },
   require: {ngModel: 'ngModel'},
   controller: class {
-    constructor($element, $timeout, $scope, SubjectGroup) {
+    constructor($element, $timeout, $scope, StudySubject) {
       this.$element     = $element;
       this.$timeout     = $timeout;
       this.$scope       = $scope;
-      this.SubjectGroup = SubjectGroup;
+      this.StudySubject = StudySubject;
 
       this.containerClass = `ctz-select-container_${new Date().getTime()}`;
     }
@@ -22,9 +25,11 @@ module.exports = {
       this.$scope.$watch(_ => this.model, m => this.ngModel.$setViewValue(m));
       this.ngModel.$render = _ => this.model = this.ngModel.$modelValue;
 
-      if (!this.subjectGroups)
-        this.SubjectGroup.query()
-          .then(sgs => this.subjectGroups = sgs);
+      if (this.studySubjects)
+        this.studySubjects = _.groupBy(this.studySubjects, 'level')
+      else
+        this.StudySubject.query()
+          .then(sss => this.studySubjects = _.groupBy(sss, 'level'));
     }
 
     get $input() { return $(`.${this.containerClass}`).find('input'); }

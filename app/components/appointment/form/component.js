@@ -28,7 +28,7 @@ module.exports = {
           placeDesc: 'un lugar re copado',
           subjects:  this.teacher.taughtSubjects.slice(0, 3),
           desc:      'Quiero saber el teorema de pitágoras',
-          startsAt:  new Date(2017, 5, 23, 16, 30),
+          startsAt:  new Date(2017, 6, 23, 16, 30),
           duration:  2
         });
     }
