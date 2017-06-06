@@ -28,13 +28,13 @@ div(
 
           md-menu-content(width=2)
             md-menu-item(ng-if='$ctrl.Auth.currentUser.isStudent')
-              md-button(ui-sref='app.s.students.profile.edit') Editar perfil
+              md-button(ui-sref='app.s.students.profile.edit') Editar perfil de estudiante
+
+            md-menu-item(ng-if='$ctrl.Auth.currentUser.isTeacher')
+              md-button(ui-sref='app.s.teachers.profile.edit') Editar perfil de profesor
 
             md-menu-item(ng-if='$ctrl.Auth.currentUser.isStudent')
               md-button(ui-sref='app.s.students.profile.edit') Cambiar contraseña
-
-            md-menu-item(ng-if='$ctrl.Auth.currentUser.isTeacher')
-              md-button(ui-sref='app.s.teachers.profile.edit') Editar perfil
 
             md-divider
 
