@@ -74,28 +74,10 @@ module.exports = {
       u.taughtSubjects.push({});
     }
 
-    setMetaLevel(ts) {
-      ts.$level = this.subjectGroups.find(sb => sb.name == ts.level);
-    }
-
     addAvailabilityPeriod() {
       const u = this.teacher;
       u.availabilityPeriods = u.availabilityPeriods || [];
       u.availabilityPeriods.push({});
-    }
-
-    setSfsow(ap) {
-      if (!(ap.weekDay && ap.startsAt && ap.endsAt)) return;
-      ap.startsAtSfsow = this._sfsowFor(ap.weekDay, ap.startsAt);
-      ap.endsAtSfsow   = this._sfsowFor(ap.weekDay, ap.endsAt);
-    }
-
-    _sfsowFor(weekDay, time) {
-      const weekPart = weekDay * 24 * 60 * 60;
-      const timePart = time.getHours() * 60 * 60 + time.getMinutes() * 60;
-      const offset   = time.getTimezoneOffset() * 60;
-
-      return weekPart + timePart + offset;;
     }
   }
 }

@@ -32,15 +32,15 @@
           date="true"
           time="true"
           show-todays-date
-          ng-model="$ctrl.filters.date"
+          ng-model="$ctrl.filters.availableAt.date"
         )
 
       md-input-container(flex=25)
         label Horas
         input(
-          ng-model='$ctrl.filters.hours'
           type='number' min=0 max=10
-          ng-disabled='!$ctrl.filters.date'
+          ng-model='$ctrl.filters.availableAt.duration'
+          ng-disabled='!$ctrl.filters.availableAt.date'
         )
 
     div(layout='column' ng-if='$ctrl.filters.classType == "presential"')

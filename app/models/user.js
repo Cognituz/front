@@ -34,6 +34,8 @@ module.exports = (
       this.nestedAttribute('taughtSubjects');
       this.nestedAttribute('location');
       this.nestedAttribute('availabilityPeriods');
+      this.serializeWith('startsAt', 'DateSerializer');
+      this.serializeWith('endsAt', 'DateSerializer');
     })
   });
 
