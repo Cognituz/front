@@ -41,6 +41,7 @@
           type='number' min=0 max=10
           ng-model='$ctrl.filters.availableAt.duration'
           ng-disabled='!$ctrl.filters.availableAt.date'
+          ng-required='$ctrl.filters.availableAt.date'
         )
 
     div(layout='column' ng-if='$ctrl.filters.classType == "presential"')

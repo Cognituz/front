@@ -79,6 +79,7 @@ angular
   .component('ctzAppointmentForm',      require('components/appointment/form/component'))
   .component('ctzAppointmentList',      require('components/appointment/list/component'))
   .component('ctzAppointmentCard',      require('components/appointment/card/component'))
+  .component('ctzVirtualClassroom',     require('components/virtual_classroom/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)

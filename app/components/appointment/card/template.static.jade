@@ -1,36 +1,36 @@
 md-card
   md-card-header
     md-card-avatar
-      img.md-user-avatar(ng-src='{{:: $ctrl.displayedUser.avatar }}')
+      img.md-user-avatar(ng-src='{{$ctrl.displayedUser.avatar }}')
     md-card-header-text
-      .md-title(ng-bind=':: $ctrl.displayedUser.name')
-      .md-subhead(ng-bind=':: $ctrl.displayedUser.shortDesc')
+      .md-title(ng-bind='$ctrl.displayedUser.name')
+      .md-subhead(ng-bind='$ctrl.displayedUser.shortDesc')
 
   md-card-content(layout='column')
     table
       tr
         td Estado
-        td(ng-bind="::  $ctrl.appointment.status")
+        td(ng-bind=" $ctrl.appointment.status")
 
       tr
         td Tipo
-        td(ng-bind="::  $ctrl.appointment.kind")
+        td(ng-bind="$ctrl.appointment.kind")
 
-      tr(ng-if=':: $ctrl.appointment.kind === "at_public_place"')
+      tr(ng-if='$ctrl.appointment.kind === "at_public_place"')
         td Lugar
-        td(ng-bind="::  $ctrl.appointment.placeDesc")
+        td(ng-bind="$ctrl.appointment.placeDesc")
 
       tr
         td Empieza
-        td(ng-bind="::  $ctrl.appointment.startsAt")
+        td(ng-bind="$ctrl.appointment.startsAt")
 
       tr
         td Termina
-        td(ng-bind="::  $ctrl.appointment.endsAt")
+        td(ng-bind="$ctrl.appointment.endsAt")
 
       tr
         td Duración
-        td {{:: $ctrl.appointment.duration }} horas
+        td {{$ctrl.appointment.duration }} horas
 
       tr
         td Materias
@@ -41,12 +41,12 @@ md-card
 
       tr
         td Tema
-        td(ng-bind="::  $ctrl.appointment.desc")
+        td(ng-bind="$ctrl.appointment.desc")
 
   md-card-actions(
     layout='row'
     layout-align='end end'
-    ng-if='$ctrl.appointments.availableStatusTransitions.length'
+    ng-if='$ctrl.appointment.availableStatusTransitions.length'
   )
     md-button(
       ng-click='$ctrl.cancel()'
@@ -58,3 +58,8 @@ md-card
       ng-disabled='!$ctrl.appointment.isTransitionAvailable("confirm")'
       ng-if='$ctrl.userType === "teacher"'
     ) Confirmar
+
+    md-button.md-primary.md-raised(
+      ui-sref='app.s.appointments.virtualClassroom({id: $ctrl.appointment.id})'
+      ng-if='$ctrl.appointment.status === "live"'
+    ) Ir al aula virtual

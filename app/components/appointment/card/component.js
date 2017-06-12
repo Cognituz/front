@@ -13,5 +13,6 @@ module.exports = {
     }
 
     cancel() { this.appointment.transition('cancel'); }
+    confirm() { this.appointment.transition('confirm'); }
   }
 };

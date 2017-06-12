@@ -49,6 +49,7 @@ form(
         ctz-subject-select(
           ng-model='$ctrl.appointment.studySubjectIds'
           study-subjects='$ctrl.teacher.taughtSubjects'
+          required
         )
 
       md-input-container
@@ -64,8 +65,6 @@ form(
             time="true"
             show-todays-date
             ng-model="$ctrl.appointment.startsAt"
-            min-date=":: $ctrl.minDate"
-            max-date=":: $ctrl.maxDate"
           )
 
         md-input-container(flex=25)
