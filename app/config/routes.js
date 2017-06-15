@@ -86,15 +86,21 @@ module.exports = (
           template: '<ctz-appointment-list/>'
         })
         .state('app.s.appointments.virtualClassroom', {
-          url: '/:id/aula_virtual',
-          template: '<ctz-virtual-classroom appointment="appointment"/>',
+          url: '/:id/aula_virtual?userType',
+          template: `<ctz-virtual-classroom
+            appointment="appointment"
+            user-type="userType"
+          />`,
           resolve: {
             appointment: (ClassAppointment, $stateParams) => {
               'ngInject';
               return ClassAppointment.get($stateParams.id);
             }
           },
-          controller: inject({resolves: ['appointment']})
+          controller: inject({
+            resolves: ['appointment'],
+            stateParams: ['userType']
+          })
         })
 
         .state('app.s.students', {

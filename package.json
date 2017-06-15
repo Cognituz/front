@@ -30,9 +30,11 @@
     "ng-mask": "^3.1.1",
     "ng-material-datetimepicker": "^1.5.9",
     "normalize.css": "^5.0.0",
+    "peerjs-client": "^0.3.15",
     "qs": "^6.4.0",
     "query-string": "^4.3.2",
-    "satellizer": "^0.15.5"
+    "satellizer": "^0.15.5",
+    "simplewebrtc": "^3.0.0"
   },
   "devDependencies": {
     "auto-reload-brunch": "^2.0.0",

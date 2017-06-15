@@ -1,1 +1,33 @@
-| PETE
+div(
+  block='ctz-virtual-classroom'
+  layout-fill
+  layout='column'
+)
+  div(layout='row' style='background-color: wheat')
+    md-button.md-raied(ng-click='$ctrl.performCall()') Call
+
+    md-button.md-raised.md-accent(
+      ng-if='$ctrl.call'
+      ng-click='$ctrl.call.close()'
+    ) Close call
+
+  div(flex layout='row' style='background-color: tomato')
+    .whiteboard-wrapper(flex=75 style='background-color: aliceblue')
+      ul: li(ng-repeat='line in $ctrl.log' ng-bind=':: line')
+
+    .comms-wrapper(
+      flex=25
+      layout='column'
+    )
+      video(
+        autoplay
+        style='\
+          display: block;         \
+          width: 100%;            \
+          height: auto;           \
+          background-color: black \
+        '
+      )
+
+      div(flex style='background-color: blue')
+        | Look mah! Imma chat!
