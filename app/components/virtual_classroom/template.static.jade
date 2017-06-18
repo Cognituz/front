@@ -1,36 +1,34 @@
 div(
   block='ctz-virtual-classroom'
   layout-fill
-  layout='column'
 )
-  div(layout='row' style='background-color: wheat')
-    form(ng-submit='$ctrl.createRoom()')
-      md-input-container
-        label RoomName
-        input(ng-model='$ctrl.roomName')
+  div(
+    ng-if='!$ctrl.roomJoined'
+    layout-fill
+    layout='column'
+    layout-align='center center'
+  )
+    .md-body-1 ¿Estás listo para unirte a la clase?
 
-    form(ng-submit='$ctrl.joinRoom()')
-      md-input-container
-        label RoomNameToJoin
-        input(ng-model='$ctrl.roomToJoin')
+    md-button.md-primary.md-raised(
+      ng-click='$ctrl.joinRoom()'
+      ng-disabled='!$ctrl.roomCreated'
+    ) Unirse a la clase
 
-  div(flex layout='row' style='background-color: tomato')
-    .whiteboard-wrapper(flex=75 style='background-color: aliceblue')
-      ul: li(ng-repeat='line in $ctrl.log' ng-bind=':: line')
+  div(
+    ng-if='$ctrl.roomJoined'
+    layout-fill
+    layout='row'
+    style='background-color: tomato'
+  )
+      .whiteboard-wrapper(flex=75 style='background-color: aliceblue')
+        ul: li(ng-repeat='line in $ctrl.log' ng-bind=':: line')
 
-    .comms-wrapper(
-      flex=25
-      layout='column'
-    )
-      video(
-        autoplay
-        style='\
-          display: block;         \
-          width: 100%;            \
-          height: auto;           \
-          background-color: black \
-        '
+      .comms-wrapper(
+        flex=25
+        layout='column'
       )
+        ctz-video-holder(stream='$ctrl.remoteStream')
 
-      div(flex style='background-color: blue')
-        | Look mah! Imma chat!
+        div(flex style='background-color: blue')
+          | Look mah! Imma chat!
