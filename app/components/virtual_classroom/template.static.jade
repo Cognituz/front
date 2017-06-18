@@ -1,4 +1,4 @@
-div(
+.position-relative(
   block='ctz-virtual-classroom'
   layout-fill
 )
@@ -15,38 +15,42 @@ div(
     layout-fill
     layout='row'
   )
-      .whiteboard-wrapper(flex=75)
+    ctz-whiteboard(
+      flex
+      readonly=':: $ctrl.whiteboardReadonly'
+      on-signal=':: $ctrl.transmitWhiteboardSignal($functionName, $args)'
+      expose-controller-on='$ctrl.whiteboardCtrl'
+    )
+
+    md-sidenav.md-whiteframe-z1(
+      md-is-locked-open='true'
+      flex=25
+      layout='column'
+    )
+      ctz-video-holder(stream='$ctrl.remoteStream')
 
       md-divider
 
-      .comms-wrapper(
-        flex=25
-        layout='column'
-      )
-        ctz-video-holder(stream='$ctrl.remoteStream')
+      .md-no-empty-errors-spacer(flex layout='column')
+        md-content(flex)
+          div(layout='column')
+            md-card(ng-repeat='m in $ctrl.chat.messages track by $index')
+              md-card-content(ng-bind=':: m')
 
         md-divider
 
-        .md-no-empty-errors-spacer(flex layout='column')
-          md-content(flex)
-            div(layout='column')
-              md-card(ng-repeat='m in $ctrl.chat.messages track by $index')
-                md-card-content(ng-bind=':: m')
-
-          md-divider
-
-          form(
-            layout='row'
-            ng-submit='$ctrl.submitChatMessage()'
+        form(
+          layout='row'
+          ng-submit='$ctrl.submitChatMessage()'
+        )
+          md-input-container.no-margin(
+            flex
+            md-no-float='true'
           )
-            md-input-container.no-margin(
-              flex
-              md-no-float='true'
+            input(
+              placeholder='Escribí un mensage'
+              ng-model='$ctrl.chatMessage'
             )
-              input(
-                placeholder='Escribí un mensage'
-                ng-model='$ctrl.chatMessage'
-              )
-            md-button.md-icon-button(type='submit')
-              md-icon(md-svg-src='/images/icons/send.svg')
+          md-button.md-icon-button(type='submit')
+            md-icon(md-svg-src='/images/icons/send.svg')
 

@@ -2,7 +2,8 @@ module.exports = {
   templateUrl: '/components/virtual_classroom/template.html',
 
   bindings: {
-    appointment: '='
+    appointment:        '<',
+    whiteboardReadonly: '<'
   },
 
   controller: class {
@@ -34,6 +35,15 @@ module.exports = {
       this.webRTC.on('channelMessage', (peer, channelLabel, data) =>  {
         if (data.type === 'chatMessage')
           this.chat.messages.push(data.payload) && this.$scope.$apply();
+
+        if (data.type === 'whiteboardSignal') {
+          console.log('GOT SIGNAL');
+
+          this.whiteboardCtrl.consumeSignal({
+            functionName: data.payload.functionName,
+            args:         data.payload.args
+          });
+        }
       });
     }
 
@@ -49,6 +59,11 @@ module.exports = {
       this.webRTC.sendDirectlyToAll(undefined, 'chatMessage', this.chatMessage);
       this.chat.messages.push(this.chatMessage);
       delete this.chatMessage;
+    }
+
+    transmitWhiteboardSignal(functionName, args) {
+      const payload = {functionName, args};
+      this.webRTC.sendDirectlyToAll(undefined, 'whiteboardSignal', payload);
     }
   }
 };

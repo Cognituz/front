@@ -81,6 +81,7 @@ angular
   .component('ctzAppointmentCard',      require('components/appointment/card/component'))
   .component('ctzVirtualClassroom',     require('components/virtual_classroom/component'))
   .component('ctzVideoHolder',          require('components/video_holder/component'))
+  .component('ctzWhiteboard',           require('components/whiteboard/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)
