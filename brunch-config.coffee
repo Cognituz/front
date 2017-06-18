@@ -4,11 +4,11 @@ module.exports =
   files:
     javascripts:
       joinTo:
-        'vendor.js': /^(bower_components|(\/usr\/lib\/)?node_modules)/
+        'vendor.js': /^(bower_components|(\/usr\/lib\/)?node_modules|vendor)/
         'app.js':    /^app\//
     stylesheets:
       joinTo:
-        'vendor.css': /^(bower_components|(\/usr\/lib\/)?node_modules)/
+        'vendor.css': /^(bower_components|(\/usr\/lib\/)?node_modules|vendor)/
         'app.css':    /^app\//
       order:
         after: ['app/main.css']

@@ -32,5 +32,7 @@ html(
       }
       window.$MPC_loaded !== true ? (window.attachEvent ? window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null;
 
-    script(src='/vendor.js')
-    script(src='/app.js')
+    script(sync src='/vendor.js')
+    script(sync src='/app.js')
+    script(sync src='https://webrtc.github.io/adapter/adapter-latest.js')
+    script(sync src='https://simplewebrtc.com/simplewebrtc.bundle.js')

@@ -4,12 +4,15 @@ div(
   layout='column'
 )
   div(layout='row' style='background-color: wheat')
-    md-button.md-raied(ng-click='$ctrl.performCall()') Call
+    form(ng-submit='$ctrl.createRoom()')
+      md-input-container
+        label RoomName
+        input(ng-model='$ctrl.roomName')
 
-    md-button.md-raised.md-accent(
-      ng-if='$ctrl.call'
-      ng-click='$ctrl.call.close()'
-    ) Close call
+    form(ng-submit='$ctrl.joinRoom()')
+      md-input-container
+        label RoomNameToJoin
+        input(ng-model='$ctrl.roomToJoin')
 
   div(flex layout='row' style='background-color: tomato')
     .whiteboard-wrapper(flex=75 style='background-color: aliceblue')
