@@ -14,10 +14,10 @@ div(
     ng-if='$ctrl.roomJoined'
     layout-fill
     layout='row'
-    style='background-color: tomato'
   )
-      .whiteboard-wrapper(flex=75 style='background-color: aliceblue')
-        ul: li(ng-repeat='line in $ctrl.log' ng-bind=':: line')
+      .whiteboard-wrapper(flex=75)
+
+      md-divider
 
       .comms-wrapper(
         flex=25
@@ -25,5 +25,28 @@ div(
       )
         ctz-video-holder(stream='$ctrl.remoteStream')
 
-        div(flex style='background-color: blue')
-          | Look mah! Imma chat!
+        md-divider
+
+        .md-no-empty-errors-spacer(flex layout='column')
+          md-content(flex)
+            div(layout='column')
+              md-card(ng-repeat='m in $ctrl.chat.messages track by $index')
+                md-card-content(ng-bind=':: m')
+
+          md-divider
+
+          form(
+            layout='row'
+            ng-submit='$ctrl.submitChatMessage()'
+          )
+            md-input-container.no-margin(
+              flex
+              md-no-float='true'
+            )
+              input(
+                placeholder='Escribí un mensage'
+                ng-model='$ctrl.chatMessage'
+              )
+            md-button.md-icon-button(type='submit')
+              md-icon(md-svg-src='/images/icons/send.svg')
+

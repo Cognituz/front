@@ -18,6 +18,8 @@ module.exports = {
       debug:            true
     });
 
+    chat = {messages: []};
+
     $onInit() {
       this.roomName = `appointment-${this.appointment.id}`;
 
@@ -28,6 +30,11 @@ module.exports = {
         this.remoteStream = peer.stream;
         this.$scope.$apply();
       });
+
+      this.webRTC.on('channelMessage', (peer, channelLabel, data) =>  {
+        if (data.type === 'chatMessage')
+          this.chat.messages.push(data.payload) && this.$scope.$apply();
+      });
     }
 
     joinRoom(roomName = this.roomName) {
@@ -36,6 +43,12 @@ module.exports = {
 
     doJoinRoom(roomName = this.roomName) {
       return this.$q((f,r) => this.webRTC.joinRoom(roomName, e => e ? r(e) : f()));
+    }
+
+    submitChatMessage() {
+      this.webRTC.sendDirectlyToAll(undefined, 'chatMessage', this.chatMessage);
+      this.chat.messages.push(this.chatMessage);
+      delete this.chatMessage;
     }
   }
 };
