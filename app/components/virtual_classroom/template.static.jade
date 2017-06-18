@@ -8,12 +8,7 @@ div(
     layout='column'
     layout-align='center center'
   )
-    .md-body-1 ¿Estás listo para unirte a la clase?
-
-    md-button.md-primary.md-raised(
-      ng-click='$ctrl.joinRoom()'
-      ng-disabled='!$ctrl.roomCreated'
-    ) Unirse a la clase
+    md-progress-circular
 
   div(
     ng-if='$ctrl.roomJoined'

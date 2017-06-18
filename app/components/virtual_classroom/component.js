@@ -24,30 +24,14 @@ module.exports = {
       // Ensure room exists
       this.joinRoom();
 
-      this.webRTC.on('createdPeer', peer => {
-        if (peer.stream) {
-          this.remoteStream = peer.stream;
-          this.$scope.$apply();
-        }
-      });
-
       this.webRTC.on('videoAdded', (_, peer) => {
         this.remoteStream = peer.stream;
         this.$scope.$apply();
       });
     }
 
-    createRoom(roomName = this.roomName) {
-      this.doCreateRoom(roomName).then(_ => this.roomCreated = true);
-    }
-
     joinRoom(roomName = this.roomName) {
       this.doJoinRoom(roomName).then(_ => this.roomJoined = true);
-    }
-
-    // This method is idempotent, if room was already created won't complain
-    doCreateRoom(roomName = this.roomName) {
-      return this.$q((f,r) => this.webRTC.createRoom(roomName, e => e ? r(e) : f()));
     }
 
     doJoinRoom(roomName = this.roomName) {
