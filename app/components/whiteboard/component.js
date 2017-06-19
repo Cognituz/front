@@ -91,45 +91,40 @@ module.exports = {
       this.$timeout(_ => {
         this.canvas.width  = this.$canvas.parent().width();
         this.canvas.height = this.$canvas.parent().height();
-        console.log({signals: this.signals});
+        this.$setTool(this.currentTool);
         this.$timeout(_ => this.signals.forEach(s => this.consumeSignal(s, false)), 1000);
       });
     }
 
     draw(ev) {
-      const coords = this.setCoordinates(ev);
+      const [pointA, pointB] = this.getLine(ev);
       if (!this.mouseDown) { return; }
-      this.drawSegment(coords);
+      this.drawSegment(pointA, pointB);
     }
 
-    setCoordinates(ev) {
-      this.coords = this.coords || [];
-
-      this.coords[0] = this.coords[2];
-      this.coords[1] = this.coords[3];
-
+    getLine(ev) {
       const offset = this.$canvas.offset();
+      const pointB = [
+        ev.pageX - offset.left,
+        ev.pageY - offset.top
+      ];
+      const pointA = this.lastPoint;
+      const line = [pointA, pointB];
 
-      this.coords[2] = ev.pageX - offset.left;
-      this.coords[3] = ;
+      this.lastPoint = pointB;
 
-      //this.newPoint = [
-        //ev.pageX - offset.left,
-        //ev.pageY - offset.top
-      //];
-
-      return this.coords;
+      return line;
     }
 
-    getRelativeCoords(coords, [width, height]) {
+    getRelativeCoords([x1,y1], [x2,y2], [width, height]) {
       const _coords = [];
 
-      _coords[0] = (coords[0] * this.canvas.width) / parseInt(width);
-      _coords[1] = (coords[1] * this.canvas.height) / parseInt(height);
-      _coords[2] = (coords[2] * this.canvas.width) / parseInt(width);
-      _coords[3] = (coords[3] * this.canvas.height) / parseInt(height);
+      const _x1 = (x1 * this.canvas.width) / parseInt(width);
+      const _y1 = (y1 * this.canvas.height) / parseInt(height);
+      const _x2 = (x2 * this.canvas.width) / parseInt(width);
+      const _y2 = (y2 * this.canvas.height) / parseInt(height);
 
-      return _coords;
+      return [[_x1,_y1], [_x2,_y2]];
     }
 
     // Remote capabilities
@@ -151,10 +146,10 @@ module.exports = {
     storeSignal(signal) { this.signals.push(signal); }
 
     // Transmitable signals
-    drawSegment(coords) {
-      this.$drawSegment(coords);
+    drawSegment(pointA, pointB) {
+      this.$drawSegment(pointA, pointB);
       const canvasSize = [this.canvas.width, this.canvas.height];
-      this.signal("$drawSegment", coords, canvasSize);
+      this.signal("$drawSegment", pointA, pointB, canvasSize);
     }
 
     clear() {
@@ -168,15 +163,15 @@ module.exports = {
     }
 
     // The dollar sign in the method name means it is transmitable
-    $drawSegment(coords, canvasSize) {
-      const _coords =
+    $drawSegment(pointA, pointB, canvasSize) {
+      const [[_x1,_y1], [_x2,_y2]] =
         canvasSize ?
-        this.getRelativeCoords(coords, canvasSize) :
-        coords;
+        this.getRelativeCoords(pointA, pointB, canvasSize) :
+        [pointA, pointB];
 
       this.ctx.beginPath();
-      this.ctx.moveTo(_coords[0], _coords[1]);
-      this.ctx.lineTo(_coords[2], _coords[3]);
+      this.ctx.moveTo(_x1, _y1);
+      this.ctx.lineTo(_x2, _y2);
       this.ctx.closePath();
       this.ctx.stroke();
     }
