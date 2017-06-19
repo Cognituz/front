@@ -28,6 +28,9 @@ module.exports = {
       }
     };
 
+    // To store signals
+    signals = [];
+
     constructor($attrs, $element, $timeout, $window) {
       'ngInject';
       this.$attrs   = $attrs;
@@ -41,11 +44,9 @@ module.exports = {
       if (this.$attrs.exposeControllerOn) this.exposeControllerOn = this;
 
       this.adjustCanvasSize();
-      this.$setTool();
-      this.$window.addEventListener('resize', _ => {
-        this.$setTool();
-        this.adjustCanvasSize();
-      });
+      this.setTool();
+
+      this.$window.addEventListener('resize', _ => this.adjustCanvasSize());
 
       if (!this.readonly) {
         this.$canvas.on("mousedown touchstart", ev => {
@@ -90,17 +91,16 @@ module.exports = {
       this.$timeout(_ => {
         this.canvas.width  = this.$canvas.parent().width();
         this.canvas.height = this.$canvas.parent().height();
+        console.log({signals: this.signals});
+        this.$timeout(_ => this.signals.forEach(s => this.consumeSignal(s, false)), 1000);
       });
     }
 
     draw(ev) {
       const coords = this.setCoordinates(ev);
       if (!this.mouseDown) { return; }
-      const canvasSize = [this.canvas.width, this.canvas.height];
-      this.$drawSegment(coords);
-      this.signal("$drawSegment", coords, canvasSize);
+      this.drawSegment(coords);
     }
-
 
     setCoordinates(ev) {
       this.coords = this.coords || [];
@@ -111,31 +111,51 @@ module.exports = {
       const offset = this.$canvas.offset();
 
       this.coords[2] = ev.pageX - offset.left;
-      this.coords[3] = ev.pageY - offset.top;
+      this.coords[3] = ;
+
+      //this.newPoint = [
+        //ev.pageX - offset.left,
+        //ev.pageY - offset.top
+      //];
 
       return this.coords;
     }
 
-    getRelativeCoords(coords, canvasSize) {
-      var _coords = [];
+    getRelativeCoords(coords, [width, height]) {
+      const _coords = [];
 
-      _coords[0] = (coords[0] * this.canvas.width) / parseInt(canvasSize[0]);
-      _coords[1] = (coords[1] * this.canvas.height) / parseInt(canvasSize[1]);
-      _coords[2] = (coords[2] * this.canvas.width) / parseInt(canvasSize[0]);
-      _coords[3] = (coords[3] * this.canvas.height) / parseInt(canvasSize[1]);
+      _coords[0] = (coords[0] * this.canvas.width) / parseInt(width);
+      _coords[1] = (coords[1] * this.canvas.height) / parseInt(height);
+      _coords[2] = (coords[2] * this.canvas.width) / parseInt(width);
+      _coords[3] = (coords[3] * this.canvas.height) / parseInt(height);
 
       return _coords;
     }
 
     // Remote capabilities
     signal(functionName, ...args) {
+      this.storeSignal({functionName, args});
+
       this.onSignal && this.onSignal({
         $functionName: functionName,
         $args:         args
       });
     }
 
-    consumeSignal({functionName, args}) { this[functionName].apply(this, args); }
+    consumeSignal({functionName, args}, store = true) {
+      this[functionName].apply(this, args);
+      if (store) this.storeSignal({functionName, args});
+    }
+
+    // Store signals to be able to reconstruct the board later
+    storeSignal(signal) { this.signals.push(signal); }
+
+    // Transmitable signals
+    drawSegment(coords) {
+      this.$drawSegment(coords);
+      const canvasSize = [this.canvas.width, this.canvas.height];
+      this.signal("$drawSegment", coords, canvasSize);
+    }
 
     clear() {
       this.$clear();

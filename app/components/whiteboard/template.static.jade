@@ -1,26 +1,5 @@
 div(
   block='ctz-whiteboard'
-  position-relative
   layout-fill
-  layout='column'
 )
-  md-toolbar.md-hue-1.absolute-top(ng-if='!$ctrl.readonly')
-    .md-toolbar-tools(layout='row')
-      md-button.md-raised.md-icon-button(
-        ng-click='$ctrl.setTool("pencil")'
-        ng-class='$ctrl.currentTool === "pencil" && "md-accent"'
-      )
-        md-icon(md-svg-src='/images/icons/pencil.svg')
-        md-tooltip(md-direction='bottom') Lápiz
-
-      md-button.md-raised.md-icon-button(
-        ng-click='$ctrl.setTool("eraser")'
-        ng-class='$ctrl.currentTool === "eraser" && "md-accent"'
-      )
-        md-icon(md-svg-src='/images/icons/eraser.svg')
-        md-tooltip(md-direction='bottom') Goma
-
-      md-button.md-raised(ng-click='$ctrl.clear()') Borrar todo
-
-  div(flex)
-    canvas(style='background: whitesmoke')
+  canvas(style='background: tomato')

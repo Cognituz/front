@@ -15,15 +15,50 @@
     layout-fill
     layout='row'
   )
-    ctz-whiteboard(
-      flex
-      readonly=':: $ctrl.whiteboardReadonly'
-      on-signal=':: $ctrl.transmitWhiteboardSignal($functionName, $args)'
-      expose-controller-on='$ctrl.whiteboardCtrl'
-    )
+    div(flex layout='column')
+      md-toolbar.md-hue-1: .md-toolbar-tools
+        md-button.md-raised.md-icon-button(
+          ng-if='::!$ctrl.whiteboardCtrl.readonly'
+          ng-click='$ctrl.whiteboardCtrl.setTool("pencil")'
+          ng-class='$ctrl.whiteboardCtrl.currentTool === "pencil" && "md-accent"'
+        )
+          md-icon(md-svg-src='/images/icons/pencil.svg')
+          md-tooltip(md-direction='bottom') Lápiz
 
-    md-sidenav.md-whiteframe-z1(
-      md-is-locked-open='true'
+        md-button.md-raised.md-icon-button(
+          ng-if='::!$ctrl.whiteboardCtrl.readonly'
+          ng-click='$ctrl.whiteboardCtrl.setTool("eraser")'
+          ng-class='$ctrl.whiteboardCtrl.currentTool === "eraser" && "md-accent"'
+        )
+          md-icon(md-svg-src='/images/icons/eraser.svg')
+          md-tooltip(md-direction='bottom') Goma
+
+        md-button.md-raised(
+          ng-if='::!$ctrl.whiteboardCtrl.readonly'
+          ng-click='$ctrl.whiteboardCtrl.clear()'
+        ) Borrar todo
+
+        span(flex)
+
+        md-button(
+          ng-if='$ctrl.isSidenavOpen'
+          ng-click='$ctrl.closeSidenav()'
+        ) Ocultar chat y video
+
+        md-button(
+          ng-if='!$ctrl.isSidenavOpen'
+          ng-click='$ctrl.openSidenav()'
+        ) Mostrar chat y video
+
+      ctz-whiteboard(
+        flex
+        readonly=':: $ctrl.whiteboardReadonly'
+        on-signal=':: $ctrl.transmitWhiteboardSignal($functionName, $args)'
+        expose-controller-on='$ctrl.whiteboardCtrl'
+      )
+
+    md-sidenav.md-sidenav-right.md-whiteframe-z1(
+      md-is-locked-open='$ctrl.isSidenavOpen'
       flex=25
       layout='column'
     )

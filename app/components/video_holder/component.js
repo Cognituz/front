@@ -33,7 +33,6 @@ module.exports = {
 
     updateDisplay() {
       if (!this.stream) return;
-      console.log('STREAM PRESENT');
       this.$video.srcObject = this.stream;
     }
 

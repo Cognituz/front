@@ -7,19 +7,17 @@ module.exports = {
   },
 
   controller: class {
-    constructor($element, $q, $scope) {
+    isSidenavOpen = true;
+    webRTC        = new SimpleWebRTC({autoRequestMedia: true});
+    chat          = {messages: []};
+
+    constructor($q, $scope, $timeout) {
       'ngInject';
 
-      this.$q     = $q;
-      this.$scope = $scope;
+      this.$q       = $q;
+      this.$scope   = $scope;
+      this.$timeout = $timeout;
     }
-
-    webRTC = new SimpleWebRTC({
-      autoRequestMedia: true,
-      debug:            true
-    });
-
-    chat = {messages: []};
 
     $onInit() {
       this.roomName = `appointment-${this.appointment.id}`;
@@ -37,14 +35,18 @@ module.exports = {
           this.chat.messages.push(data.payload) && this.$scope.$apply();
 
         if (data.type === 'whiteboardSignal') {
-          console.log('GOT SIGNAL');
-
           this.whiteboardCtrl.consumeSignal({
             functionName: data.payload.functionName,
             args:         data.payload.args
           });
         }
       });
+    }
+
+    $onDestroy() {
+      this.webRTC.leaveRoom();
+      this.webRTC.stopLocalVideo();
+      this.webRTC.disconnect();
     }
 
     joinRoom(roomName = this.roomName) {
@@ -64,6 +66,16 @@ module.exports = {
     transmitWhiteboardSignal(functionName, args) {
       const payload = {functionName, args};
       this.webRTC.sendDirectlyToAll(undefined, 'whiteboardSignal', payload);
+    }
+
+    // Sidenav controls
+    closeSidenav() {
+      this.isSidenavOpen = false;
+      this.$timeout(_ => this.whiteboardCtrl.adjustCanvasSize(), 1000);
+    }
+    openSidenav() {
+      this.isSidenavOpen = true;
+      this.$timeout(_ => this.whiteboardCtrl.adjustCanvasSize(), 1000);
     }
   }
 };

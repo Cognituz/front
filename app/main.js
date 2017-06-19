@@ -2,6 +2,8 @@ window.$      = require('jquery');
 window.jQuery = require('jquery');
 window.moment = require('moment');
 
+require('jquery-elementresize');
+
 require('angular');
 require('angular-aria');
 require('angular-animate');
