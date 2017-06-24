@@ -17,24 +17,31 @@
     layout='row'
   )
     div(flex layout='column')
-      md-toolbar.md-hue-1.md-whiteframe-z1: .md-toolbar-tools
-        md-button.md-raised.md-icon-button(
+      md-toolbar.md-hue-1.md-whiteframe-z1: .md-toolbar-tools(layout='row')
+        md-button.md-icon-button(
           ng-if='::!$ctrl.whiteboardCtrl.readonly'
           ng-click='$ctrl.whiteboardCtrl.setTool("pencil")'
-          ng-class='$ctrl.whiteboardCtrl.currentTool === "pencil" && "md-accent"'
+          ng-class='$ctrl.whiteboardCtrl.currentTool === "pencil" && "md-raised md-accent"'
         )
           md-icon(md-svg-src='/images/icons/pencil.svg')
           md-tooltip(md-direction='bottom') Lápiz
 
-        md-button.md-raised.md-icon-button(
+        div(layout-margin)
+          md-slider(
+            min=5 max=30
+            ng-model="$ctrl.whiteboardCtrl.currentToolOptions.pencilWidth"
+          )
+          md-tooltip(md-direction='bottom') Grosor del lápiz
+
+        md-button.md-icon-button(
           ng-if='::!$ctrl.whiteboardCtrl.readonly'
           ng-click='$ctrl.whiteboardCtrl.setTool("eraser")'
-          ng-class='$ctrl.whiteboardCtrl.currentTool === "eraser" && "md-accent"'
+          ng-class='$ctrl.whiteboardCtrl.currentTool === "eraser" && "md-raised md-accent"'
         )
           md-icon(md-svg-src='/images/icons/eraser.svg')
           md-tooltip(md-direction='bottom') Goma
 
-        md-button.md-raised(
+        md-button(
           ng-if='::!$ctrl.whiteboardCtrl.readonly'
           ng-click='$ctrl.whiteboardCtrl.clear()'
         ) Borrar todo

@@ -79,7 +79,6 @@ module.exports = {
       }
     }
 
-
     // Handlers
     onChatMessage(message) {
       this.chat.messages.push(message)

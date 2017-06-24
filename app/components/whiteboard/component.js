@@ -1,3 +1,5 @@
+import {isMatch, memoize} from 'lodash';
+
 module.exports = {
   templateUrl: '/components/whiteboard/template.html',
 
@@ -8,23 +10,24 @@ module.exports = {
   },
 
   controller: class {
-    DEFAULT_TOOL = "pencil";
+    currentTool        = 'pencil';
+    currentToolOptions = {pencilWidth: 5};
 
     tools = {
-      pencil(canvas, ctx) {
-        setLineWidth(canvas, ctx, 5);
-        ctx.globalCompositeOperation = "source-over";
-        ctx.strokeStyle              = "black";
-        ctx.lineJoin                 = "round";
-        ctx.lineCap                  = "round";
+      pencil(toolOptions = {}) {
+        this.setLineWidth(toolOptions.pencilWidth);
+        this.ctx.globalCompositeOperation = "source-over";
+        this.ctx.strokeStyle              = "black";
+        this.ctx.lineJoin                 = "round";
+        this.ctx.lineCap                  = "round";
       },
 
-      eraser(canvas, ctx) {
-        setLineWidth(canvas, ctx, 25);
-        ctx.globalCompositeOperation = "destination-out";
-        ctx.strokeStyle              = "rgba(0,0,0,1)";
-        ctx.lineJoin                 = "square";
-        ctx.lineCap                  = "square";
+      eraser(toolOptions = {}) {
+        this.setLineWidth(25);
+        this.ctx.globalCompositeOperation = "destination-out";
+        this.ctx.strokeStyle              = "rgba(0,0,0,1)";
+        this.ctx.lineJoin                 = "square";
+        this.ctx.lineCap                  = "square";
       }
     };
 
@@ -62,7 +65,6 @@ module.exports = {
       this.resize();
       this.$window.addEventListener('resize', _ =>
         this.$scope.$apply(_ => this.resize())
-        //this.resize()
       );
 
       if (!this.readonly) {
@@ -101,8 +103,7 @@ module.exports = {
       return this.$timeout(_ => {
         this.canvas.width  = this.$element.width();
         this.canvas.height = this.$element.height();
-        return this.$setTool(this.currentTool)
-          .then(_ => this.reconstruct());
+        this.reconstruct();
       }, delay);
     }
 
@@ -149,6 +150,7 @@ module.exports = {
 
     consumeSignal({functionName, args}, store = true) {
       this[functionName].apply(this, args);
+      console.log({functionName, args});
       if (store) this.storeSignal({functionName, args});
     }
 
@@ -159,9 +161,9 @@ module.exports = {
 
     // Transmitable signals
     drawSegment(pointA, pointB) {
-      this.$drawSegment(pointA, pointB);
+      this.$drawSegment(pointA, pointB, this.currentTool, this.currentToolOptions);
       const canvasSize = [this.$canvas.width(), this.$canvas.height()];
-      this.signal("$drawSegment", pointA, pointB, canvasSize);
+      this.signal("$drawSegment", pointA, pointB, this.currentTool, this.currentToolOptions, canvasSize);
     }
 
     clear() {
@@ -169,13 +171,15 @@ module.exports = {
       this.signal('$clear');
     }
 
-    setTool(...args) {
-      this.$setTool(...args);
-      this.signal('$setTool');
+    setTool(toolName, toolOptions = this.currentToolOptions) {
+      this.$setTool(toolName, toolOptions)
+      this.signal('$setTool', toolName, toolOptions);
     }
 
     // The dollar sign in the method name means it is transmitable
-    $drawSegment(pointA, pointB, canvasSize) {
+    $drawSegment(pointA, pointB, tool, toolOptions, canvasSize) {
+      this.applyTool(tool, toolOptions);
+
       const [[_x1,_y1], [_x2,_y2]] =
         canvasSize ?
         this.getRelativeCoords(pointA, pointB, canvasSize) :
@@ -186,19 +190,24 @@ module.exports = {
       this.ctx.lineTo(_x2, _y2);
       this.ctx.closePath();
       this.ctx.stroke();
+      this.ctx.restore();
     }
 
     $clear() { this.ctx.clearRect(0,0, this.$canvas.width(), this.$canvas.height()); }
 
-    $setTool(toolName = this.DEFAULT_TOOL) {
-      return this.$timeout(_ => {
-        this.tools[toolName](this.canvas, this.ctx);
-        this.currentTool = toolName;
-      });
+    $setTool(toolName, toolOptions) {
+      this.currentTool        = toolName
+      this.currentToolOptions = toolOptions
+    }
+
+    // Other helpers
+    setLineWidth(val) {
+      this.ctx.lineWidth = (val * this.canvas.width)/800;
+    }
+
+    applyTool(tool, toolOptions, forceUpdate) {
+      this.tools[tool].call(this, toolOptions);
     }
   }
 };
 
-function setLineWidth(canvas, ctx, int) {
-  ctx.lineWidth = (int * canvas.width)/800;
-}
