@@ -61,16 +61,24 @@ module.exports = {
     }
 
     // Sidenav controls
-    closeSidenav() {
-      this.isSidenavOpen = false;
+    toggleSidenav() {
+      this.isSidenavOpen = !this.isSidenavOpen;
+      this.setVideoChatTooltip();
+      if (this.isSidenavOpen) this.unreadMessages = false;
       this.whiteboardCtrl.resize(1000);
     }
 
-    openSidenav() {
-      this.isSidenavOpen = true;
-      this.unreadMessages = false;
-      this.whiteboardCtrl.resize(1000);
+    setVideoChatTooltip() {
+      if (this.isSidenavOpen)
+        this.videoChatTooltip = 'Ocultar videochat';
+      else {
+        if (this.unreadMessages)
+          this.videoChatTooltip = 'Mostrar videochat (mensajes sin leer)';
+        else 
+          this.videoChatTooltip = 'Mostrar videochat';
+      }
     }
+
 
     // Handlers
     onChatMessage(message) {

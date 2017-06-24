@@ -1,6 +1,7 @@
 .position-relative(
   block='ctz-virtual-classroom'
   layout-fill
+  ngsf-fullscreen=""
 )
   div(
     ng-if='!$ctrl.roomJoined'
@@ -16,7 +17,7 @@
     layout='row'
   )
     div(flex layout='column')
-      md-toolbar.md-hue-1: .md-toolbar-tools
+      md-toolbar.md-hue-1.md-whiteframe-z1: .md-toolbar-tools
         md-button.md-raised.md-icon-button(
           ng-if='::!$ctrl.whiteboardCtrl.readonly'
           ng-click='$ctrl.whiteboardCtrl.setTool("pencil")'
@@ -40,22 +41,21 @@
 
         span(flex)
 
-        md-button(
-          ng-if='$ctrl.isSidenavOpen'
-          ng-click='$ctrl.closeSidenav()'
-        ) Ocultar chat y video
+        md-button.md-icon-button(ngsf-toggle-fullscreen='')
+          md-icon(show-if-fullscreen="false" md-svg-src='/images/icons/enter_fullscreen.svg')
+          md-icon(show-if-fullscreen="true" md-svg-src='/images/icons/exit_fullscreen.svg')
+          md-tooltip Entrar en modo fullscreen
 
-        md-button(
-          ng-if='!$ctrl.isSidenavOpen'
-          ng-click='$ctrl.openSidenav()'
+        md-button.md-icon-button(
+          ng-click='$ctrl.toggleSidenav()'
           ng-class='$ctrl.unreadMessages && "md-accent md-raised"'
-        ) Mostrar chat y video
-          md-tooltip(
-            ng-if="$ctrl.unreadMessages"
-            md-direction='bottom'
-            md-visible='::true'
-          )
-            | Mensajes sin leer
+        )
+          md-icon(md-svg-src='/images/icons/video_chat.svg')
+          md-tooltip(md-direction='bottom')
+            span(ng-if='$ctrl.isSidenavOpen') Ocultar videochat
+            span(ng-if='!$ctrl.isSidenavOpen')
+              | Mostrar videochat
+              span(ng-if='$ctrl.unreadMessages') &nbsp;(Mensajes sin leer)
 
       ctz-whiteboard(
         flex

@@ -1,9 +1,13 @@
-window.$      = require('jquery');
-window.jQuery = require('jquery');
-window.moment = require('moment');
+// Globals
+window.$          = require('jquery');
+window.jQuery     = require('jquery');
+window.moment     = require('moment');
+window.screenfull = require('screenfull');
 
+// Jquery plugins. Yes I use them
 require('jquery-elementresize');
 
+// Angular plugins
 require('angular');
 require('angular-aria');
 require('angular-animate');
@@ -15,6 +19,7 @@ require('satellizer');
 require('ng-file-upload');
 require('ng-material-datetimepicker');
 require('ng-infinite-scroll');
+require('angular-screenfull');
 
 angular
   .module('cognituzFront', [
@@ -27,7 +32,8 @@ angular
     'satellizer',
     'ngFileUpload',
     'ngMaterialDatePicker',
-    'infinite-scroll'
+    'infinite-scroll',
+    'angularScreenfull'
   ])
 
   // Configuration Blocks
