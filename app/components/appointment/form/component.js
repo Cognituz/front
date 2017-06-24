@@ -45,19 +45,20 @@ module.exports = {
 
     submit() {
       this.createAppointment()
-        //.then(appointment => {
-          //const initPoint = appointment.paymentPreference.initPoint;
-          //return this.launchPaymentDialog(initPoint);
-        //})
+        .then(appointment => {
+          const initPoint = appointment.paymentPreference.initPoint;
+          return this.launchPaymentDialog(initPoint);
+        })
         .then(_ => {
           this.$mdDialog.hide();
           this.$mdToast.showSimple('Por ahora las clases son gratis!')
         })
-        .catch(_ => {
+        .catch((...args) => {
           const msg = 'Algo ha salido mal, intentalo mas tarde por favor';
           const toast = this.$mdToast.simple().textContent(msg);
           this.$mdToast.show(toast);
-          //this.$mdDialog.hide();
+          return this.$q.reject(...args);
+          // this.$mdDialog.hide();
         });
     }
 

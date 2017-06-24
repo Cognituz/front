@@ -8,7 +8,7 @@ module.exports = {
 
   controller: class {
     isSidenavOpen = true;
-    webRTC        = new SimpleWebRTC({autoRequestMedia: true});
+    webRTC        = new SimpleWebRTC({});
     chat          = {messages: []};
 
     constructor($q, $scope, $timeout) {
@@ -20,27 +20,23 @@ module.exports = {
     }
 
     $onInit() {
-      this.roomName = `appointment-${this.appointment.id}`;
+      this.joinRoom(`appointment-${this.appointment.id}`)
+        .then(_ => this.roomJoined = true);
 
-      // Ensure room exists
-      this.joinRoom();
-
-      this.webRTC.on('videoAdded', (_, peer) => {
+      this.onWebRTCEvent('videoAdded', (_, peer) => {
         this.remoteStream = peer.stream;
-        this.$scope.$apply();
       });
 
-      this.webRTC.on('channelMessage', (peer, channelLabel, data) =>  {
-        if (data.type === 'chatMessage')
-          this.chat.messages.push(data.payload) && this.$scope.$apply();
-
-        if (data.type === 'whiteboardSignal') {
-          this.whiteboardCtrl.consumeSignal({
-            functionName: data.payload.functionName,
-            args:         data.payload.args
-          });
-        }
+      this.onWebRTCEvent('channelMessage', (peer, channelLabel, data) =>  {
+        if (data.type === 'chatMessage') this.onChatMessage(data.payload);
+        if (data.type === 'whiteboardSignal') this.onWhiteboardSignal(data.payload);
       });
+    }
+
+    onWebRTCEvent(eventName, callback) {
+      return this.webRTC.on(eventName, (...args) =>
+        this.$scope.$apply(_ => callback(...args))
+      );
     }
 
     $onDestroy() {
@@ -50,10 +46,6 @@ module.exports = {
     }
 
     joinRoom(roomName = this.roomName) {
-      this.doJoinRoom(roomName).then(_ => this.roomJoined = true);
-    }
-
-    doJoinRoom(roomName = this.roomName) {
       return this.$q((f,r) => this.webRTC.joinRoom(roomName, e => e ? r(e) : f()));
     }
 
@@ -71,11 +63,21 @@ module.exports = {
     // Sidenav controls
     closeSidenav() {
       this.isSidenavOpen = false;
-      this.$timeout(_ => this.whiteboardCtrl.adjustCanvasSize(), 1000);
+      this.whiteboardCtrl.resize(1000);
     }
+
     openSidenav() {
       this.isSidenavOpen = true;
-      this.$timeout(_ => this.whiteboardCtrl.adjustCanvasSize(), 1000);
+      this.unreadMessages = false;
+      this.whiteboardCtrl.resize(1000);
     }
+
+    // Handlers
+    onChatMessage(message) {
+      this.chat.messages.push(message)
+      if (!this.isSidenavOpen) this.unreadMessages = true;
+    }
+
+    onWhiteboardSignal(signal) { this.whiteboardCtrl.consumeSignal(signal); }
   }
 };

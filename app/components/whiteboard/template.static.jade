@@ -1,5 +1,20 @@
-div(
+.position-relative(
   block='ctz-whiteboard'
   layout-fill
+  style='background: white; overflow: hidden'
 )
-  canvas(style='background: white')
+  canvas(
+    layout-fill
+    style='background: white; display: block; transition: all 1s'
+    ng-style='$ctrl.resizing && {filter: "blur(30px)"}'
+  )
+
+  .absolute-top(
+    layout-fill
+    layout='column'
+    layout-align='center center'
+    layout-margin
+    ng-if='$ctrl.resizing'
+  )
+    md-progress-circular
+    .md-body-1 Ajustando pizarra...

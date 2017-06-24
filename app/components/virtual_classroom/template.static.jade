@@ -48,7 +48,14 @@
         md-button(
           ng-if='!$ctrl.isSidenavOpen'
           ng-click='$ctrl.openSidenav()'
+          ng-class='$ctrl.unreadMessages && "md-accent md-raised"'
         ) Mostrar chat y video
+          md-tooltip(
+            ng-if="$ctrl.unreadMessages"
+            md-direction='bottom'
+            md-visible='::true'
+          )
+            | Mensajes sin leer
 
       ctz-whiteboard(
         flex

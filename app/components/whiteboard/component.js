@@ -31,45 +31,13 @@ module.exports = {
     // To store signals
     signals = [];
 
-    constructor($attrs, $element, $timeout, $window) {
+    constructor($attrs, $element, $scope, $timeout, $window) {
       'ngInject';
       this.$attrs   = $attrs;
       this.$element = $element;
+      this.$scope   = $scope;
       this.$timeout = $timeout;
       this.$window  = $window;
-    }
-
-    $onInit() {
-      // Expose this controller on binding
-      if (this.$attrs.exposeControllerOn) this.exposeControllerOn = this;
-
-      this.adjustCanvasSize();
-      this.setTool();
-
-      this.$window.addEventListener('resize', _ => this.adjustCanvasSize());
-
-      if (!this.readonly) {
-        this.$canvas.on("mousedown touchstart", ev => {
-          ev.preventDefault();
-          this.mouseDown = true;
-          this.draw(ev)
-        });
-
-        this.$canvas.on("mousemove touchmove", ev => {
-          ev.preventDefault();
-          this.draw(ev);
-        });
-
-        this.$canvas.on("mouseup touchend", ev => {
-          ev.preventDefault();
-          this.mouseDown = false;
-        });
-
-        this.$canvas.on("mouseout touchcancel", ev => {
-          ev.preventDefault();
-          this.mouseDown = false;
-        });
-      }
     }
 
     get $canvas() {
@@ -87,23 +55,65 @@ module.exports = {
       return this._ctx;
     }
 
-    adjustCanvasSize() {
-      this.$timeout(_ => {
-        this.canvas.width  = this.$canvas.parent().width();
-        this.canvas.height = this.$canvas.parent().height();
-        this.$setTool(this.currentTool);
-        this.$timeout(_ => this.signals.forEach(s => this.consumeSignal(s, false)), 1000);
-      });
+    $onInit() {
+      // Expose this controller on binding
+      if (this.$attrs.exposeControllerOn) this.exposeControllerOn = this;
+
+      this.resize();
+      this.$window.addEventListener('resize', _ =>
+        this.$scope.$apply(_ => this.resize())
+        //this.resize()
+      );
+
+      if (!this.readonly) {
+        this.$element.on("mousedown touchstart", ev => {
+          ev.preventDefault();
+          this.mouseDown = true;
+          this.draw(ev)
+        });
+
+        this.$element.on("mousemove touchmove", ev => {
+          ev.preventDefault();
+          this.draw(ev);
+        });
+
+        this.$element.on("mouseup touchend", ev => {
+          ev.preventDefault();
+          this.mouseDown = false;
+        });
+
+        this.$element.on("mouseout touchcancel", ev => {
+          ev.preventDefault();
+          this.mouseDown = false;
+        });
+      }
+    }
+
+    // Although canvas is set to fill container via layout-fill
+    // we still need to resize it manually to update it's inner state
+    // and really fill it's contaier
+    resize(delay) {
+      this.resizing = true
+      this.doResize(delay).then(_ => this.resizing = false);
+    }
+
+    doResize(delay = 0) {
+      return this.$timeout(_ => {
+        this.canvas.width  = this.$element.width();
+        this.canvas.height = this.$element.height();
+        return this.$setTool(this.currentTool)
+          .then(_ => this.reconstruct());
+      }, delay);
     }
 
     draw(ev) {
       const [pointA, pointB] = this.getLine(ev);
-      if (!this.mouseDown) { return; }
+      if (!this.mouseDown || this.resizing) { return; }
       this.drawSegment(pointA, pointB);
     }
 
     getLine(ev) {
-      const offset = this.$canvas.offset();
+      const offset = this.$element.offset();
       const pointB = [
         ev.pageX - offset.left,
         ev.pageY - offset.top
@@ -119,10 +129,10 @@ module.exports = {
     getRelativeCoords([x1,y1], [x2,y2], [width, height]) {
       const _coords = [];
 
-      const _x1 = (x1 * this.canvas.width) / parseInt(width);
-      const _y1 = (y1 * this.canvas.height) / parseInt(height);
-      const _x2 = (x2 * this.canvas.width) / parseInt(width);
-      const _y2 = (y2 * this.canvas.height) / parseInt(height);
+      const _x1 = (x1 * this.$canvas.width()) / parseInt(width);
+      const _y1 = (y1 * this.$canvas.height()) / parseInt(height);
+      const _x2 = (x2 * this.$canvas.width()) / parseInt(width);
+      const _y2 = (y2 * this.$canvas.height()) / parseInt(height);
 
       return [[_x1,_y1], [_x2,_y2]];
     }
@@ -142,13 +152,15 @@ module.exports = {
       if (store) this.storeSignal({functionName, args});
     }
 
+    reconstruct() { this.signals.forEach(s => this.consumeSignal(s, false)); }
+
     // Store signals to be able to reconstruct the board later
     storeSignal(signal) { this.signals.push(signal); }
 
     // Transmitable signals
     drawSegment(pointA, pointB) {
       this.$drawSegment(pointA, pointB);
-      const canvasSize = [this.canvas.width, this.canvas.height];
+      const canvasSize = [this.$canvas.width(), this.$canvas.height()];
       this.signal("$drawSegment", pointA, pointB, canvasSize);
     }
 
@@ -176,10 +188,10 @@ module.exports = {
       this.ctx.stroke();
     }
 
-    $clear() { this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height); }
+    $clear() { this.ctx.clearRect(0,0, this.$canvas.width(), this.$canvas.height()); }
 
     $setTool(toolName = this.DEFAULT_TOOL) {
-      this.$timeout(_ => {
+      return this.$timeout(_ => {
         this.tools[toolName](this.canvas, this.ctx);
         this.currentTool = toolName;
       });
