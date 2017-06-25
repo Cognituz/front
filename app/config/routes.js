@@ -90,6 +90,7 @@ module.exports = (
           template: `<ctz-virtual-classroom
             appointment="appointment"
             user-type="userType"
+            layout-fill
           />`,
           resolve: {
             appointment: (ClassAppointment, $stateParams) => {

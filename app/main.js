@@ -1,8 +1,9 @@
 // Globals
 window.$          = require('jquery');
 window.jQuery     = require('jquery');
-window.moment     = require('moment');
-window.screenfull = require('screenfull');
+window.moment     = require('moment'); // Required by ng-material-datetimepicker
+window.screenfull = require('screenfull'); // Required by angular-screefull
+window.tinycolor  = require('tinycolor2'); // Required by md-color-picker
 
 // Jquery plugins. Yes I use them
 require('jquery-elementresize');
@@ -20,6 +21,7 @@ require('ng-file-upload');
 require('ng-material-datetimepicker');
 require('ng-infinite-scroll');
 require('angular-screenfull');
+require('md-color-picker');
 
 angular
   .module('cognituzFront', [
@@ -33,7 +35,8 @@ angular
     'ngFileUpload',
     'ngMaterialDatePicker',
     'infinite-scroll',
-    'angularScreenfull'
+    'angularScreenfull',
+    'mdColorPicker'
   ])
 
   // Configuration Blocks
@@ -90,6 +93,7 @@ angular
   .component('ctzVirtualClassroom',     require('components/virtual_classroom/component'))
   .component('ctzVideoHolder',          require('components/video_holder/component'))
   .component('ctzWhiteboard',           require('components/whiteboard/component'))
+  .component('ctzColorPicker',          require('components/color_picker/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)

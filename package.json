@@ -26,6 +26,7 @@
     "jquery": "^3.1.1",
     "jquery-elementresize": "^0.2.2",
     "lodash": "^4.17.4",
+    "md-color-picker": "^0.2.6",
     "moment": "^2.17.1",
     "ng-file-upload": "^12.2.13",
     "ng-infinite-scroll": "^1.3.0",
@@ -36,7 +37,8 @@
     "qs": "^6.4.0",
     "query-string": "^4.3.2",
     "satellizer": "^0.15.5",
-    "screenfull": "^3.2.2"
+    "screenfull": "^3.2.2",
+    "tinycolor2": "^1.4.1"
   },
   "devDependencies": {
     "auto-reload-brunch": "^2.0.0",

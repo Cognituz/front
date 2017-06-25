@@ -11,13 +11,16 @@ module.exports = {
 
   controller: class {
     currentTool        = 'pencil';
-    currentToolOptions = {pencilWidth: 5};
+    currentToolOptions = {
+      thickness: 5,
+      color:    "#000000"
+    };
 
     tools = {
       pencil(toolOptions = {}) {
-        this.setLineWidth(toolOptions.pencilWidth);
+        this.setLineWidth(toolOptions.thickness);
         this.ctx.globalCompositeOperation = "source-over";
-        this.ctx.strokeStyle              = "black";
+        this.ctx.strokeStyle              = toolOptions.color;
         this.ctx.lineJoin                 = "round";
         this.ctx.lineCap                  = "round";
       },
@@ -161,9 +164,10 @@ module.exports = {
 
     // Transmitable signals
     drawSegment(pointA, pointB) {
-      this.$drawSegment(pointA, pointB, this.currentTool, this.currentToolOptions);
+      const commonArgs = [pointA, pointB, this.currentTool, this.currentToolOptions];
+      this.$drawSegment(...commonArgs);
       const canvasSize = [this.$canvas.width(), this.$canvas.height()];
-      this.signal("$drawSegment", pointA, pointB, this.currentTool, this.currentToolOptions, canvasSize);
+      this.signal("$drawSegment", ...commonArgs, canvasSize);
     }
 
     clear() {

@@ -41,3 +41,4 @@ module.exports =
       "angular-material":           ["angular-material.min.css"]
       "normalize.css":              ["normalize.css"]
       "ng-material-datetimepicker": ["dist/material-datetimepicker.min.css"]
+      "md-color-picker":            ["/dist/mdColorPicker.min.css"]
