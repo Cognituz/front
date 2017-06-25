@@ -34,6 +34,14 @@
           md-icon(md-svg-src='/images/icons/eraser.svg')
           md-tooltip(md-direction='bottom') Goma
 
+        md-button.md-icon-button(
+          ng-if='::!$ctrl.whiteboardCtrl.readonly'
+          ng-click='$ctrl.whiteboardCtrl.setTool("textInserter")'
+          ng-class='$ctrl.whiteboardCtrl.currentTool === "textInserter" && "md-raised md-accent"'
+        )
+          md-icon(md-svg-src='/images/icons/text.svg')
+          md-tooltip(md-direction='bottom') Insertar texto
+
         div(
           elem='tool-options'
           layout='row'
