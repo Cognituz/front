@@ -64,7 +64,6 @@ angular
   .service('Neighborhood',      require('models/neighborhood'))
   .service('ClassAppointment',  require('models/class_appointment'))
   .service('PaymentPreference', require('models/mercado_pago/payment_preference'))
-  .service('WhiteboardSignal',  require('models/whiteboard_signal.js'))
 
   // Filters
   .filter('fuzzy', require('filters/fuzzy'))
