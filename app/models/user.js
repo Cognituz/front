@@ -25,7 +25,7 @@ module.exports = (
         "5to. Año"
       ];
     }
-  };
+  }
 
   User.configure({
     url:  `${API_URL}/v1/users`,

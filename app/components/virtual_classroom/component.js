@@ -1,3 +1,5 @@
+const {map} = require('lodash');
+
 module.exports = {
   templateUrl: '/components/virtual_classroom/template.html',
 
@@ -7,16 +9,17 @@ module.exports = {
   },
 
   controller: class {
-    isSidenavOpen = true;
-    webRTC        = new SimpleWebRTC({});
-    chat          = {messages: []};
+    isSidenavOpen    = true;
+    webRTC           = new SimpleWebRTC({});
+    chat             = {messages: []};
 
-    constructor($q, $scope, $timeout) {
+    constructor($q, $scope, $timeout, WhiteboardSignal) {
       'ngInject';
 
-      this.$q       = $q;
-      this.$scope   = $scope;
-      this.$timeout = $timeout;
+      this.$q               = $q;
+      this.$scope           = $scope;
+      this.$timeout         = $timeout;
+      this.WhiteboardSignal = WhiteboardSignal;
     }
 
     $onInit() {
@@ -55,9 +58,9 @@ module.exports = {
       delete this.chatMessage;
     }
 
-    transmitWhiteboardSignal(functionName, args) {
-      const payload = {functionName, args};
-      this.webRTC.sendDirectlyToAll(undefined, 'whiteboardSignal', payload);
+    transmitWhiteboardSignal(signal) {
+      this.webRTC.sendDirectlyToAll(undefined, 'whiteboardSignal', signal);
+      this.persistWhiteboardSignal(signal);
     }
 
     // Sidenav controls
@@ -85,6 +88,28 @@ module.exports = {
       if (!this.isSidenavOpen) this.unreadMessages = true;
     }
 
-    onWhiteboardSignal(signal) { this.whiteboardCtrl.consumeSignal(signal); }
+    onWhiteboardSignal(signal) {
+      this.whiteboardCtrl.consumeSignal(signal);
+    }
+
+    persistWhiteboardSignal(signal) {
+      signal
+      | this.buildWhiteboardSignal()
+      | this.appointment.whiteboardSignals.push();
+
+      // Throttle this process
+      this.persistWhiteboardSignalPromise &&
+      this.$timeout.cancel(this.persistWhiteboardSignalPromise);
+
+      this.persistWhiteboardSignalPromise =
+        this.$timeout(_ => this.appointment.save(), 5000);
+    }
+
+    buildWhiteboardSignal(signal) {
+      return {
+        ...signal,
+        date: new Date(),
+      };
+    }
   }
 };

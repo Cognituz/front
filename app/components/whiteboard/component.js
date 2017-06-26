@@ -6,7 +6,8 @@ module.exports = {
   bindings: {
     onSignal:           '&?',
     readonly:           '<',
-    exposeControllerOn: '='
+    exposeControllerOn: '=',
+    signals:            '<'
   },
 
   controller: class {
@@ -42,9 +43,6 @@ module.exports = {
       }
     };
 
-    // To store signals
-    signals = [];
-
     constructor($attrs, $element, $mdDialog, $scope, $timeout, $window) {
       'ngInject';
       this.$attrs    = $attrs;
@@ -73,6 +71,9 @@ module.exports = {
     $onInit() {
       // Expose this controller on binding
       if (this.$attrs.exposeControllerOn) this.exposeControllerOn = this;
+
+      // Duplicate signals to prevent modifing the array passed via bindings
+      if (this.signals) this.signals = this.signals.slice();
 
       this.resize();
       this.$window.addEventListener('resize', _ =>
@@ -137,17 +138,13 @@ module.exports = {
 
     // Remote capabilities
     signal(functionName, ...args) {
-      this.storeSignal({functionName, args});
-
-      this.onSignal && this.onSignal({
-        $functionName: functionName,
-        $args:         args
-      });
+      const signal = {functionName, args};
+      this.storeSignal(signal); // Store locally
+      this.onSignal && this.onSignal({$signal: signal});
     }
 
     consumeSignal({functionName, args}, store = true) {
       this[functionName].apply(this, args);
-      console.log({functionName, args});
       if (store) this.storeSignal({functionName, args});
     }
 
@@ -204,8 +201,8 @@ module.exports = {
     }
 
     setTool(toolName, toolOptions = this.currentToolOptions) {
-      this.$setTool(toolName, toolOptions)
-      this.signal('$setTool', toolName, toolOptions);
+      this.currentTool        = toolName
+      this.currentToolOptions = toolOptions
     }
 
     // The dollar sign in the method name means it is transmitable
@@ -231,11 +228,6 @@ module.exports = {
     }
 
     $clear() { this.ctx.clearRect(0,0, this.$canvas.width(), this.$canvas.height()); }
-
-    $setTool(toolName, toolOptions) {
-      this.currentTool        = toolName
-      this.currentToolOptions = toolOptions
-    }
 
     // Other helpers
     setLineWidth(val) {

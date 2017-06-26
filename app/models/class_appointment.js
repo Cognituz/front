@@ -18,6 +18,7 @@ module.exports = (
     name: 'class_appointment',
     serializer: railsSerializer(function() {
       this.nestedAttribute('attachments');
+      this.nestedAttribute('whiteboardSignals');
     })
   });
 

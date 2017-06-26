@@ -61,5 +61,8 @@ md-card
 
     md-button.md-primary.md-raised(
       ui-sref='app.s.appointments.virtualClassroom({id: $ctrl.appointment.id})'
-      ng-if='$ctrl.appointment.status === "live"'
+      ng-if='\
+        $ctrl.appointment.status === "live" || \
+        $ctrl.appointment.status === "demo" \
+      '
     ) Ir al aula virtual

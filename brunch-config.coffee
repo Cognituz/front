@@ -30,7 +30,12 @@ module.exports =
       compress: true
     babel:
       presets: ["es2015", "es2016", "es2017"]
-      plugins: ["angularjs-annotate", "transform-class-properties"]
+      plugins: [
+        "angularjs-annotate",
+        "transform-class-properties",
+        "pipe-operator",
+        "transform-object-rest-spread"
+      ]
     stylus:
       plugins: ['autoprefixer-stylus']
 

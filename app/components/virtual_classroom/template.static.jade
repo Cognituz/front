@@ -84,8 +84,9 @@
       ctz-whiteboard(
         flex
         readonly=':: $ctrl.whiteboardReadonly'
-        on-signal=':: $ctrl.transmitWhiteboardSignal($functionName, $args)'
+        on-signal=':: $ctrl.transmitWhiteboardSignal($signal)'
         expose-controller-on='$ctrl.whiteboardCtrl'
+        signals='$ctrl.appointment.whiteboardSignals'
       )
 
     md-sidenav.md-sidenav-right.md-whiteframe-z1(
