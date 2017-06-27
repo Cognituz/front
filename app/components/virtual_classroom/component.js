@@ -13,13 +13,12 @@ module.exports = {
     webRTC           = new SimpleWebRTC({});
     chat             = {messages: []};
 
-    constructor($q, $scope, $timeout, WhiteboardSignal) {
+    constructor($q, $scope, $timeout) {
       'ngInject';
 
       this.$q               = $q;
       this.$scope           = $scope;
       this.$timeout         = $timeout;
-      this.WhiteboardSignal = WhiteboardSignal;
     }
 
     $onInit() {
