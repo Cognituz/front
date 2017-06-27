@@ -2,6 +2,8 @@ module.exports = {
   templateUrl: '/components/appointment/list/template.html',
   controller: class {
     constructor(Auth, ClassAppointment) {
+      'ngInject';
+
       this.statuses = {
         unconfirmed: 'No confirmada',
         confirmed:   'Confirmada',
