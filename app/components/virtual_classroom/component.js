@@ -10,7 +10,7 @@ module.exports = {
 
   controller: class {
     isSidenavOpen    = true;
-    webRTC           = new SimpleWebRTC({});
+    webRTC           = new SimpleWebRTC({autoRequestMedia: true});
     chat             = {messages: []};
 
     constructor($q, $scope, $timeout) {
