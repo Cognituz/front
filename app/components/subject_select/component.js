@@ -13,6 +13,8 @@ module.exports = {
   require: {ngModel: 'ngModel'},
   controller: class {
     constructor($element, $timeout, $scope, StudySubject) {
+      'ngInject';
+
       this.$element     = $element;
       this.$timeout     = $timeout;
       this.$scope       = $scope;
