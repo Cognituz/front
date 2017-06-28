@@ -1,0 +1,14 @@
+div(
+  block='ctz-period-picker'
+  layout-fill
+  layout='row'
+)
+  div(
+    flex
+    ng-repeat='wdayName in $ctrl.translatedWdays track by $index'
+    layout='column'
+    layout-align='start center'
+    layout-padding
+  )
+    strong {{:: wdayName }} ({{:: $index }})
+    div(ng-bind=':: $ctrl.periodsIntercepting($index).length')

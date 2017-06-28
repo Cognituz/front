@@ -94,6 +94,7 @@ angular
   .component('ctzVideoHolder',          require('components/video_holder/component'))
   .component('ctzWhiteboard',           require('components/whiteboard/component'))
   .component('ctzColorPicker',          require('components/color_picker/component'))
+  .component('ctzPeriodPicker',         require('components/period_picker/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)

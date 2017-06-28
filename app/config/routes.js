@@ -27,6 +27,10 @@ module.exports = (
   });
 
   $stateProvider
+    .state('pete', {
+      url: '/pete',
+      template: '<ctz-period-picker/>'
+    })
     .state('home', {
       url: '/',
       template: '<ctz-home/>'
