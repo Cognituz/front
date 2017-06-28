@@ -29,7 +29,7 @@ module.exports = (
   $stateProvider
     .state('pete', {
       url: '/pete',
-      template: '<ctz-period-picker/>'
+      template: '<ctz-period-picker layout-fill/>'
     })
     .state('home', {
       url: '/',

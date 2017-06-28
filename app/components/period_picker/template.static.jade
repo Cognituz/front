@@ -1,14 +1,65 @@
 div(
   block='ctz-period-picker'
   layout-fill
-  layout='row'
+  layout='column'
 )
-  div(
-    flex
-    ng-repeat='wdayName in $ctrl.translatedWdays track by $index'
-    layout='column'
-    layout-align='start center'
-    layout-padding
-  )
-    strong {{:: wdayName }} ({{:: $index }})
-    div(ng-bind=':: $ctrl.periodsIntercepting($index).length')
+  h3
+    Seconds per day: 
+    span(ng-bind='$ctrl.SECONDS_PER_DAY')
+
+  h3 Periods
+
+  div(layout='row')
+    div(ng-repeat='p in $ctrl.periods')
+      div
+        strong Start SFSOW: 
+        span(ng-bind=':: p.startSfsow | number')
+
+      div
+        strong End SFSOW: 
+        span(ng-bind=':: p.endSfsow | number')
+
+  div(flex layout='row')
+    div(
+      elem='wday'
+      flex
+      ng-repeat='wdayName in $ctrl.translatedWdays track by $index'
+      layout='column'
+      layout-align='start stretch'
+      ng-init="segments = $ctrl.segmentsIntercepting($index)"
+    )
+      div(elem='wday-header')
+        span {{:: wdayName }} ({{:: $index }})
+        div
+          strong SFSOW: 
+          span {{:: $ctrl.wdayStartSfsow($index) | number }}
+
+      div(flex elem='wday-body')
+        div(
+          elem='segment'
+          ng-repeat='s in segments track by $index'
+          ng-style='{\
+            width: "100%", \
+            top: s.y1 + "%", \
+            height: s.y2 - s.y1 + "%" \
+          } '
+        )
+          div
+            strong Start SFSOW: 
+            span(ng-bind=':: s.startSfsow')
+
+          div
+            strong End SFSOW: 
+            span(ng-bind=':: s.endSfsow')
+
+          div
+            strong Y1: 
+            span(ng-bind=':: s.y1')
+
+          div
+            strong Y2: 
+            span(ng-bind=':: s.y2')
+
+      div
+        strong SFSOW: 
+        span {{:: $ctrl.wdayEndSfsow($index) | number }}
