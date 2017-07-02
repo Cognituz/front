@@ -34,7 +34,8 @@ module.exports =
         "angularjs-annotate",
         "transform-class-properties",
         "pipe-operator",
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "transform-do-expressions"
       ]
     stylus:
       plugins: ['autoprefixer-stylus']

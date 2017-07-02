@@ -9,8 +9,12 @@ div(
 
   h3 Periods
 
-  div(layout='row')
+  div(layout='row' layout-padding)
     div(ng-repeat='p in $ctrl.periods')
+      div
+        strong Desc: 
+        span(ng-bind=':: p.desc')
+
       div
         strong Start SFSOW: 
         span(ng-bind=':: p.startSfsow | number')
@@ -18,6 +22,8 @@ div(
       div
         strong End SFSOW: 
         span(ng-bind=':: p.endSfsow | number')
+
+      md-divider(ng-if='$middle')
 
   div(flex layout='row')
     div(
@@ -30,9 +36,18 @@ div(
     )
       div(elem='wday-header')
         span {{:: wdayName }} ({{:: $index }})
+
+        md-divider
+
         div
           strong SFSOW: 
           span {{:: $ctrl.wdayStartSfsow($index) | number }}
+
+        md-divider
+
+        div
+          strong SEGMENTS COUNT: 
+          span {{:: segments.length }}
 
       div(flex elem='wday-body')
         div(
@@ -41,24 +56,12 @@ div(
           ng-style='{\
             width: "100%", \
             top: s.y1 + "%", \
-            height: s.y2 - s.y1 + "%" \
+            height: s.height + "%" \
           } '
         )
-          div
-            strong Start SFSOW: 
-            span(ng-bind=':: s.startSfsow')
-
-          div
-            strong End SFSOW: 
-            span(ng-bind=':: s.endSfsow')
-
-          div
-            strong Y1: 
-            span(ng-bind=':: s.y1')
-
-          div
-            strong Y2: 
-            span(ng-bind=':: s.y2')
+          div(ng-repeat='(k, v) in s track by $index')
+            strong {{:: k}}: 
+            span(ng-bind=':: v')
 
       div
         strong SFSOW: 
