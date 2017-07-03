@@ -12,6 +12,13 @@ module.exports = new class SFSOW {
     return sfsow | inRange(wdayStart, wdayEnd);
   }
 
+  relative(sfsow) {
+    return do {
+      if (sfsow > this.START_OF_WEEK) sfsow - this.SECONDS_PER_WEEK;
+      else if(sfsow < this.START_OF_WEEK) sfsow + this.SECONDS_PER_WEEK;
+    };
+  }
+
   wdayStart(wday) { return wday * this.SECONDS_PER_DAY; }
   wdayEnd(wday) { return this.wdayStart(wday+1); }
 };

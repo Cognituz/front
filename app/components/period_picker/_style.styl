@@ -20,11 +20,23 @@ ctz-period-picker
     background aliceblue
     color black
     position relative
+    cursor pointer
 
   &__segment
-    background red
+    background rgba(blue, 0.7)
     overflow hidden
     position absolute
+    width 100%
+    pointer-events none
 
-    &:hover
-      height auto !important
+    &--selected
+      background green
+      z-index 1
+
+  &__step
+    &:nth-child(even)
+      background orange
+
+    &:nth-child(odd)
+      background limegreen
+

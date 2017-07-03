@@ -4,8 +4,19 @@ div(
   layout='column'
 )
   h3
-    Seconds per day: 
-    span(ng-bind='$ctrl.SECONDS_PER_DAY')
+    Selected period
+
+    div
+      strong Week Day: 
+      span(ng-bind='$ctrl.translatedWdays[$ctrl.selectedPeriod.wday]')
+
+    div
+      strong Start SFSOD: 
+      span(ng-bind='$ctrl.selectedPeriod.startY')
+
+    div
+      strong Height: 
+      span(ng-bind='$ctrl.selectedPeriod.height')
 
   h3 Periods
 
@@ -20,8 +31,8 @@ div(
         span(ng-bind=':: p.startSfsow | number')
 
       div
-        strong End SFSOW: 
-        span(ng-bind=':: p.endSfsow | number')
+        strong Height:
+        span(ng-bind=':: p.height | number')
 
       md-divider(ng-if='$middle')
 
@@ -29,7 +40,7 @@ div(
     div(
       elem='wday'
       flex
-      ng-repeat='wdayName in $ctrl.translatedWdays track by $index'
+      ng-repeat='wdayName in ::$ctrl.translatedWdays track by $index'
       layout='column'
       layout-align='start stretch'
       ng-init="segments = $ctrl.segmentsIntercepting($index)"
@@ -49,15 +60,34 @@ div(
           strong SEGMENTS COUNT: 
           span {{:: segments.length }}
 
-      div(flex elem='wday-body')
+      div(
+        flex elem='wday-body'
+        ng-mouseover='$ctrl.setSelectedPeriod($index, $event)'
+        ng-mouseleave='$ctrl.unsetSelectedPeriod()'
+      )
+        div(
+          elem='step'
+          ng-repeat='_ in ::$ctrl.steps track by $index'
+          ng-style='{height: $ctrl.stepHeight + "%"}'
+        )
+
+        div(
+          elem='segment' mod-once='selected'
+          ng-if='$ctrl.selectedPeriod.wday === $index'
+          ng-style='{\
+            top: $ctrl.selectedPeriod.startY + "%", \
+            height: $ctrl.selectedPeriod.height + "%" \
+          }'
+        )
+          | Elejir Horario
+
         div(
           elem='segment'
-          ng-repeat='s in segments track by $index'
+          ng-repeat='s in ::segments track by $index'
           ng-style='{\
-            width: "100%", \
-            top: s.y1 + "%", \
+            top: s.startY + "%", \
             height: s.height + "%" \
-          } '
+          }'
         )
           div(ng-repeat='(k, v) in s track by $index')
             strong {{:: k}}: 

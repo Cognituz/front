@@ -35,7 +35,8 @@ module.exports =
         "transform-class-properties",
         "pipe-operator",
         "transform-object-rest-spread",
-        "transform-do-expressions"
+        "transform-do-expressions",
+        "transform-private"
       ]
     stylus:
       plugins: ['autoprefixer-stylus']
