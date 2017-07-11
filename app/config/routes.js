@@ -29,7 +29,53 @@ module.exports = (
   $stateProvider
     .state('pete', {
       url: '/pete',
-      template: '<ctz-period-picker layout-fill/>'
+      template: '<ctz-period-picker whitelist="whitelist" blacklist="blacklist" layout-fill/>',
+      controller: $scope => {
+        'ngInject';
+
+        const SFSOW  = require('lib/sfsow');
+        const moment = require('moment');
+
+        $scope.whitelist = [
+          {
+            desc: "Lunes de 8 a 20",
+            startSfsow: 1 * SFSOW.SECONDS_PER_DAY + 8 * 60 * 60,
+            endSfsow:   1 * SFSOW.SECONDS_PER_DAY + 20 * 60 * 60,
+          },
+          {
+            desc: "Martes de 8 a 20",
+            startSfsow: 2 * SFSOW.SECONDS_PER_DAY + 8 * 60 * 60,
+            endSfsow:   2 * SFSOW.SECONDS_PER_DAY + 20 * 60 * 60,
+          },
+          {
+            desc: "Miércoles a las 21 a Jueves as las 6",
+            startSfsow: 3 * SFSOW.SECONDS_PER_DAY + 21 * 60 * 60,
+            endSfsow:   4 * SFSOW.SECONDS_PER_DAY + 6 * 60 * 60,
+          },
+          {
+            desc: "Jueves de 8 a 20",
+            startSfsow: 4 * SFSOW.SECONDS_PER_DAY + 8 * 60 * 60,
+            endSfsow:   4 * SFSOW.SECONDS_PER_DAY + 20 * 60 * 60,
+          },
+          {
+            desc: "Viernes de 8 a 20",
+            startSfsow: 5 * SFSOW.SECONDS_PER_DAY + 8 * 60 * 60,
+            endSfsow:   5 * SFSOW.SECONDS_PER_DAY + 20 * 60 * 60,
+          },
+          {
+            desc: 'Sábado a las 21 a Domingo a las 6',
+            startSfsow: (6 * SFSOW.SECONDS_PER_DAY + 21 * 60 * 60),
+            endSfsow:   (7 * SFSOW.SECONDS_PER_DAY + 6 * 60 * 60),
+          }
+        ];
+
+        $scope.blacklist = [
+          {
+            startDate: moment().startOf('week').add(4, 'days').add(10, 'hours').toDate(),
+            endDate:   moment().startOf('week').add(4, 'days').add(12, 'hours').toDate()
+          }
+        ];
+      }
     })
     .state('home', {
       url: '/',

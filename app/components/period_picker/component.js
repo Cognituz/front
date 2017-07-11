@@ -1,9 +1,17 @@
-const SFSOW  = require('lib/sfsow');
-const Period = require('lib/period')
-const $      = require('jquery');
+const $         = require('jquery');
+const moment    = require('moment');
+const {flatten, merge} = require('lodash');
+
+const SFSOW          = require('lib/sfsow');
+const SFSOWPeriod    = require('lib/sfsow/period');
+const DateTimePeriod = require('lib/date_time/period');
 
 module.exports = {
   templateUrl: '/components/period_picker/template.html',
+  bindings: {
+    whitelist: '<?',
+    blacklist: '<?'
+  },
   controller: class PeriodPickerController {
     translatedWdays = [
       "DOMINGO",
@@ -25,28 +33,26 @@ module.exports = {
     }
 
     $onInit() {
-      this._periods = [
-        {
-          desc: "Miércoles a las 21, Jueves as las 6",
-          startSfsow: 3 * SFSOW.SECONDS_PER_DAY + 21 * 60 * 60,
-          endSfsow:   4 * SFSOW.SECONDS_PER_DAY + 6 * 60 * 60,
-        },
-        {
-          desc: 'Sábado a las 21, Domingo a las 6',
-          startSfsow: (6 * SFSOW.SECONDS_PER_DAY + 21 * 60 * 60),
-          endSfsow:   (7 * SFSOW.SECONDS_PER_DAY + 6 * 60 * 60),
-        }
-      ];
+      this.week = moment().week();
 
-      // Period length in seconds
+      this.whitelist = this.whitelist || [];
+      this.blacklist = this.blacklist || [];
+
+      // SFSOWPeriod length in seconds
       this._periodLength = 2 * 60 * 60;
       this._step = 30 * 60;
+
+      this._generateWdayData();
     }
 
-    segmentsIntercepting(wday) {
-      return this._periods && this._periods
-        .filter(p => Period.isWdayRange(p, wday))
-        .map(p => Period.toSegment(p, wday));
+    increaseWeek() {
+      this.week++;
+      this._generateWdayData();
+    }
+
+    decreaseWeek() {
+      this.week--;
+      this._generateWdayData()
     }
 
     setSelectedPeriod(wday, mouseEv) {
@@ -56,10 +62,67 @@ module.exports = {
 
     unsetSelectedPeriod() { delete this.selectedPeriod; }
 
+    _getDate(wday) {
+      return moment()
+        .startOf('year')
+        .add(this.week - 1, 'weeks')
+        .add(wday, 'days');
+    }
+
+    _generateWdayData() { // Changes in function of this.week
+      this.wdayData =
+        this.translatedWdays.map((name, wday) => {
+          const day = this._getDate(wday);
+
+          return {
+            name, day,
+            segments: this._segmentsFor(day)
+          };
+        });
+    }
+
+    _segmentsFor(day) {
+      return [
+        this._blacklistedPeriods(day).map(p => p | merge({type: 'blacklisted'})),
+        this._whitelistedPeriods(day.weekday()).map(p => p | merge({type: 'whitelisted'}))
+      ]
+      | flatten();
+    }
+
+    _whitelistedPeriods(wday) {
+      return this.whitelist
+        .filter(p => SFSOWPeriod.isWithinWdayRange(p, wday))
+        .map(p => SFSOWPeriod.toSegment(p, wday))
+    }
+
+    _blacklistedPeriods(day) {
+      return this.blacklist
+        .filter(p => DateTimePeriod.isWithinDay(p, day))
+        .map(p => DateTimePeriod.toSegment(p));
+    }
+
     _doSetSelectedPeriod(y, wday) {
       const period = this._buildPeriod(y, wday);
-      if (!Period.isWithinAvailabilityPeriods(period, this._periods)) return;
+      if (!this._isValidPeriod(period)) return;
       this.selectedPeriod = period
+    }
+
+    _isValidPeriod(period) {
+      let result = true;
+
+      if (
+        this.whitelist &&
+        !SFSOWPeriod.isWithinAvailabilityPeriods(period, this.whitelist)
+      )
+        result = false;
+
+      if (
+        this.blacklist &&
+        SFSOWPeriod.overlapsDateTimePeriods(period, this.blacklist)
+      )
+        result = false;
+
+      return result;
     }
 
     _buildPeriod(y, wday) {

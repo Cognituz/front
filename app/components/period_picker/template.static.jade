@@ -36,14 +36,18 @@ div(
 
       md-divider(ng-if='$middle')
 
+  div(layout='row' layout-align='center center' layout-margin)
+    md-button.md-raised(ng-click='$ctrl.decreaseWeek()') Prev
+    h1 Week Number: {{ $ctrl.week }}
+    md-button.md-raised(ng-click='$ctrl.increaseWeek()') Next
+
   div(flex layout='row')
     div(
       elem='wday'
       flex
-      ng-repeat='wdayName in ::$ctrl.translatedWdays track by $index'
+      ng-repeat='data in $ctrl.wdayData track by $index'
       layout='column'
       layout-align='start stretch'
-      ng-init="segments = $ctrl.segmentsIntercepting($index)"
     )
       div(elem='wday-header')
         span {{:: wdayName }} ({{:: $index }})
@@ -51,14 +55,20 @@ div(
         md-divider
 
         div
+          strong Date: 
+          span {{ data.day.toString() }}
+
+        md-divider
+
+        div
           strong SFSOW: 
-          span {{:: $ctrl.wdayStartSfsow($index) | number }}
+          span {{ $ctrl.wdayStartSfsow($index) | number }}
 
         md-divider
 
         div
           strong SEGMENTS COUNT: 
-          span {{:: segments.length }}
+          span {{ data.segments.length }}
 
       div(
         flex elem='wday-body'
@@ -83,7 +93,8 @@ div(
 
         div(
           elem='segment'
-          ng-repeat='s in ::segments track by $index'
+          ng-repeat='s in data.segments track by $index'
+          mod-once='blacklisted: s.type === "blacklisted"'
           ng-style='{\
             top: s.startY + "%", \
             height: s.height + "%" \
