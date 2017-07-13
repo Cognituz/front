@@ -1,0 +1,50 @@
+div(
+  block='ctz-period-picker'
+  layout-fill
+  layout='column'
+)
+  div(layout='row' layout-align='center center' layout-margin)
+    md-button.md-raised(ng-click='$ctrl.decreaseWeek()') Prev
+    h1 Week Number: {{ $ctrl.weekNumber }}
+    md-button.md-raised(ng-click='$ctrl.increaseWeek()') Next
+
+  div(flex layout='row')
+    div(
+      elem='wday'
+      flex
+      ng-repeat='data in $ctrl.wdayData track by $index'
+      layout='column'
+      layout-align='start stretch'
+    )
+      div(elem='wday-header') {{:: data.name }}
+
+      div(
+        flex elem='wday-body'
+        ng-mouseover='$ctrl.setSelectedPeriod($index, $event)'
+        ng-mouseleave='$ctrl.unsetSelectedPeriod()'
+      )
+        div(
+          elem='step'
+          ng-repeat='_ in ::$ctrl.steps track by $index'
+          ng-style='{height: $ctrl.stepHeight + "%"}'
+        )
+
+        div(
+          elem='segment' mod-once='selected'
+          ng-if='$ctrl.selectedPeriod.wday === $index'
+          ng-style='{\
+            top: $ctrl.selectedPeriod.startY + "%", \
+            height: $ctrl.selectedPeriod.height + "%" \
+          }'
+        )
+          | Elejir Horario
+
+        div(
+          elem='segment'
+          ng-repeat='s in data.segments track by $index'
+          mod-once='blacklisted: s.type === "blacklisted"'
+          ng-style='{\
+            top: s.startY + "%", \
+            height: s.height + "%" \
+          }'
+        )

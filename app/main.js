@@ -1,9 +1,12 @@
 // Globals
 window.$          = require('jquery');
 window.jQuery     = require('jquery');
-window.moment     = require('moment'); // Required by ng-material-datetimepicker
+window.moment     = require('moment') | require('moment-range').extendMoment(); // Required by ng-material-datetimepicker
 window.screenfull = require('screenfull'); // Required by angular-screefull
 window.tinycolor  = require('tinycolor2'); // Required by md-color-picker
+
+require('moment/locale/es');
+moment.locale('es');
 
 // Jquery plugins. Yes I use them
 require('jquery-elementresize');

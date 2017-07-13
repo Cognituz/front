@@ -1,155 +1,143 @@
-const $         = require('jquery');
-const moment    = require('moment');
-const {flatten, merge} = require('lodash');
-
-const SFSOW          = require('lib/sfsow');
-const SFSOWPeriod    = require('lib/sfsow/period');
-const DateTimePeriod = require('lib/date_time/period');
+const $               = require('jquery');
+const RangeList       = require('lib/range_list');
+const DateTimePeriod  = require('lib/date_time/period');
+const SFSOWPeriod     = require('lib/sfsow/period');
+const SECONDS_PER_DAY = require('lib/seconds_per_day')
+const {map}           = require('lodash');
 
 module.exports = {
   templateUrl: '/components/period_picker/template.html',
+
   bindings: {
-    whitelist: '<?',
-    blacklist: '<?'
+    whitelist:      '<?',
+    blacklist:      '<?',
+    periodDuration: '<',
+    stepDuration:   '<',
+    minWeekDay:     '<?',
+    maxWeekDay:     '<?',
+    minSFSOD:       '<?',
+    maxSFSOD:       '<?'
   },
+
   controller: class PeriodPickerController {
-    translatedWdays = [
-      "DOMINGO",
-      "LUNES",
-      "MARTES",
-      "MIÉRCOLES",
-      "JUEVES",
-      "VIERNES",
-      "SÁBADO"
-    ];
-
-    set _periodLength(length) { // In seconds
-      this._periodHeight = (length * 100) / SFSOW.SECONDS_PER_DAY;
-    }
-
-    set _step(duration) { // In seconds
-      this.steps = new Array(SFSOW.SECONDS_PER_DAY / duration);
-      this.stepHeight = (duration * 100) / SFSOW.SECONDS_PER_DAY;
-    }
-
     $onInit() {
-      this.week = moment().week();
-
-      this.whitelist = this.whitelist || [];
-      this.blacklist = this.blacklist || [];
-
-      // SFSOWPeriod length in seconds
-      this._periodLength = 2 * 60 * 60;
-      this._step = 30 * 60;
-
-      this._generateWdayData();
+      this.currentWeekStart = moment().startOf('isoweek');
+      this._blacklistedRanges = this.blacklist.map(p => DateTimePeriod.toRange(p));
+      this._calculateWeekDayData();
     }
 
-    increaseWeek() {
-      this.week++;
-      this._generateWdayData();
+    nextWeek() {
+      this.currentWeekStart.add(1, 'w'); // Yes, add MUTATES!
+      this._calculateWeekDayData();
     }
 
-    decreaseWeek() {
-      this.week--;
-      this._generateWdayData()
+    prevWeek() {
+      this.currentWeekStart.subtract(1, 'w'); // Yes, subtract MUTATES!
+      this._calculateWeekDayData();
     }
 
-    setSelectedPeriod(wday, mouseEv) {
-      this._extractHeight(mouseEv)
-      | this._doSetSelectedPeriod(wday);
+    setSelectedSegment(wday, mouseEv) {
+      const range =
+        this._extractHeight(mouseEv)
+        | this._heightToSfsod()
+        | this._dateFromSfsodAndWday(wday)
+        | this._buildSelectedRange()
+        | this._validateSelectedRange()
+
+      if (range) {
+        this.selectedRange = range;
+        this.selectedSegment = {wday, ...this._rangeToSegment(range)};
+
+        console.log(this.selectedSegment);
+      }
     }
 
-    unsetSelectedPeriod() { delete this.selectedPeriod; }
+    unsetSelectedSegment() { delete this.selectedSegment; }
 
-    _getDate(wday) {
-      return moment()
-        .startOf('year')
-        .add(this.week - 1, 'weeks')
-        .add(wday, 'days');
+    // Private stuff
+    _buildSelectedRange(date) {
+      const start =
+        moment.max(
+          moment(date).startOf('day'),
+          moment(date).subtract(this.periodDuration/2, 'm')
+        );
+
+      const end = moment(start).add(this.periodDuration, 'm');
+
+      return moment.range(start, end);
     }
 
-    _generateWdayData() { // Changes in function of this.week
-      this.wdayData =
-        this.translatedWdays.map((name, wday) => {
-          const day = this._getDate(wday);
-
-          return {
-            name, day,
-            segments: this._segmentsFor(day)
-          };
-        });
+    _validateSelectedRange(range) {
+      if (!RangeList.anyContainsRange(this._whitelistedRanges, range)) return;
+      if (RangeList.anyOverlapsRange(this._blacklistedRanges, range)) return;
+      return range;
     }
 
-    _segmentsFor(day) {
-      return [
-        this._blacklistedPeriods(day).map(p => p | merge({type: 'blacklisted'})),
-        this._whitelistedPeriods(day.weekday()).map(p => p | merge({type: 'whitelisted'}))
-      ]
-      | flatten();
+    _calculateWeekDayData() {
+      this._calculateWhitelistedRanges();
+      this.weekDayData = [0,1,2,3,4,5,6].map(wday => this._wdayDataFor(wday));
     }
 
-    _whitelistedPeriods(wday) {
-      return this.whitelist
-        .filter(p => SFSOWPeriod.isWithinWdayRange(p, wday))
-        .map(p => SFSOWPeriod.toSegment(p, wday))
+    _calculateWhitelistedRanges() {
+      this._whitelistedRanges =
+        this.whitelist
+          | map(p => SFSOWPeriod.toRange(p, this.currentWeekStart));
     }
 
-    _blacklistedPeriods(day) {
-      return this.blacklist
-        .filter(p => DateTimePeriod.isWithinDay(p, day))
-        .map(p => DateTimePeriod.toSegment(p));
-    }
+    _wdayDataFor(wday) {
+      const m    = moment(this.currentWeekStart).add(wday, 'days');
+      const date = m.toDate();
 
-    _doSetSelectedPeriod(y, wday) {
-      const period = this._buildPeriod(y, wday);
-      if (!this._isValidPeriod(period)) return;
-      this.selectedPeriod = period
-    }
-
-    _isValidPeriod(period) {
-      let result = true;
-
-      if (
-        this.whitelist &&
-        !SFSOWPeriod.isWithinAvailabilityPeriods(period, this.whitelist)
-      )
-        result = false;
-
-      if (
-        this.blacklist &&
-        SFSOWPeriod.overlapsDateTimePeriods(period, this.blacklist)
-      )
-        result = false;
-
-      return result;
-    }
-
-    _buildPeriod(y, wday) {
-      const startY = do {
-        if ((y - this._periodHeight/2) < 0) 0;
-        else if ((y + this._periodHeight/2) > 100)
-          100 - this._periodHeight;
-        else this._closestTick(y - this._periodHeight/2)
+      return {
+        date, wday,
+        availableSegments: this._availableSegmentsFor(date),
+        name: this._getWeekDayName(m),
       };
-      const endY       = startY + this._periodHeight;
-      const height     = endY - startY;
-      const startSfsow = this._coordinatesToSfsow(startY, wday);
-      const endSfsow   = this._coordinatesToSfsow(endY, wday);
-
-      return {wday, startY, endY, height, startSfsow, endSfsow};
     }
 
-    _coordinatesToSfsow(y, wday) {
-      return (SFSOW.SECONDS_PER_DAY * y) / 100 + wday * SFSOW.SECONDS_PER_DAY;
+    _getWeekDayName(moment) { return moment.format('dddd').charAt(0).toUpperCase(); }
+
+    _availableSegmentsFor(date) {
+      return (
+        this._whitelistedRanges
+        | RangeList.selectOverlappingDate(date)
+        | RangeList.intersectDate(date)
+        | RangeList.subtractRangeList(this._blacklistedRanges)
+        | map(wr => this._rangeToSegment(wr, date))
+      );
+    }
+
+    _rangeToSegment(r) {
+      const startSfsod = r.start.hours() * 60 * 60 + r.start.minutes() * 60 + r.start.seconds();
+      const endSfsod   = r.end.hours() * 60 * 60 + r.end.minutes() * 60 + r.end.seconds();
+
+      const startY = (startSfsod * 100) / SECONDS_PER_DAY;
+      const endY   = (endSfsod * 100) / SECONDS_PER_DAY;
+
+      const height = endY - startY;
+
+      return {startY, height};
     }
 
     _extractHeight(ev) {
-      const $container = $(ev.currentTarget);
+      const $container =
+        $(ev.currentTarget).parents('.ctz-period-picker__week-day-body');
+
       const offset = $container.offset();
+
       return ((ev.pageY - offset.top) * 100) / $container.height();
     }
 
-    _closestTick(y) { return Math.floor(y / this.stepHeight) * this.stepHeight; }
+    _heightToSfsod(y) {
+      return (y * SECONDS_PER_DAY) / 100;
+    }
+
+    _dateFromSfsodAndWday(sfsod, wday) {
+      return (
+        moment(this.currentWeekStart)
+          .add(wday, 'd')
+          .add(sfsod, 's')
+      );
+    }
   }
 };

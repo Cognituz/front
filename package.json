@@ -32,7 +32,6 @@
     "moment-range": "^3.0.3",
     "ng-file-upload": "^12.2.13",
     "ng-infinite-scroll": "^1.3.0",
-    "ng-mask": "^3.1.1",
     "ng-material-datetimepicker": "^1.5.9",
     "normalize.css": "^5.0.0",
     "peerjs-client": "^0.3.15",
@@ -45,7 +44,7 @@
   "devDependencies": {
     "auto-reload-brunch": "^2.0.0",
     "autoprefixer-stylus": "^0.11.0",
-    "babel-brunch": "^6.0.6",
+    "babel-brunch": "^6.1.1",
     "babel-plugin-angularjs-annotate": "^0.6.0",
     "babel-plugin-pipe-operator": "^1.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
