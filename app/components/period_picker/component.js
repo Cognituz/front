@@ -56,11 +56,22 @@ module.exports = {
 
     // Private stuff
     _buildSelectedRange(date) {
-      const start =
-        moment.max(
-          moment(date).startOf('day'),
-          moment(date).subtract(this.periodDuration/2, 'm')
-        );
+      const start = do {
+        const memo       = moment(date).subtract(this.periodDuration/2, 'm');
+        const startOfDay = moment(date).startOf('day');
+        const endOfDay   = moment(date).endOf('day');
+
+        if (memo < startOfDay)
+          startOfDay
+        else if (moment(memo).add(this.periodDuration, 'm') > endOfDay)
+          moment(endOfDay).subtract(this.periodDuration, 'm');
+        else
+          memo;
+      }
+        //moment.max(
+          //moment(date).startOf('day'),
+          //moment(date).subtract(this.periodDuration/2, 'm')
+        //);
 
       const end = moment(start).add(this.periodDuration, 'm');
 
