@@ -25,9 +25,6 @@ require('ng-material-datetimepicker');
 require('ng-infinite-scroll');
 require('angular-screenfull');
 require('md-color-picker');
-require('ngtouchstart');
-require('ngtouchmove');
-require('ngtouchend');
 
 angular
   .module('cognituzFront', [
@@ -42,10 +39,7 @@ angular
     'ngMaterialDatePicker',
     'infinite-scroll',
     'angularScreenfull',
-    'mdColorPicker',
-    'ngTouchstart',
-    'ngTouchmove',
-    'ngTouchend'
+    'mdColorPicker'
   ])
 
   // Configuration Blocks
@@ -56,6 +50,11 @@ angular
   // Decorators
   .decorator('RailsResource', require('decorators/rails_resource'))
   .decorator('$mdDialog',     require('decorators/md_dialog'))
+
+  // Directives
+  .directive('ngTouchmove', require('directives/touchmove'))
+  .directive('ngTouchstart', require('directives/touchstart'))
+  .directive('ngTouchend', require('directives/touchend'))
 
   // Misc services
   .service('Auth',                  require('services/auth'))

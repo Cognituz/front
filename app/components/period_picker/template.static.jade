@@ -41,7 +41,7 @@
         ng-click='$ctrl.confirmSelection()'
         ng-touchend='$ctrl.confirmSelection()'
       )
-        .md-whiteframe-z2(
+        .md-whiteframe-z2(:
           elem='segment'
           ng-repeat='s in data.availableSegments track by $index'
           ng-style='{\
