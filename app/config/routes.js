@@ -30,10 +30,13 @@ module.exports = (
     .state('pete', {
       url: '/pete',
       template: `
+        {{ selectedPeriod }}
+
         <ctz-period-picker
+          ng-model='selectedPeriod'
           layout-fill
-          period-duration='120'
-          step-duration='15'
+          period-duration=120
+          step-duration=30
           whitelist="whitelist"
           blacklist="blacklist"
         />

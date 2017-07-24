@@ -38,6 +38,7 @@
         .md-whiteframe-z2(
           ng-mousemove='$ctrl.setSelectedSegment(data.wday, $event)'
           ng-mouseleave='$ctrl.unsetSelectedSegment()'
+          ng-click='$ctrl.confirmSelection()'
           elem='segment'
           ng-repeat='s in data.availableSegments track by $index'
           ng-style='{\
@@ -52,6 +53,16 @@
           ng-style='{\
             top: $ctrl.selectedSegment.startY + "%", \
             height: $ctrl.selectedSegment.height + "%" \
+          }'
+        )
+          | Elejir Horario
+
+        .md-whiteframe-z3(
+          elem='segment' mod-once='confirmed'
+          ng-if='$ctrl.confirmedSegment.wday === data.wday'
+          ng-style='{\
+            top: $ctrl.confirmedSegment.startY + "%", \
+            height: $ctrl.confirmedSegment.height + "%" \
           }'
         )
           | Elejir Horario

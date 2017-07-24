@@ -3,10 +3,12 @@ const RangeList       = require('lib/range_list');
 const DateTimePeriod  = require('lib/date_time/period');
 const SFSOWPeriod     = require('lib/sfsow/period');
 const SECONDS_PER_DAY = require('lib/seconds_per_day')
-const {map}           = require('lodash');
+const {map, minBy}    = require('lodash');
 
 module.exports = {
   templateUrl: '/components/period_picker/template.html',
+
+  require: {ngModel: 'ngModel'},
 
   bindings: {
     whitelist:      '<?',
@@ -41,37 +43,60 @@ module.exports = {
         this._extractHeight(mouseEv)
         | this._heightToSfsod()
         | this._dateFromSfsodAndWday(wday)
+        | this._getClosestStep()
         | this._buildSelectedRange()
-        | this._validateSelectedRange()
+        | this._validateSelectedRange();
 
       if (range) {
         this.selectedRange = range;
         this.selectedSegment = {wday, ...this._rangeToSegment(range)};
-
-        console.log(this.selectedSegment);
       }
     }
 
-    unsetSelectedSegment() { delete this.selectedSegment; }
+    unsetSelectedSegment() {
+      delete this.selectedSegment;
+    }
+
+    confirmSelection() {
+      this.confirmedSegment = this.selectedSegment;
+      this.ngModel.$setViewValue(this.selectedRange.toDate());
+    }
 
     // Private stuff
+    _getClosestStep(date) {
+      const dateMfsod = // Minutes from start of day
+        moment(date).hours() * 60 +
+        moment(date).minutes();
+
+      const prevStep =
+        moment(date)
+          .startOf('day')
+          .add(this.stepDuration * Math.floor(dateMfsod / this.stepDuration), 'm');
+
+      const nextStep =
+        moment(date)
+          .startOf('day')
+          .add(this.stepDuration * Math.ceil(dateMfsod / this.stepDuration), 'm');
+
+      return do {
+        if (nextStep > moment(date).endOf('day')) prevStep;
+        else [prevStep, nextStep] | minBy(stepDate => Math.abs(stepDate.diff(date)));
+      }
+    }
+
     _buildSelectedRange(date) {
       const start = do {
-        const memo       = moment(date).subtract(this.periodDuration/2, 'm');
+        const lowerBound  = moment(date).subtract(this.periodDuration/2, 'm');
+        const upperBound  = moment(date).add(this.periodDuration/2, 'm');
         const startOfDay = moment(date).startOf('day');
         const endOfDay   = moment(date).endOf('day');
 
-        if (memo < startOfDay)
-          startOfDay
-        else if (moment(memo).add(this.periodDuration, 'm') > endOfDay)
+        if (lowerBound < startOfDay)
+          startOfDay;
+        else if (upperBound > endOfDay)
           moment(endOfDay).subtract(this.periodDuration, 'm');
-        else
-          memo;
-      }
-        //moment.max(
-          //moment(date).startOf('day'),
-          //moment(date).subtract(this.periodDuration/2, 'm')
-        //);
+        else lowerBound;
+      };
 
       const end = moment(start).add(this.periodDuration, 'm');
 
