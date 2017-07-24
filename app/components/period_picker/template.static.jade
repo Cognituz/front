@@ -6,10 +6,8 @@
   div(
     layout='row'
     layout-align='space-between center'
-    layout-margin
   )
     md-button(ng-click='$ctrl.prevWeek()') Prev
-    h1 Week Number: {{ $ctrl.currentWeekStart.week() }}
     md-button(ng-click='$ctrl.nextWeek()') Next
 
   md-divider
@@ -27,18 +25,23 @@
         layout-padding
         layout='row'
         layout-align='center center'
-      ) {{ data.name }} ({{ data.wday }})
+      ) {{ data.name }}
 
       md-divider
 
       div(
         elem='week-day-body'
         flex
+        ng-mousemove='$ctrl.setSelectedSegment(data.wday, $event)'
+        ng-touchstart='$ctrl.setSelectedSegment(data.wday, $event)'
+        ng-touchmove='$ctrl.setSelectedSegment(data.wday, $event)'
+
+        ng-mouseleave='$ctrl.unsetSelectedSegment()'
+
+        ng-click='$ctrl.confirmSelection()'
+        ng-touchend='$ctrl.confirmSelection()'
       )
         .md-whiteframe-z2(
-          ng-mousemove='$ctrl.setSelectedSegment(data.wday, $event)'
-          ng-mouseleave='$ctrl.unsetSelectedSegment()'
-          ng-click='$ctrl.confirmSelection()'
           elem='segment'
           ng-repeat='s in data.availableSegments track by $index'
           ng-style='{\
@@ -47,15 +50,16 @@
           }'
         )
 
-        .md-whiteframe-z3(
+        md-whiteframe-z3(
           elem='segment' mod-once='selected'
           ng-if='$ctrl.selectedSegment.wday === data.wday'
           ng-style='{\
             top: $ctrl.selectedSegment.startY + "%", \
             height: $ctrl.selectedSegment.height + "%" \
           }'
+          layout='row'
+          layout-align='center center'
         )
-          | Elejir Horario
 
         .md-whiteframe-z3(
           elem='segment' mod-once='confirmed'
@@ -64,7 +68,10 @@
             top: $ctrl.confirmedSegment.startY + "%", \
             height: $ctrl.confirmedSegment.height + "%" \
           }'
+          layout='row'
+          layout-align='center center'
         )
-          | Elejir Horario
+          md-button.md-icon-button.no-margin(ng-click='$ctrl.unconfirmSelection()')
+            md-icon(md-svg-src='/images/icons/remove.svg')
 
     md-divider(ng-repeat-end ng-if='!$last')

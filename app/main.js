@@ -25,6 +25,9 @@ require('ng-material-datetimepicker');
 require('ng-infinite-scroll');
 require('angular-screenfull');
 require('md-color-picker');
+require('ngtouchstart');
+require('ngtouchmove');
+require('ngtouchend');
 
 angular
   .module('cognituzFront', [
@@ -39,7 +42,10 @@ angular
     'ngMaterialDatePicker',
     'infinite-scroll',
     'angularScreenfull',
-    'mdColorPicker'
+    'mdColorPicker',
+    'ngTouchstart',
+    'ngTouchmove',
+    'ngTouchend'
   ])
 
   // Configuration Blocks

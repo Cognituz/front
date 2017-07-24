@@ -53,13 +53,17 @@ module.exports = {
       }
     }
 
-    unsetSelectedSegment() {
-      delete this.selectedSegment;
+    unsetSelectedSegment() { delete this.selectedSegment; }
+
+    unconfirmSelection() {
+      delete this.confirmedSegment;
+      this.ngModel.$setViewValue(undefined);
     }
 
     confirmSelection() {
       this.confirmedSegment = this.selectedSegment;
-      this.ngModel.$setViewValue(this.selectedRange.toDate());
+      this.confirmedRange = this.selectedRange;
+      this.ngModel.$setViewValue(this.confirmedRange.toDate());
     }
 
     // Private stuff
@@ -156,12 +160,14 @@ module.exports = {
     }
 
     _extractHeight(ev) {
-      const $container =
-        $(ev.currentTarget).parents('.ctz-period-picker__week-day-body');
-
+      const $container = $(ev.currentTarget);
       const offset = $container.offset();
+      const pageY =
+        ev.originalEvent.constructor === TouchEvent ?
+          ev.touches[0].pageY :
+          ev.pageY;
 
-      return ((ev.pageY - offset.top) * 100) / $container.height();
+      return ((pageY - offset.top) * 100) / $container.height();
     }
 
     _heightToSfsod(y) {
