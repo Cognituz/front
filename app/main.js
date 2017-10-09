@@ -55,13 +55,14 @@ angular
   .directive('ngTouchmove', require('directives/touchmove'))
   .directive('ngTouchstart', require('directives/touchstart'))
   .directive('ngTouchend', require('directives/touchend'))
+  .directive('ngScrolled', require('directives/scrolled'))
 
   // Misc services
   .service('Auth',                  require('services/auth'))
   .service('lockingScope',          require('services/locking_scope'))
   .service('AppointmentFormDialog', require('components/appointment/form/dialog'))
   .service('MercadoPago',           require('services/mercado_pago'))
- 
+
   // Serializers, used by models to serialize and deserialize JSON
   .factory('DateSerializer', require('serializers/date'))
 

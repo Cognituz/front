@@ -7,8 +7,8 @@ div(
   md-card.md-no-empty-errors-spacer
     md-toolbar: .md-toolbar-tools
       | Ingresá como 
-      span(ng-if='$ctrl.userType === "student"') estudiante
-      span(ng-if='$ctrl.userType === "teacher"') profesor
+      span.margin-left-5(ng-if='$ctrl.userType === "student"') estudiante
+      span.margin-left-5(ng-if='$ctrl.userType === "teacher"') profesor
 
     md-button.md-button--facebook(
       ng-if='$ctrl.userType === "student"'
