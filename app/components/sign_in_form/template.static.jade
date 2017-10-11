@@ -20,7 +20,7 @@ div(
 
     md-divider(ng-if='$ctrl.userType === "student"')
 
-    form(ng-submit='$ctrl.loginWithCredentials()' layout='column')
+    form(ng-submit='$ctrl.loginWithCredentials()' layout='column' autocomplete="off")
       div(layout='column' layout-padding)
         md-input-container
           label Email

@@ -2,10 +2,11 @@ module.exports = {
   templateUrl: '/components/sign_up_form/template.html',
   bindings: {userType: '@'},
   controller: class {
-    constructor($mdToast, $state, Auth, lockingScope) {
+    constructor($mdToast, $state, Auth, $auth, lockingScope) {
       'ngInject';
       this.$mdToast     = $mdToast;
       this.$state       = $state;
+      this.$auth        = $auth;
       this.Auth         = Auth;
       this.lockingScope = lockingScope;
     }
