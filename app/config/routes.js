@@ -196,6 +196,26 @@ module.exports = (
                 }
               }
             })
+            .state('app.s.students.profile.password', {
+              url: '/editar_contraseña?afterSaveRedirectTo',
+              template: '<ctz-student-profile-password after-save="$ctrl.afterSave()" layout-fill/>',
+              controllerAs: '$ctrl',
+              controller: class {
+                constructor($state, $stateParams) {
+                  'ngInject';
+                  this.$state       = $state;
+                  this.$stateParams = $stateParams;
+                }
+
+                afterSave() {
+                  const redirectLocation =
+                    this.$stateParams &&
+                    this.$stateParams.afterSaveRedirectTo;
+
+                  redirectLocation && this.$state.go(redirectLocation);
+                }
+              }
+            })
 
         .state('app.s.teachers', {
           url: '/profesores',

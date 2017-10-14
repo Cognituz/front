@@ -89,6 +89,7 @@ angular
   .component('ctzSignInForm',           require('components/sign_in_form/component'))
   .component('ctzSignUpForm',           require('components/sign_up_form/component'))
   .component('ctzStudentProfileEditor', require('components/student/profile/editor/component'))
+  .component('ctzStudentProfilePassword', require('components/student/profile/password/component'))
   .component('ctzAvatarInput',          require('components/avatar_input/component'))
   .component('ctzTeacherList',          require('components/teacher/list/component'))
   .component('ctzTeacherListFilters',   require('components/teacher/list/filters/component'))

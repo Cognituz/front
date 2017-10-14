@@ -5,17 +5,17 @@ md-divider
 ctz-spacer-xs
 
 div(layout='column')
-  md-button(
+  md-button.md-raised.md-primary(
     ng-click="$ctrl.MercadoPago.link($ctrl.teacher)"
     ng-if="!$ctrl.teacher.linkedMercadoPagoAccount"
   ) Vincular
 
-  md-button(
+  md-button.md-raised.md-primary(
     ng-click="$ctrl.MercadoPago.link($ctrl.teacher)"
     ng-if="$ctrl.teacher.linkedMercadoPagoAccount"
   ) Cambiar
 
-  md-button(
+  md-button.md-raised.md-primary(
     ng-click="$ctrl.MercadoPago.unlink($ctrl.teacher)"
     ng-if="$ctrl.teacher.linkedMercadoPagoAccount"
   ) Desvincular

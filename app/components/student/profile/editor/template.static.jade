@@ -7,7 +7,7 @@ form.md-no-empty-errors-spacer(
 )
   md-toolbar.md-hue-1.md-whiteframe-z1
     .md-toolbar-tools(layout='row')
-      h2 Editando perfil
+      h2 Editando perfil general
       span(flex)
       md-button.md-primary.md-raised(
         type='submit'
@@ -28,16 +28,16 @@ form.md-no-empty-errors-spacer(
             label Apellido
             input(ng-model='$ctrl.student.lastName')
 
-        md-input-container
+        md-input-container(ng-if='$ctrl.Auth.currentUser.isStudent')
           label Descripción
           textarea(ng-model='$ctrl.student.description')
 
         div(layout='row')
-          md-input-container(flex=20)
+          md-input-container(flex=20 ng-if='$ctrl.Auth.currentUser.isStudent')
             label Edad
             input(ng-model='$ctrl.student.age' type='number' min=1)
 
-          md-input-container(flex)
+          md-input-container(flex ng-if='$ctrl.Auth.currentUser.isStudent')
             label Año escolar
             md-select(ng-model='$ctrl.student.schoolYear')
               md-option(
@@ -52,11 +52,3 @@ form.md-no-empty-errors-spacer(
             ng-model='$ctrl.student.phoneNumber'
             type='string'
           )
-
-        md-input-container
-          label Contraseña
-          input(ng-model='$ctrl.student.password' type='password')
-
-        md-input-container
-          label Repetir contraseña
-          input(ng-model='$ctrl.student.passwordConfirmation' type='password')
