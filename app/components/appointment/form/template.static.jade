@@ -40,7 +40,7 @@ form(
 
       ctz-spacer-xs
 
-      md-input-container(ng-if='$ctrl.appointment.kind === "at_public_place"')
+      md-input-container(ng-if='$ctrl.appointment.kind === "at_public_place" && $ctrl.classType === "faceToFace"')
         label Lugar
         input(ng-model='$ctrl.appointment.placeDesc')
 

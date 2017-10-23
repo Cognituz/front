@@ -1,11 +1,26 @@
 .md-title Datos Generales
 md-divider
 
-div(layout='column')
+div(layout='column')  
+  md-input-container
+    label Nombre
+    input(ng-model='$ctrl.teacher.firstName')
+    
+  md-input-container
+    label Apellido
+    input(ng-model='$ctrl.teacher.lastName')
+    
+  md-input-container
+    label Teléfono
+    input(
+      ng-model='$ctrl.teacher.phoneNumber'
+      type='string'
+    )
+    
   md-input-container
     label Barrios
     md-select(
-      ng-model='$ctrl.teacher.neighborhoods'
+      ng-model='$ctrl.teacher.teacher.neighborhoods'
       multiple
     )
       md-option(
