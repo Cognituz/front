@@ -12,13 +12,14 @@ module.exports = {
   },
   require: {ngModel: 'ngModel'},
   controller: class {
-    constructor($element, $timeout, $scope, StudySubject) {
+    constructor($element, $timeout, $scope, StudySubject, $mdSelect) {
       'ngInject';
 
       this.$element     = $element;
       this.$timeout     = $timeout;
       this.$scope       = $scope;
       this.StudySubject = StudySubject;
+      this.$mdSelect = $mdSelect;
 
       this.containerClass = `ctz-select-container_${new Date().getTime()}`;
     }
@@ -43,6 +44,11 @@ module.exports = {
       }, 300);
     }
 
+    closeSelect() {
+      if(this.model.includes('close')) {
+        this.$mdSelect.hide();
+      }
+     }
     clearSearch() { delete this.searchTerm; }
   }
 };

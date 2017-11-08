@@ -6,18 +6,23 @@ div(
   md-toolbar.md-whiteframe-z2(layout='row')
 
     .md-toolbar-tools(layout='row')
-      span(elem='header-brand' ): img(src='/images/logo.png')
+      span(elem='header-brand' ): img(src='/images/logo.png' ui-sref='app.s.teachers.list')
 
       div(layout='row' ng-if='$ctrl.Auth.currentUser')
         md-button(
           ui-sref='app.s.teachers.list'
           ui-sref-active='md-raised'
-        ) Profesores
+        ) Inicio
 
         md-button(
           ui-sref='app.s.appointments.list'
           ui-sref-active='md-raised'
-        ) Agenda
+        ) Mis Clases
+        
+        md-button(
+          ui-sref='app.s.teachers.list'
+          ui-sref-active='md-raised'
+        ) En Vivo
 
       span(flex)
 
@@ -32,6 +37,9 @@ div(
 
             md-menu-item(ng-if='$ctrl.Auth.currentUser.isTeacher')
               md-button(ui-sref='app.s.teachers.profile.edit') Editar perfil
+              
+            md-menu-item(ng-if='$ctrl.Auth.currentUser.isTeacher')
+              md-button(ui-sref='app.s.teachers.profile.addresses') Editar direcciones
 
             md-menu-item
               md-button(ui-sref='app.s.students.profile.password') Cambiar contraseña

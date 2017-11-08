@@ -1,6 +1,9 @@
 module.exports = {
   templateUrl: '/components/appointment/form/template.html',
-  bindings: {teacher: '<'},
+  bindings: {
+    teacher: '<',
+    filters: '<'
+  },
   controller: class {
     classType = 'faceToFace';
     minDate   = moment().add(1, 'day');
@@ -28,9 +31,10 @@ module.exports = {
           // for testing purposes, remove later
           kind:      'at_public_place',
           placeDesc: 'un lugar re copado',
-          subjects:  this.teacher.taughtSubjects.slice(0, 3),
+          subjects:  this.filters.taughtSubjectsIds,
           desc:      'Quiero saber el teorema de pitágoras',
-          duration:  2
+          duration:  this.filters.availableAt.duration,
+          startsAt:  this.filters.availableAt.date
         });
     }
 

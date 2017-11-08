@@ -1,24 +1,24 @@
 .md-no-empty-errors-spacer(layout='column')
-  md-nav-bar.md-accent.md-whiteframe-z1(md-border-bottom)
-    md-nav-item(md-nav-click='$ctrl.filters.classType = "online"') Online
-    md-nav-item(md-nav-click='$ctrl.filters.classType = "presential"') Presencial
+  md-nav-bar.md-accent.md-whiteframe-z1(
+    md-selected-nav-item="'online'"
+    md-border-bottom
+  )
+    md-nav-item(
+      md-nav-click='$ctrl.filters.classType = "online"'
+      name="online"
+    ) 
+      | Online
+    md-nav-item(
+      md-nav-click='$ctrl.filters.classType = "presential"'
+      name="presential"
+    ) 
+      | Presencial
 
   md-content.md-no-empty-errors-spacer(
     flex
     layout='column'
     layout-padding
   )
-    md-input-container(ng-if='$ctrl.filters.classType === "presential"')
-      label Barrios
-      md-select(
-        ng-model='$ctrl.filters.neighborhoods'
-        multiple
-      )
-        md-option(
-          ng-repeat='n in $ctrl.neighborhoods'
-          ng-value='n'
-          ng-bind='n'
-        )
 
     md-input-container
       label Materias
@@ -43,8 +43,3 @@
           ng-disabled='!$ctrl.filters.availableAt.date'
           ng-required='$ctrl.filters.availableAt.date'
         )
-
-    div(layout='column' ng-if='$ctrl.filters.classType == "presential"')
-      md-checkbox(ng-model='$ctrl.filters.teachesAtStudentsPlace') En mi casa
-      md-checkbox(ng-model='$ctrl.filters.teachesAtOwnPlace') En el domicilio del profesor
-      md-checkbox(ng-model='$ctrl.filters.teachesAtPublicPlace') En un lugar publico a acordar

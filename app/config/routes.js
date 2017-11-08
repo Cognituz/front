@@ -231,6 +231,14 @@ module.exports = (
               url: '/editar',
               template: '<ctz-teacher-profile-editor layout-fill/>',
             })
+            .state('app.s.teachers.profile.addresses', {
+              url: '/direcciones',
+              template: '<ctz-teacher-profile-addresses layout-fill/>',
+            })
+            .state('app.s.teachers.profile.address', {
+              url: '/direcciones/editar?id',
+              template: '<ctz-teacher-profile-address-form id="id" layout-fill/>',
+            })
           .state('app.s.teachers.list', {
             url: '/',
             template: '<ctz-teacher-list/>'

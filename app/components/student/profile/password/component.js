@@ -7,16 +7,15 @@ module.exports = {
       this.$mdToast     = $mdToast;
       this.Auth         = Auth
       this.lockingScope = lockingScope;
-      this.schoolYears  = User.SCHOOL_YEARS;
 
       Auth
         .getCurrentUser()
-        .then(user => this.student = angular.copy(user));
+        .then(user => this.user = angular.copy(user));
     }
 
     save() {
       this.lockingScope(this, _ =>
-        this.student
+        this.user
           .save()
           .then(user => this.handleSuccess(user))
           .catch(resp => this.handleError(resp))

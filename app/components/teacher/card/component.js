@@ -1,6 +1,9 @@
 module.exports = {
   templateUrl: '/components/teacher/card/template.html',
-  bindings: {teacher: '<'},
+  bindings: {
+    teacher: '<',
+    filters: '=',
+  },
   controller: class {
     constructor($mdDialog, $mdMedia, AppointmentFormDialog) {
       'ngInject';

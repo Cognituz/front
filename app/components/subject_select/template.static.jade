@@ -6,6 +6,7 @@ md-select(
   block='ctz-subject-select'
   md-container-class='ctz-subject-select-container {{:: $ctrl.containerClass }}'
   ng-required='$ctrl.required'
+  ng-change="$ctrl.closeSelect()"
 )
   md-select-header
     input(
@@ -14,6 +15,11 @@ md-select(
       placeholder='{{:: $ctrl.searchPlaceholder }}'
     )
 
+  md-option(
+    ng-value='"close"'
+    ng-bind='"Aceptar"'
+  )
+  
   md-optgroup(
     ng-repeat='(level, studySubjects) in $ctrl.studySubjects'
     label='{{:: level === null ? "Otros" : level }}'

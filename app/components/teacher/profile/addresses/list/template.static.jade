@@ -1,0 +1,33 @@
+form.md-no-empty-errors-spacer(
+  block='ctz-teacher-profile-addresses'
+  layout-fill
+  layout='column'
+  layout-align='center center'
+  ng-submit='$ctrl.save()'
+)
+  md-toolbar.md-hue-1.md-whiteframe-z1
+    .md-toolbar-tools(layout='row')
+      h2 Editando direcciones
+      span(flex)
+      md-button.md-primary.md-raised(
+        ui-sref='app.s.teachers.profile.address'
+      ) Agregar Dirección
+      
+  md-card.md-whiteframe-z1(flex layout='column')
+    md-list
+      md-list-item.noright(
+        ng-repeat="location in $ctrl.user.locations"
+        ui-sref='app.s.teachers.profile.address({id: location.id})'
+      )
+        p {{ location.name }}
+        p {{ location.radius }}km
+        md-icon.md-secondary(
+          md-svg-src='/images/icons/pencil.svg' 
+          aria-label="Editar"
+        )
+        md-icon.md-secondary.delete-icon(
+          ui-sref='app.s.teachers.profile.address({id: 5})'
+          md-svg-src='/images/icons/delete.svg'
+          aria-label="Borrar"
+        )
+    div#map

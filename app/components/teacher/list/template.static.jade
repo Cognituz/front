@@ -33,7 +33,7 @@ section.position-relative(
         flex-gt-sm=25
         ng-repeat='t in $ctrl.teachers'
       )
-        ctz-teacher-card(teacher=':: t')
+        ctz-teacher-card(teacher=':: t' filters='$ctrl.filters')
 
   md-button.md-fab.absolute-left-bottom(
     ng-click='$ctrl.sidenav.toggle()'

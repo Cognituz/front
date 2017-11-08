@@ -14,13 +14,13 @@ form.md-no-empty-errors-spacer(
         ng-disabled='$ctrl.locked'
       ) Actualizar
 
-  md-content(flex layout='column')
+  md-card.md-whiteframe-z1(flex layout='column')
     div(layout-padding)
       div(layout='column')
         md-input-container
           label Contraseña
-          input(ng-model='$ctrl.student.password' type='password')
+          input(ng-model='$ctrl.user.password' type='password')
 
         md-input-container
           label Repetir contraseña
-          input(ng-model='$ctrl.student.passwordConfirmation' type='password')
+          input(ng-model='$ctrl.user.passwordConfirmation' type='password')

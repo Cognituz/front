@@ -2,7 +2,7 @@ module.exports = {
   templateUrl: '/components/teacher/list/filters/template.html',
   require: {ngModel: 'ngModel'},
   controller: class {
-    constructor($scope, Neighborhood) {
+    constructor($scope) {
       'ngInject';
 
       $scope.$watch(
@@ -10,8 +10,6 @@ module.exports = {
         fts => this.ngModel.$setViewValue(fts),
         true
       );
-
-      Neighborhood.query().then(ngs => this.neighborhoods = ngs);
     }
 
     $onInit() {
