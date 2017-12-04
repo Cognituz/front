@@ -13,19 +13,25 @@ module.exports = {
     webRTC        = new SimpleWebRTC({autoRequestMedia: true});
     chat          = {messages: []};
 
-    constructor($q, $scope, $timeout) {
+    constructor($q, $scope, $timeout, Auth) {
       'ngInject';
 
       this.$q               = $q;
       this.$scope           = $scope;
       this.$timeout         = $timeout;
+
+      Auth
+        .getCurrentUser()
+        .then(user => this.user = angular.copy(user));
     }
 
     $onInit() {
       this.joinRoom(`appointment-${this.appointment.id}`)
         .then(_ => this.roomJoined = true);
-
+      console.log(111111111)
       this.onWebRTCEvent('videoAdded', (_, peer) => {
+        console.log(3333333)
+        console.log(this.remoteStream)
         this.remoteStream = peer.stream;
       });
 
@@ -52,14 +58,20 @@ module.exports = {
     }
 
     submitChatMessage() {
-      this.webRTC.sendDirectlyToAll(undefined, 'chatMessage', this.chatMessage);
-      this.chat.messages.push(this.chatMessage);
+      const message = {
+        name: this.user.firstName,
+        avatar: this.user.avatar,
+        msg: this.chatMessage
+      }
+
+      this.webRTC.sendDirectlyToAll(undefined, 'chatMessage', message);
+      this.chat.messages.push(message);
       delete this.chatMessage;
     }
 
     transmitWhiteboardSignal(signal) {
-      this.webRTC.sendDirectlyToAll(undefined, 'whiteboardSignal', signal);
-      this.persistWhiteboardSignal(signal);
+      //this.webRTC.sendDirectlyToAll(undefined, 'whiteboardSignal', signal);
+      //this.persistWhiteboardSignal(signal);
     }
 
     // Sidenav controls
@@ -76,7 +88,7 @@ module.exports = {
       else {
         if (this.unreadMessages)
           this.videoChatTooltip = 'Mostrar videochat (mensajes sin leer)';
-        else 
+        else
           this.videoChatTooltip = 'Mostrar videochat';
       }
     }

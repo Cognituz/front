@@ -7,9 +7,10 @@ module.exports = {
       $mdToast,
       Auth,
       MercadoPago,
-      Neighborhood,
       User,
-      lockingScope
+      lockingScope,
+      $scope,
+      $state
     ) {
       'ngInject';
 
@@ -28,11 +29,17 @@ module.exports = {
         [0]: 'Domingo'
       };
 
-      Neighborhood.query().then(ngs => this.neighborhoods = ngs);
-
       Auth
         .getCurrentUser()
-        .then(user => this.teacher = user);
+        .then(user => {
+          this.teacher = user;
+          $scope.$watch('$ctrl.teacher.teachesAtPublicPlace', function(newValue, oldValue){
+            if (!angular.equals(oldValue, newValue) && newValue && user.locations) {
+              $mdToast.showSimple('Tenes que agregar una dirección para poder dar clases personalmente.');
+              $state.go('app.s.teachers.profile.addresses')
+            }
+          }, true);
+        })
     }
 
     partialPath(key) {

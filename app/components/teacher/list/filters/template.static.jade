@@ -4,25 +4,27 @@
     md-border-bottom
   )
     md-nav-item(
-      md-nav-click='$ctrl.filters.classType = "online"'
+      md-nav-click='$ctrl.lala = false'
       name="online"
     ) 
       | Online
     md-nav-item(
-      md-nav-click='$ctrl.filters.classType = "presential"'
+      md-nav-click='$ctrl.lala = true'
       name="presential"
     ) 
-      | Presencial
+      | Presencia
 
   md-content.md-no-empty-errors-spacer(
     flex
     layout='column'
     layout-padding
   )
-
     md-input-container
       label Materias
       ctz-subject-select(ng-model='$ctrl.filters.taughtSubjectIds')
+      
+    md-input-container(ng-hide='!$ctrl.lala')
+      input#searchInput(ng-model='$ctrl.filters.address' type='text')  
 
     div(layout='row' layout-wrap)
       md-input-container(flex=75)

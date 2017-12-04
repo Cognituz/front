@@ -24,8 +24,7 @@ form.md-no-empty-errors-spacer(
         )
           div(flex=100 flex-gt-xs=33)
             ctz-avatar-input(ng-model='$ctrl.teacher.avatar')
-          div(flex=100 flex-gt-xs=33 ng-include=':: $ctrl.partialPath("general")')
-          div(flex=100 flex-gt-xs=33 ng-include=':: $ctrl.partialPath("location")')
+          div(flex=100 flex-gt-xs=66 ng-include=':: $ctrl.partialPath("general")')
 
         div(flex=100 layout-padding)
           div(ng-include=':: $ctrl.partialPath("descriptions")')

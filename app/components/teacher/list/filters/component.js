@@ -10,9 +10,13 @@ module.exports = {
         fts => this.ngModel.$setViewValue(fts),
         true
       );
+
+      this.input = document.getElementById('searchInput');
+      var autocomplete = new google.maps.places.Autocomplete(this.input);
     }
 
     $onInit() {
+      console.log(this.ngModel)
       const filters = this.ngModel.$modelValue || {};
       this.ngModel.$setViewValue(filters);
       this.ngModel.$render = _ => this.filters = this.ngModel.$viewValue;

@@ -108,6 +108,7 @@ angular
   .component('ctzWhiteboard',               require('components/whiteboard/component'))
   .component('ctzColorPicker',              require('components/color_picker/component'))
   .component('ctzPeriodPicker',             require('components/period_picker/component'))
+  .component('ctzStarsInput',               require('components/stars_input/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)

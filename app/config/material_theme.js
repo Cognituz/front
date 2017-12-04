@@ -2,16 +2,16 @@ module.exports = ($mdThemingProvider) => {
   'ngInject';
 
   $mdThemingProvider.definePalette('cognituzGreen', {
-    '50':                   '#ffffff',
-    '100':                  '#e5eddb',
-    '200':                  '#cbdbb5',
-    '300':                  '#a9c385',
-    '400':                  '#9ab971',
-    '500':                  '#8caf5c',
-    '600':                  '#7d9f4e',
-    '700':                  '#6c8a44',
-    '800':                  '#5c763a',
-    '900':                  '#4c6130',
+    '50':                   '#c8d9b2',
+    '100':                  '#bcd1a0',
+    '200':                  '#b0c88f',
+    '300':                  '#a4c07e',
+    '400':                  '#98b76d',
+    '500':                  '#8CAF5C',
+    '600':                  '#7fa250',
+    '700':                  '#729147',
+    '800':                  '#64803f',
+    '900':                  '#576f36',
     'A100':                 '#ffffff',
     'A200':                 '#e5eddb',
     'A400':                 '#9ab971',
@@ -61,13 +61,13 @@ module.exports = ($mdThemingProvider) => {
   $mdThemingProvider
     .theme('default')
       .primaryPalette('cognituzGreen', {
-        'default': '600',
-        'hue-1':   '500',
-        'hue-2':   '400',
-        'hue-3':   '300'
+        'default': '500',
+        'hue-1':   '400',
+        'hue-2':   '300',
+        'hue-3':   '200'
       })
       .accentPalette('cognituzBlue', {
-          'default': 'A400',
+          'default': '500',
           'hue-1':   'A700',
           'hue-2':   '700',
           'hue-3':   '800'

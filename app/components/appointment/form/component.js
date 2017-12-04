@@ -31,10 +31,11 @@ module.exports = {
           // for testing purposes, remove later
           kind:      'at_public_place',
           placeDesc: 'un lugar re copado',
-          subjects:  this.filters.taughtSubjectsIds,
+          subjects:  this.filters ? this.filters.taughtSubjectsIds : '',
           desc:      'Quiero saber el teorema de pitágoras',
-          duration:  this.filters.availableAt.duration,
-          startsAt:  this.filters.availableAt.date
+          duration:  this.filters ? this.filters.availableAt.duration : '',
+          address:  this.filters ? this.filters.address : '',
+          startsAt:  this.filters ? this.filters.availableAt.date : ''
         });
     }
 

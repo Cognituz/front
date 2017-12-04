@@ -29,18 +29,13 @@ form(
       md-nav-item(md-nav-click='$ctrl.setAppointmentKind()' name='faceToFace') Presencial
 
     md-card-content(layout='column')
-      md-radio-group(
-        ng-model='$ctrl.appointment.kind'
-        ng-class='{"layout-row": $ctrl.$mdMedia("gt-xs")}'
-        ng-if='$ctrl.classType === "faceToFace"'
-      )
-        md-radio-button(value='at_students_place') En mi casa
-        md-radio-button(value='at_teachers_place') En casa del profesor
-        md-radio-button(value='at_public_place')   En lugar público
+      md-input-container(ng-if='$ctrl.classType === "faceToFace"')
+        label Dirección
+        input(ng-model='$ctrl.appointment.address')
 
       ctz-spacer-xs
 
-      md-input-container(ng-if='$ctrl.appointment.kind === "at_public_place" && $ctrl.classType === "faceToFace"')
+      md-input-container(ng-if='$ctrl.classType === "faceToFace"')
         label Lugar
         input(ng-model='$ctrl.appointment.placeDesc')
 

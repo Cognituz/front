@@ -102,7 +102,12 @@
         md-content(flex)
           div(layout='column')
             md-card(ng-repeat='m in $ctrl.chat.messages track by $index')
-              md-card-content(ng-bind=':: m')
+              md-card-content.chat-box(layout='row' layout-align='start center')
+                img.md-whiteframe-z1(ng-src='{{ m.avatar }}')
+                p
+                  b {{ m.name }}: 
+                p {{m.msg}}
+                
 
         md-divider
 
@@ -120,4 +125,3 @@
             )
           md-button.md-icon-button(type='submit')
             md-icon(md-svg-src='/images/icons/send.svg')
-

@@ -4,6 +4,9 @@ md-card(
   layout-fill
 )
   img.md-card-image(ng-src="{{:: $ctrl.teacher.avatar }}")
+  
+  div(layout='row' layout-align='center center')
+    ctz-stars-input
 
   md-card-content(flex)
     p(ng-bind=':: $ctrl.teacher.shortDesc')

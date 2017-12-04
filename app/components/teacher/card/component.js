@@ -10,6 +10,7 @@ module.exports = {
       this.$mdDialog             = $mdDialog;
       this.$mdMedia              = $mdMedia;
       this.AppointmentFormDialog = AppointmentFormDialog;
+      this.lala = 5
     }
   }
 };

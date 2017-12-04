@@ -16,15 +16,3 @@ div(layout='column')
       ng-model='$ctrl.teacher.phoneNumber'
       type='string'
     )
-    
-  md-input-container
-    label Barrios
-    md-select(
-      ng-model='$ctrl.teacher.teacher.neighborhoods'
-      multiple
-    )
-      md-option(
-        ng-repeat='n in $ctrl.neighborhoods'
-        ng-value='n'
-        ng-bind='n'
-      )
