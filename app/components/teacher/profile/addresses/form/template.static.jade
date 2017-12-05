@@ -9,7 +9,7 @@ form.md-no-empty-errors-spacer(
     .md-toolbar-tools(layout='row')
       h2(ng-bind='$ctrl.$stateParams.id ? "Editando dirección" : "Creando dirección"')
       span(flex)
-  
+      h1 {{ $ctrl.location }}
   md-card.md-whiteframe-z1(flex layout='column')
     div(layout-padding)
       div(layout='column')

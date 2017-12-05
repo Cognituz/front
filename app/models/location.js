@@ -7,7 +7,7 @@ module.exports = (RailsResource) => {
 
   Location.configure({
     url:  `${API_URL}/v1/locations`,
-    name: 'locations'
+    name: 'location'
   });
 
   return Location;
