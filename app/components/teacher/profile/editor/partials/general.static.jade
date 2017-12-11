@@ -1,18 +1,27 @@
 .md-title Datos Generales
 md-divider
 
-div(layout='column')  
-  md-input-container
-    label Nombre
-    input(ng-model='$ctrl.teacher.firstName')
+div(layout='row')  
+  div(layout='column')  
+    md-input-container
+      label Nombre
+      input(ng-model='$ctrl.teacher.firstName')
+      
+    md-input-container
+      label Apellido
+      input(ng-model='$ctrl.teacher.lastName')
     
-  md-input-container
-    label Apellido
-    input(ng-model='$ctrl.teacher.lastName')
-    
-  md-input-container
-    label Teléfono
-    input(
-      ng-model='$ctrl.teacher.phoneNumber'
-      type='string'
-    )
+  div(layout='column')  
+    md-input-container
+      label Teléfono
+      input(
+        ng-model='$ctrl.teacher.phoneNumber'
+        type='string'
+      )
+      
+    md-input-container
+      label Precio por hora
+      input(
+        ng-model='$ctrl.teacher.price'
+        type='number'
+      )
