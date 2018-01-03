@@ -27,7 +27,7 @@ module.exports = {
       },
 
       eraser(toolOptions = {}) {
-        this.setLineWidth(25);
+        this.setLineWidth(toolOptions.thickness);
         this.ctx.globalCompositeOperation = "destination-out";
         this.ctx.strokeStyle              = "rgba(0,0,0,1)";
         this.ctx.lineJoin                 = "square";
@@ -40,17 +40,31 @@ module.exports = {
         this.ctx.textBaseline             = 'middle';
         this.ctx.font                     = '3vw Dosis';
         this.ctx.fillStyle                = 'black';
+      },
+
+      textDelete(toolOptions = {}) {
+        this.ctx.globalCompositeOperation = "source-over";
+        this.textAlign                    = 'center';
+        this.ctx.textBaseline             = 'middle';
+        this.ctx.font                     = '3vw Dosis';
+        this.ctx.fillStyle                = 'black';
       }
     };
 
-    constructor($attrs, $element, $mdDialog, $scope, $timeout, $window) {
+    constructor($attrs, $element, $mdDialog, $scope, $timeout, $window, $rootScope) {
       'ngInject';
-      this.$attrs    = $attrs;
-      this.$element  = $element;
-      this.$mdDialog = $mdDialog;
-      this.$scope    = $scope;
-      this.$timeout  = $timeout;
-      this.$window   = $window;
+      this.$attrs     = $attrs;
+      this.$element   = $element;
+      this.$mdDialog  = $mdDialog;
+      this.$scope     = $scope;
+      this.$timeout   = $timeout;
+      this.$window    = $window;
+      this.$rootScope = $rootScope;
+
+      $rootScope.$watch(function(){
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+        return true;
+      });
     }
 
     get $canvas() {
@@ -105,6 +119,7 @@ module.exports = {
         this.$element.on("click touchstart", ev => {
           ev.preventDefault();
           this.drawText(ev);
+          this.deleteText(ev);
         })
       }
     }
@@ -171,12 +186,37 @@ module.exports = {
       this.signal("$drawSegment", ...commonArgs, canvasSize);
     }
 
+    deleteText(ev) {
+      if (this.currentTool !== 'textDelete') return;
+      if ($(ev.target).hasClass('whiteboard-text')) {
+        $(ev.target).remove();
+        this.currentTool = '';
+      }
+    }
+
     drawText(ev) {
       if (this.currentTool !== 'textInserter') return;
       this.applyTool()
       const point = this.extractCoordinates(ev);
-      this.getTextToInsert(ev)
-        .then(text => this.doDrawText(point, text));
+      if (ev.target != $('canvas')[0]) {
+        this.getTextToInsert(ev)
+          .then(text => {
+            $(ev.target).text(text)
+
+            this.currentTool = '';
+          });
+      }
+      else {
+        this.getTextToInsert(ev)
+          .then(text => {
+            $(".ctz-whiteboard").append("<p class='whiteboard-text' style='left:" +  point[0] + "px;top:" + point[1] + "px;font-size:"+this.currentToolOptions.thickness*5+"px;color:"+this.currentToolOptions.color+"''>" + text + "</p>")
+
+            this.currentTool = '';
+
+           $( ".whiteboard-text" ).draggable();
+          });
+        //.then(text => this.doDrawText(point, text));
+      }
     }
 
     doDrawText(point, text) {
@@ -189,6 +229,7 @@ module.exports = {
         this.$mdDialog
           .prompt()
           .placeholder('Texto a insertar')
+          .textContent('Guia formulas: https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference')
           .targetEvent(ev)
           .cancel('Cancelar')
           .ok('Insertar')
@@ -227,7 +268,10 @@ module.exports = {
       this.ctx.fillText(text, x, y);
     }
 
-    $clear() { this.ctx.clearRect(0,0, this.$canvas.width(), this.$canvas.height()); }
+    $clear() {
+      $('.whiteboard-text').remove();
+      this.ctx.clearRect(0,0, this.$canvas.width(), this.$canvas.height());
+    }
 
     // Other helpers
     setLineWidth(val) {
@@ -262,4 +306,3 @@ module.exports = {
     }
   }
 };
-

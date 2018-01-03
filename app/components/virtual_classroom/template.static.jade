@@ -40,7 +40,7 @@
           ng-class='$ctrl.whiteboardCtrl.currentTool === "textInserter" && "md-raised md-accent"'
         )
           md-icon(md-svg-src='/images/icons/text.svg')
-          md-tooltip(md-direction='bottom') Insertar texto
+          md-tooltip(md-direction='bottom') Editor de texto
 
         div(
           elem='tool-options'
@@ -62,6 +62,11 @@
           ng-if='::!$ctrl.whiteboardCtrl.readonly'
           ng-click='$ctrl.whiteboardCtrl.clear()'
         ) Borrar todo
+        
+        md-button(
+          ng-if='::!$ctrl.whiteboardCtrl.readonly'
+          ng-click='$ctrl.whiteboardCtrl.setTool("textDelete")'
+        ) Borrar un texto
 
         span(flex)
 

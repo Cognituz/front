@@ -14,13 +14,29 @@ html(
 
     link(rel='stylesheet' href='/vendor.css')
     link(rel='stylesheet' href='/app.css')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML")
 
   body
     ctz-app(layout-fill)
-
+    
+    script.
+      function $MPC_load() {
+        window.$MPC_loaded !== true && (function() {
+          var s = document.createElement("script");
+          s.type = "text/javascript";
+          s.async = true;
+          s.src = document.location.protocol + "//secure.mlstatic.com/mptools/render.js";
+          var x = document.getElementsByTagName('script')[0];
+          x.parentNode.insertBefore(s, x);
+          window.$MPC_loaded = true;
+        })();
+      }
+      window.$MPC_loaded !== true ? (window.attachEvent ? window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null;
 
     script(sync src='/vendor.js')
     script(sync src='/app.js')
     script(sync src='https://webrtc.github.io/adapter/adapter-latest.js')
-    script(sync src='https://simplewebrtc.com/simplewebrtc.bundle.js')
+    script(sync src='https://simplewebrtc.com/latest-v2.js')
+    script(sync src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    
     script(sync src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEWowvox5MNmzgD0VCqal-dosN55_6MYY&libraries=places")

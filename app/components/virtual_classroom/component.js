@@ -28,11 +28,12 @@ module.exports = {
     $onInit() {
       this.joinRoom(`appointment-${this.appointment.id}`)
         .then(_ => this.roomJoined = true);
-      console.log(111111111)
       this.onWebRTCEvent('videoAdded', (_, peer) => {
-        console.log(3333333)
-        console.log(this.remoteStream)
         this.remoteStream = peer.stream;
+      });
+
+      this.webRTC.on('localStream', (stream) => {
+        this.remoteStream = stream;
       });
 
       this.onWebRTCEvent('channelMessage', (peer, channelLabel, data) =>  {
