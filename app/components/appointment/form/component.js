@@ -49,8 +49,8 @@ module.exports = {
     submit() {
       this.createAppointment()
         .then(appointment => {
-          const initPoint = appointment.paymentPreference.initPoint;
-          return this.launchPaymentDialog(initPoint);
+          //const initPoint = appointment.paymentPreference.initPoint;
+          // return this.launchPaymentDialog(initPoint);
         })
         .then(_ => {
           this.$mdDialog.hide();
