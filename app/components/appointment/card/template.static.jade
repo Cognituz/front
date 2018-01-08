@@ -22,11 +22,11 @@ md-card
 
       tr
         td Empieza
-        td(ng-bind="$ctrl.appointment.startsAt")
+        td(ng-bind="$ctrl.appointment.startTime")
 
       tr
         td Termina
-        td(ng-bind="$ctrl.appointment.endsAt")
+        td(ng-bind="$ctrl.appointment.endTime")
 
       tr
         td Duración
@@ -37,11 +37,16 @@ md-card
         td
           span(ng-repeat="ss in $ctrl.appointment.studySubjects")
             | {{ ss.level }} - {{ ss.name }}
-            span(ng-if='!$last') , 
+            span(ng-if='!$last') ,
 
       tr
         td Tema
         td(ng-bind="$ctrl.appointment.desc")
+
+      tr
+        td Archivos
+        td(ng-repeat="attachment in $ctrl.appointment.attachmentsList")
+          a(href="{{ attachment }}" target="_blank") Descargar
 
   md-card-actions(
     layout='row'

@@ -5,7 +5,7 @@ module.exports = {
     filters: '<'
   },
   controller: class {
-    classType = 'faceToFace';
+    classType = 'online';
     minDate   = moment().add(1, 'day');
     maxDate   = moment().add(2, 'weeks');
 
@@ -27,12 +27,10 @@ module.exports = {
           teacher:   this.teacher,
           teacherId: this.teacher.id,
           studentId: this.Auth.currentUser.id,
-
-          // for testing purposes, remove later
-          kind:      'at_public_place',
-          placeDesc: 'un lugar re copado',
+          kind:      'online',
+          placeDesc: '',
           subjects:  this.filters ? this.filters.taughtSubjectsIds : '',
-          desc:      'Quiero saber el teorema de pitágoras',
+          desc:      '',
           duration:  this.filters ? this.filters.availableAt.duration : '',
           address:  this.filters ? this.filters.address : '',
           startsAt:  this.filters ? this.filters.availableAt.date : ''
