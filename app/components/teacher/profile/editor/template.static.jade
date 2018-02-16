@@ -45,5 +45,5 @@ form.md-no-empty-errors-spacer(
           layout='row'
           layout-wrap
         )
-          div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("taught_subjects")')
-          div(flex=100 flex-gt-xs=50 ng-include=':: $ctrl.partialPath("availability_periods")')
+          div(flex=100 ng-include=':: $ctrl.partialPath("taught_subjects")')
+          div(flex=100 ng-include=':: $ctrl.partialPath("availability_periods")')

@@ -166,7 +166,9 @@ module.exports = {
     reconstruct() { this.signals.forEach(s => this.consumeSignal(s, false)); }
 
     // Store signals to be able to reconstruct the board later
-    storeSignal(signal) { this.signals.push(signal); }
+    storeSignal(signal) {
+      this.signals.push(signal);
+    }
 
     // Transmitable signals
     drawLine(ev) {
@@ -180,7 +182,11 @@ module.exports = {
     }
 
     doDrawLine(pointA, pointB) {
-      const commonArgs = [pointA, pointB, this.currentTool, this.currentToolOptions];
+      const toolOptions = {
+        'thickness': this.currentToolOptions.thickness,
+        'color': this.currentToolOptions.color,
+      }
+      const commonArgs = [pointA, pointB, this.currentTool, toolOptions];
       this.$drawSegment(...commonArgs);
       const canvasSize = [this.$canvas.width(), this.$canvas.height()];
       this.signal("$drawSegment", ...commonArgs, canvasSize);
@@ -190,6 +196,10 @@ module.exports = {
       if (this.currentTool !== 'textDelete') return;
       if ($(ev.target).hasClass('whiteboard-text')) {
         $(ev.target).remove();
+        this.currentTool = '';
+      }
+      else if ($(ev.target).is('[class*="mjx"]')) {
+        $(ev.target).closest(".whiteboard-text").remove();
         this.currentTool = '';
       }
     }
@@ -226,13 +236,21 @@ module.exports = {
 
     getTextToInsert(ev) {
       return this.$mdDialog.show(
-        this.$mdDialog
-          .prompt()
-          .placeholder('Texto a insertar')
-          .textContent('Guia formulas: https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference')
-          .targetEvent(ev)
-          .cancel('Cancelar')
-          .ok('Insertar')
+        this.$mdDialog.prompt({
+          onComplete: function afterShowAnimation() {
+            var $dialog = angular.element(document.querySelector('md-dialog'));
+            var $actionsSection = $dialog.find('md-dialog-actions');
+            var $cancelButton = $actionsSection.children()[0];
+            var $confirmButton = $actionsSection.children()[1];
+            angular.element($cancelButton).click(function(ev) {
+              window.open("https://docs.google.com/document/d/1Y7mYMcsvAMCSaEgucM63purSnxhOtpVbYswVtJQ0bGY",'_blank');
+            });
+          },
+        })
+        .placeholder('Texto a insertar')
+        .targetEvent(ev)
+        .cancel('Aprender Formulas')
+        .ok('Insertar')
       );
     }
 

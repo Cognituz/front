@@ -53,6 +53,21 @@ div(layout='column')
             mdc-datetime-picker date="false" time="true" format="HH:mm"
             required
           )
+          
+        md-input-container(flex)
+          label Lugar
+          md-select(
+            ng-model='ap.locationId'
+            required
+          )
+            md-option(
+              value='online'
+            ) Online
+            md-option(
+              ng-repeat='location in $ctrl.teacher.locations'
+              ng-value='location.id'
+              ng-bind='location.name'
+            )
 
         md-button.md-icon-button(ng-click='$ctrl.markForDestruction(ap)')
           md-icon(md-svg-src='/images/icons/delete.svg')

@@ -49,7 +49,7 @@ module.exports = {
     submit() {
       this.createAppointment()
         .then(appointment => {
-          //const initPoint = appointment.paymentPreference.initPoint;
+          // const initPoint = appointment.paymentPreference.initPoint;
           // return this.launchPaymentDialog(initPoint);
         })
         .then(_ => {

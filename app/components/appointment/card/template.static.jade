@@ -10,11 +10,11 @@ md-card
     table
       tr
         td Estado
-        td(ng-bind=" $ctrl.appointment.status")
+        td(ng-bind="$ctrl.statuses[$ctrl.appointment.status]")
 
       tr
         td Tipo
-        td(ng-bind="$ctrl.appointment.kind")
+        td(ng-bind="$ctrl.kinds[$ctrl.appointment.kind]")
 
       tr(ng-if='$ctrl.appointment.kind === "at_public_place"')
         td Lugar

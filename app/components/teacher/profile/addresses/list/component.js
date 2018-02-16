@@ -2,11 +2,12 @@ module.exports = {
   templateUrl: '/components/teacher/profile/addresses/list/template.html',
   bindings: {afterSave: '&?'},
   controller: class {
-    constructor($mdToast, Auth, User, lockingScope) {
+    constructor($mdToast, Auth, User, lockingScope, Location) {
       'ngInject';
       this.$mdToast     = $mdToast;
       this.Auth         = Auth
       this.lockingScope = lockingScope;
+      this.Location     = Location;
 
       Auth
         .getCurrentUser()
@@ -39,7 +40,38 @@ module.exports = {
           title: location.name
         });
       });
-    };
+    }
+
+    getAddress(id, index) {
+      this.Location.get(id).then(location => this.destroyAddress(location, index) )
+    }
+
+    destroyAddress(location, index) {
+      this.location = location;
+      this.location.delete = true;
+      this.lockingScope(this, _ =>
+        this.location
+          .save()
+          .then(location => this.showSuccessMessage(index))
+          .catch(resp => this.handleError(resp))
+      );
+    }
+
+    showSuccessMessage(index) {
+      this.user.locations.splice(index)
+      this.$mdToast.showSimple('Se borro la dirección exitosamente');
+    }
+
+    handleError(resp) {
+      const msg =
+        resp.status == 422 ?
+        `Operación inválida: ${resp.data.errors}` :
+        'Halgo ha salido mal. Por favor intentálo mas tarde'
+
+      this.$mdToast.showSimple(msg);
+
+      throw(resp);
+    }
   }
 
 };

@@ -1,6 +1,5 @@
 form.md-no-empty-errors-spacer(
   block='ctz-student-profile-password'
-  layout-fill
   layout='column'
   layout-align='center center'
   ng-submit='$ctrl.save()'
@@ -16,7 +15,7 @@ form.md-no-empty-errors-spacer(
 
   md-card.md-whiteframe-z1(flex layout='column')
     div(layout-padding)
-      div(layout='column')
+      div.margin-bottom-18(layout='column')
         md-input-container
           label Contraseña
           input(ng-model='$ctrl.user.password' type='password')

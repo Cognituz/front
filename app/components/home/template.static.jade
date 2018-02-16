@@ -31,12 +31,12 @@ md-content(layout-fill ng-scrolled="true")
           | Encontrá al profesor particular que estás buscando
 
         div(layout='row')
-          md-button.md-primary.md-raised.uppercase Ser profesor
-          md-button.md-raised Como funciona
+          md-button.md-primary.md-raised.uppercase(href="https://docs.google.com/forms/d/e/1FAIpQLSc4JZ17ZUr4LdQvOcyhUpNHxI1hNjZd67q1RSZu7OAcCxo9Dg/viewform") Ser profesor
+          md-button.md-raised(href="#como-funciona") Como funciona
 
     md-divider
 
-    section(
+    section#como-funciona(
       elem='cards-section'
       zum-waypoints='waypoints'
       down='headerOn'
@@ -44,7 +44,7 @@ md-content(layout-fill ng-scrolled="true")
     )
       div(ng-bind='waypoints | json')
 
-      div(layout='column' layout-gt-xs='row' layout-padding)
+      div(layout='column' layout-gt-xs='row' layout-padding layout-align="center start")
         .text-align-center(flex=33 layout='column' layout-padding)
           md-icon.blue-icon(
             elem='card-icon'
@@ -59,7 +59,7 @@ md-content(layout-fill ng-scrolled="true")
             elem='card-icon'
             md-svg-src='/images/icons/home_filter.svg'
           )
-          .md-title Filtrá los profesores
+          .md-title Filtra los profesores
           .md-subhead Filtra los profesores a medida de tus preferencias en cuanto a fecha, horario, tipo de clase, barrio
 
         .text-align-center(flex=33 layout='column' layout-padding)
@@ -109,16 +109,16 @@ md-content(layout-fill ng-scrolled="true")
           | y enterate de todas nuestras novedades diariamente
 
       div(layout='row' layout-padding)
-        md-button.md-icon-button(href='https://www.facebook.com/EducandoAndoPage' target='_blank')
+        md-button.md-icon-button(href='https://www.facebook.com/Cognituz/' target='_blank')
           md-icon.md-icon--color-black(md-svg-src='/images/icons/facebook_logo.svg')
 
-        md-button.md-icon-button(href='https://twitter.com/EducandoAndoEA' target='_blank')
+        md-button.md-icon-button(href='https://twitter.com/CognituzARG' target='_blank')
           md-icon.md-icon--color-black(md-svg-src='/images/icons/twitter_logo.svg')
 
         md-button.md-icon-button(href='https://www.youtube.com/channel/UCdKxdDX6uj3ou8xuVUjvJoQ' target='_blank')
           md-icon.md-icon--color-black(md-svg-src='/images/icons/youtube_logo.svg')
 
-        md-button.md-icon-button(href='https://www.linkedin.com/company/7675672' target='_blank')
+        md-button.md-icon-button(href='https://www.linkedin.com/company/10820447/' target='_blank')
           md-icon.md-icon--color-black(md-svg-src='/images/icons/linkedin_logo.svg')
 
         md-button.md-icon-button(href='https://plus.google.com/u/0/117734367256319007789?hl=es' target='_blank')

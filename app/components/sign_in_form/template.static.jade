@@ -6,7 +6,7 @@ div(
 )
   md-card.md-no-empty-errors-spacer
     md-toolbar: .md-toolbar-tools
-      | Ingresá como 
+      | Ingresá como
       span.margin-left-5(ng-if='$ctrl.userType === "student"') estudiante
       span.margin-left-5(ng-if='$ctrl.userType === "teacher"') profesor
 
@@ -44,5 +44,5 @@ div(
       )
         | ¿No tenés cuenta? Registrate acá
 
-      a(ui-sref='app.students.resetPassword')
-        | ¿Olvidaste tu contraseña? Reseteale acá
+      a(ui-sref='app.recoverPassword')
+        | ¿Olvidaste tu contraseña? Reseteala acá

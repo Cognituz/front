@@ -58,6 +58,7 @@ module.exports = {
     showSuccessMessage() {
       this.$mdToast.showSimple('Se agrego la dirección exitosamente');
       this.$state.go('app.s.teachers.profile.addresses')
+      window.location.reload(false);
     }
 
     handleError(resp) {

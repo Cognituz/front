@@ -1,0 +1,36 @@
+div(
+  block='ctz-recover-password'
+  layout-fill
+  layout='column'
+  layout-align='center center'
+)
+  md-card.md-no-empty-errors-spacer
+    md-toolbar: .md-toolbar-tools
+      | Recuperar Contraseña
+    form(ng-submit='$ctrl.sendForm()' layout='column')
+      div(layout='column' layout-padding)
+        md-input-container
+          label Email
+          input(
+            type='email'
+            ng-model='$ctrl.credentials.email'
+            required
+            autocomplete='false'
+          )
+
+      md-button.md-raised.md-primary(
+        type='submit'
+        ng-disabled='$ctrl.locked'
+      ) Enviar
+
+    md-divider
+
+    div(layout='column' layout-align='center center' layout-padding)
+      a(
+        ui-sref='app.signIn'
+      )
+        | ¿Tenés cuenta? Ingresá acá
+      a(
+        ui-sref='app.students.signUp'
+      )
+        | ¿No tenés cuenta? Registrate acá

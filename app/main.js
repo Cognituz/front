@@ -109,6 +109,7 @@ angular
   .component('ctzColorPicker',              require('components/color_picker/component'))
   .component('ctzPeriodPicker',             require('components/period_picker/component'))
   .component('ctzStarsInput',               require('components/stars_input/component'))
+  .component('ctzRecoverPassword',          require('components/recover_password/component'))
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 100)

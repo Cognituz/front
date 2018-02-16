@@ -18,6 +18,7 @@ form.md-no-empty-errors-spacer(
       md-list-item.noright(
         ng-repeat="location in $ctrl.user.locations"
         ui-sref='app.s.teachers.profile.address({id: location.id})'
+        ng-value="{{$index}}"
       )
         p {{ location.name }}
         p {{ location.radius }}km
@@ -26,7 +27,7 @@ form.md-no-empty-errors-spacer(
           aria-label="Editar"
         )
         md-icon.md-secondary.delete-icon(
-          ui-sref='app.s.teachers.profile.address({id: 5})'
+          ng-click='$ctrl.getAddress(location.id, $index)'
           md-svg-src='/images/icons/delete.svg'
           aria-label="Borrar"
         )

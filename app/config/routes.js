@@ -105,9 +105,9 @@ module.exports = (
         url: '/ingresar',
         template: '<ctz-sign-in-form-wrapper layout-fill/>'
       })
-      .state('app.resetPassword', {
+      .state('app.recoverPassword', {
         url: '/recuperar_contraseña',
-        template: '<ctz-sign-up-form layout-fill/>'
+        template: '<ctz-recover-password layout-fill/>'
       })
       .state('app.editPassword', {
         url: '/editar_contraseña',

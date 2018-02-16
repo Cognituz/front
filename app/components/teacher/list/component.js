@@ -4,15 +4,25 @@ module.exports = {
     constructor(
       $mdMedia,
       $mdSidenav,
-      User
+      User,
+      Auth,
+      $state
     ) {
       'ngInject';
 
       this.$mdMedia   = $mdMedia;
       this.$mdSidenav = $mdSidenav;
       this.User       = User;
+      this.$state     = $state;
 
-      this.page    = 1;
+      Auth.getCurrentUser().then(u => {
+        this.user = u;
+        if(this.user.isTeacher) {
+          this.$state.go('app.s.appointments.list');
+        }
+      });
+
+      this.page    = 111;
       this.filters = {};
 
       this.search();

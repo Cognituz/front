@@ -12,6 +12,7 @@ div(
         md-button(
           ui-sref='app.s.teachers.list'
           ui-sref-active='md-raised'
+          ng-if="$ctrl.Auth.currentUser.isStudent"
         ) Inicio
 
         md-button(
