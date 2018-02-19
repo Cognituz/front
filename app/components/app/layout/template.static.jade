@@ -21,7 +21,8 @@ div(
         ) Mis Clases
         
         md-button(
-          ui-sref='app.s.appointments.virtualClassroom({id: 13})'
+          ng-if='$ctrl.live.length > 0'
+          ui-sref='app.s.appointments.virtualClassroom({id: $ctrl.live[0].id})'
           ui-sref-active='md-raised'
         ) En Vivo
 
